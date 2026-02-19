@@ -2,9 +2,11 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const app = express();
-const httpServer = createServer(app);
+export const app = express();
+export const httpServer = createServer(app);
 
 declare module "http" {
   interface IncomingMessage {
@@ -46,20 +48,18 @@ app.use((req, res, next) => {
 
   res.on("finish", () => {
     const duration = Date.now() - start;
-    if (path.startsWith("/api")) {
-      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
-      }
-
-      log(logLine);
+    let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
+    if (capturedJsonResponse && path.startsWith("/api")) {
+      logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
     }
+
+    log(logLine);
   });
 
   next();
 });
 
-(async () => {
+export const setupPromise = (async () => {
   await registerRoutes(httpServer, app);
 
   app.use((err: any, _req: Request, res: Response, next: NextFunction) => {
@@ -85,19 +85,44 @@ app.use((req, res, next) => {
     await setupVite(httpServer, app);
   }
 
-  // ALWAYS serve the app on the port specified in the environment variable PORT
-  // Other ports are firewalled. Default to 5000 if not specified.
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = parseInt(process.env.PORT || "5000", 10);
-  httpServer.listen(
-    {
-      port,
-      host: "0.0.0.0",
-      reusePort: true,
-    },
-    () => {
-      log(`serving on port ${port}`);
-    },
+  // ONLY listen if this file is run directly (not as a module)
+  // This is important for Vercel which handles the serverless execution
+  const isDirectRun = process.argv.some(arg =>
+    arg.replace(/\\/g, '/').endsWith('server/index.ts') ||
+    arg.replace(/\\/g, '/').endsWith('dist/index.cjs')
   );
+
+  if (isDirectRun) {
+    const startPort = parseInt(process.env.PORT || "5000", 10);
+
+    // Robustly find an available port starting from startPort
+    const findAvailablePort = async (port: number): Promise<number> => {
+      return new Promise((resolve) => {
+        const server = createServer();
+        server.listen(port, "0.0.0.0", () => {
+          server.close(() => resolve(port));
+        });
+        server.on("error", () => {
+          resolve(findAvailablePort(port + 1));
+        });
+      });
+    };
+
+    const port = await (process.env.PORT ? Promise.resolve(startPort) : findAvailablePort(startPort));
+
+    httpServer.listen(
+      {
+        port,
+        host: "0.0.0.0",
+        reusePort: true,
+      },
+      () => {
+        log(`serving on port ${port}`);
+        console.log("\x1b[32m%s\x1b[0m", "---------------------------------------");
+        console.log("\x1b[32m%s\x1b[0m", "🚀 APPLICATION READY!");
+        console.log("\x1b[36m%s\x1b[0m", `👉 Open: http://localhost:${port}`);
+        console.log("\x1b[32m%s\x1b[0m", "---------------------------------------");
+      },
+    );
+  }
 })();
