@@ -16,9 +16,11 @@ export function Navbar() {
   }, []);
 
   const navLinks = [
+    { name: "Home", href: "/" },
     { name: "Services", href: "/#services" },
-    { name: "About", href: "/#about" },
-    { name: "Contact", href: "/#contact" },
+    { name: "Blogs", href: "/#blogs" },
+    { name: "About Us", href: "/#about" },
+    { name: "Let's Talk", href: "/#contact" },
   ];
 
   return (
@@ -33,12 +35,12 @@ export function Navbar() {
             <div className="relative overflow-hidden rounded-full border-2 border-primary/50 group-hover:border-primary transition-colors duration-300">
               <img 
                 src={logo} 
-                alt="Crafting Digital Reality Logo" 
+                alt="As Kreativ Logo" 
                 className="w-10 h-10 md:w-12 md:h-12 object-cover" 
               />
             </div>
             <span className="font-heading font-bold text-lg md:text-xl tracking-wider text-white group-hover:text-primary transition-colors">
-              CRAFTING DIGITAL REALITY
+              AS KREATIV
             </span>
           </a>
         </Link>
@@ -54,12 +56,6 @@ export function Navbar() {
               {link.name}
             </a>
           ))}
-          <a
-            href="#contact"
-            className="px-6 py-2.5 bg-primary hover:bg-primary/90 text-white font-bold tracking-wide uppercase text-sm rounded transition-all transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/25"
-          >
-            Get Started
-          </a>
         </div>
 
         {/* Mobile Toggle */}
@@ -91,13 +87,6 @@ export function Navbar() {
                   {link.name}
                 </a>
               ))}
-              <a
-                href="#contact"
-                className="mt-2 w-full text-center px-6 py-3 bg-primary text-white font-bold uppercase rounded"
-                onClick={() => setIsOpen(false)}
-              >
-                Get Started
-              </a>
             </div>
           </motion.div>
         )}

@@ -89,9 +89,6 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-primary font-bold tracking-widest uppercase mb-4 text-sm md:text-base">
-              Premium Digital Agency
-            </h2>
             <h1 className="font-heading text-5xl md:text-7xl lg:text-9xl font-bold uppercase leading-tight mb-8 text-glow">
               Crafting Digital
               <span className="block text-white/90">Reality</span>

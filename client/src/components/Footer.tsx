@@ -15,7 +15,7 @@ export function Footer() {
                 className="w-10 h-10 rounded-full border border-white/10" 
               />
               <span className="font-heading font-bold text-lg tracking-wider text-white">
-                CRAFTING DIGITAL REALITY
+                AS KREATIV
               </span>
             </div>
             <p className="text-white/60 leading-relaxed text-sm">
