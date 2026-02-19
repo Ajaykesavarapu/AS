@@ -1,5 +1,6 @@
-import { Mail, Phone, MapPin, Instagram, Linkedin, Twitter } from "lucide-react";
+import { Mail, Phone, MapPin, Instagram, Linkedin, Twitter, Facebook, Sidebar as Pinterest } from "lucide-react";
 import logo from "@assets/AS_1771522686023.jpg";
+import { Link } from "wouter";
 
 export function Footer() {
   return (
@@ -8,18 +9,18 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
           <div className="space-y-6">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1">
               <img 
                 src={logo} 
                 alt="Logo" 
                 className="w-10 h-10 rounded-full border border-white/10" 
               />
               <span className="font-heading font-bold text-lg tracking-wider text-white">
-                AS KREATIV
+                ASKREATIV
               </span>
             </div>
             <p className="text-white/60 leading-relaxed text-sm">
-              We transform ambitious ideas into exceptional digital experiences. 
+              Global consultancy transforming ambitious ideas into exceptional digital experiences. 
               Elevating brands through technology and design innovation.
             </p>
           </div>
@@ -28,11 +29,18 @@ export function Footer() {
           <div>
             <h4 className="font-heading text-lg font-bold text-white mb-6">Quick Links</h4>
             <ul className="space-y-4">
-              {["Services", "About Us", "Our Process", "Careers"].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-white/60 hover:text-primary transition-colors text-sm">
-                    {item}
-                  </a>
+              {[
+                { name: "Services", href: "/#services" },
+                { name: "About Us", href: "/about" },
+                { name: "Blogs", href: "/blogs" },
+                { name: "Contact", href: "/#contact" }
+              ].map((item) => (
+                <li key={item.name}>
+                  <Link href={item.href}>
+                    <a className="text-white/60 hover:text-primary transition-colors text-sm">
+                      {item.name}
+                    </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -62,14 +70,20 @@ export function Footer() {
           {/* Social */}
           <div>
             <h4 className="font-heading text-lg font-bold text-white mb-6">Follow Us</h4>
-            <div className="flex gap-4">
-              {[Instagram, Linkedin, Twitter].map((Icon, i) => (
+            <div className="flex flex-wrap gap-4">
+              {[
+                { icon: Instagram, href: "#" },
+                { icon: Linkedin, href: "#" },
+                { icon: Twitter, href: "#" },
+                { icon: Facebook, href: "#" },
+                { icon: Pinterest, href: "#" }
+              ].map((social, i) => (
                 <a
                   key={i}
-                  href="#"
+                  href={social.href}
                   className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/60 hover:bg-primary hover:text-white transition-all duration-300"
                 >
-                  <Icon className="w-5 h-5" />
+                  <social.icon className="w-5 h-5" />
                 </a>
               ))}
             </div>

@@ -18,9 +18,8 @@ export function Navbar() {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Services", href: "/#services" },
-    { name: "Blogs", href: "/#blogs" },
-    { name: "About Us", href: "/#about" },
-    { name: "Let's Talk", href: "/#contact" },
+    { name: "Blogs", href: "/blogs" },
+    { name: "About Us", href: "/about" },
   ];
 
   return (
@@ -31,7 +30,7 @@ export function Navbar() {
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
         <Link href="/">
-          <a className="flex items-center gap-3 group">
+          <a className="flex items-center gap-1 group">
             <div className="relative overflow-hidden rounded-full border-2 border-primary/50 group-hover:border-primary transition-colors duration-300">
               <img 
                 src={logo} 
@@ -40,7 +39,7 @@ export function Navbar() {
               />
             </div>
             <span className="font-heading font-bold text-lg md:text-xl tracking-wider text-white group-hover:text-primary transition-colors">
-              AS KREATIV
+              ASKREATIV
             </span>
           </a>
         </Link>
@@ -48,14 +47,18 @@ export function Navbar() {
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-sm font-medium text-white/80 hover:text-primary transition-colors tracking-wide uppercase"
-            >
-              {link.name}
-            </a>
+            <Link key={link.name} href={link.href}>
+              <a className="text-sm font-medium text-white/80 hover:text-primary transition-colors tracking-wide uppercase">
+                {link.name}
+              </a>
+            </Link>
           ))}
+          <a
+            href="/#contact"
+            className="px-6 py-2.5 bg-primary hover:bg-primary/90 text-white font-bold tracking-wide uppercase text-sm rounded transition-all transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/25"
+          >
+            Let's Talk
+          </a>
         </div>
 
         {/* Mobile Toggle */}
