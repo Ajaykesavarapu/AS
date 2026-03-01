@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 import NotFound from "@/pages/not-found";
+import TechMarquee from "@/components/TechMarquee";
 
 // Data Structure for Services
 const servicesData: Record<string, {
@@ -144,7 +145,90 @@ const servicesData: Record<string, {
       { step: "Execution", desc: "Launching campaigns, creating content, and managing bids." },
       { step: "Optimization", desc: "Continuous A/B testing and data analysis to improve results." }
     ]
+  },
+  "seo-services": {
+    title: "SEO Services",
+    subtitle: "Search Engine Maximization",
+    description: "Rank higher, grow faster. Our SEO experts craft strategies that push your website to the top of Google and drive consistent organic traffic.",
+    whyThis: "In a world where 93% of online experiences begin with a search engine, appearing on the first page is not just beneficial—it's essential for survival and growth.",
+    benefits: [
+      "Increased Organic Traffic",
+      "Higher Search Rankings",
+      "Improved Site Authority",
+      "Better User Experience",
+      "Long-term Sustainable Growth"
+    ],
+    useCases: [
+      "Local Business Visibility",
+      "E-commerce Product Ranking",
+      "Content Marketing Success",
+      "Brand Authority Building",
+      "International Market Expansion"
+    ],
+    approach: [
+      { step: "Technical Audit", desc: "Analyzing site structure, speed, and mobile-friendliness for search compliance." },
+      { step: "Keyword Strategy", desc: "Identifying high-value search terms that your ideal customers are using." },
+      { step: "On-Page SEO", desc: "Optimizing content, meta tags, and internal linking for maximum visibility." },
+      { step: "Authority Building", desc: "Earning high-quality backlinks and improving overall domain authority." }
+    ]
   }
+};
+
+const serviceTools = {
+  "3d-web-experience": [
+    { name: "Three.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg" },
+    { name: "WebGL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opengl/opengl-plain.svg" },
+    { name: "Blender", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" },
+    { name: "GSAP", icon: "https://cdn.worldvectorlogo.com/logos/gsap-greensock.svg" },
+    { name: "Spline", icon: "https://cdn.worldvectorlogo.com/logos/spline.svg" },
+    { name: "React Three Fiber", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+  ],
+  "website-development": [
+    { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+    { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+    { name: "Next.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
+    { name: "Tailwind CSS", icon: "https://cdn.worldvectorlogo.com/logos/tailwind-css-2.svg" },
+    { name: "WordPress", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg" },
+    { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+    { name: "Vite", icon: "https://cdn.worldvectorlogo.com/logos/vitejs.svg" },
+    { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+  ],
+  "digital-marketing": [
+    { name: "Google Ads", icon: "https://cdn.worldvectorlogo.com/logos/google-ads-2.svg" },
+    { name: "Meta Ads", icon: "https://cdn.worldvectorlogo.com/logos/meta-1.svg" },
+    { name: "Google Analytics", icon: "https://cdn.worldvectorlogo.com/logos/google-analytics-4.svg" },
+    { name: "SEMrush", icon: "https://cdn.worldvectorlogo.com/logos/semrush.svg" },
+    { name: "Ahrefs", icon: "https://cdn.worldvectorlogo.com/logos/ahrefs.svg" },
+    { name: "Mailchimp", icon: "https://cdn.worldvectorlogo.com/logos/mailchimp.svg" },
+    { name: "HubSpot", icon: "https://cdn.worldvectorlogo.com/logos/hubspot.svg" },
+    { name: "Canva", icon: "https://cdn.worldvectorlogo.com/logos/canva-1.svg" },
+  ],
+  "automation": [
+    { name: "Zapier", icon: "https://cdn.worldvectorlogo.com/logos/zapier-1.svg" },
+    { name: "Make (Integromat)", icon: "https://cdn.worldvectorlogo.com/logos/make-seeklogo.svg" },
+    { name: "n8n", icon: "https://cdn.worldvectorlogo.com/logos/n8n.svg" },
+    { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+    { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+    { name: "Airtable", icon: "https://cdn.worldvectorlogo.com/logos/airtable.svg" },
+    { name: "Notion API", icon: "https://cdn.worldvectorlogo.com/logos/notion-logo-1.svg" },
+    { name: "OpenAI API", icon: "https://cdn.worldvectorlogo.com/logos/openai-2.svg" },
+  ],
+  "graphic-designing": [
+    { name: "Adobe Photoshop", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-plain.svg" },
+    { name: "Adobe Illustrator", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg" },
+    { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+    { name: "After Effects", icon: "https://cdn.worldvectorlogo.com/logos/after-effects-1.svg" },
+    { name: "Canva", icon: "https://cdn.worldvectorlogo.com/logos/canva-1.svg" },
+    { name: "Blender", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/blender/blender-original.svg" },
+    { name: "Premiere Pro", icon: "https://cdn.worldvectorlogo.com/logos/premiere-pro-cc.svg" },
+  ],
+  "seo-services": [
+    { name: "Google Search Console", icon: "https://cdn.worldvectorlogo.com/logos/google-2015.svg" },
+    { name: "Ahrefs", icon: "https://cdn.worldvectorlogo.com/logos/ahrefs.svg" },
+    { name: "SEMrush", icon: "https://cdn.worldvectorlogo.com/logos/semrush.svg" },
+    { name: "Screaming Frog", icon: "https://cdn.worldvectorlogo.com/logos/google-analytics-4.svg" },
+    { name: "Moz", icon: "https://cdn.worldvectorlogo.com/logos/moz.svg" },
+  ]
 };
 
 export default function ServiceDetail() {
@@ -170,15 +254,34 @@ export default function ServiceDetail() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-accent font-bold tracking-widest uppercase text-sm mb-4 block">
-              {service.subtitle}
-            </span>
-            <h1 className="font-heading text-5xl md:text-7xl font-bold uppercase mb-8 leading-tight">
-              {service.title}
-            </h1>
-            <p className="text-xl text-white/70 max-w-3xl leading-relaxed">
-              {service.description}
-            </p>
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <span className="text-accent font-bold tracking-widest uppercase text-sm mb-4 block">
+                  {service.subtitle}
+                </span>
+                <h1 className="font-heading text-5xl md:text-7xl font-bold uppercase mb-8 leading-tight">
+                  {service.title}
+                </h1>
+                <p className="text-xl text-white/70 leading-relaxed mb-8">
+                  {service.description}
+                </p>
+                <TechMarquee tools={serviceTools[slug as keyof typeof serviceTools] || []} />
+              </div>
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 group">
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                  poster={`/images/services/${slug}-poster.jpg`}
+                >
+                  <source src={`/videos/${slug}.mp4`} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-60" />
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -192,7 +295,7 @@ export default function ServiceDetail() {
               <p className="text-white/70 leading-relaxed text-lg mb-10">
                 {service.whyThis}
               </p>
-              
+
               <h3 className="font-heading text-2xl font-bold mb-6 text-primary">Key Benefits</h3>
               <ul className="space-y-4">
                 {service.benefits.map((benefit, i) => (

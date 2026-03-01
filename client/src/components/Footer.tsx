@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Instagram, Linkedin, Twitter, Facebook, Sidebar as Pinterest } from "lucide-react";
+import { Mail, Phone, MapPin, Instagram, Linkedin, Twitter, Facebook, Sidebar as Pinterest, Youtube } from "lucide-react";
 import logo from "@assets/AS_1771522686023.jpg";
 import { Link } from "wouter";
 
@@ -10,18 +10,17 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-6">
             <div className="flex items-center gap-1">
-              <img 
-                src={logo} 
-                alt="Logo" 
-                className="w-10 h-10 rounded-full border border-white/10" 
+              <img
+                src={logo}
+                alt="Logo"
+                className="w-10 h-10 rounded-full border border-white/10"
               />
               <span className="font-heading font-bold text-lg tracking-wider text-white">
                 ASKREATIV
               </span>
             </div>
             <p className="text-white/60 leading-relaxed text-sm">
-              Global consultancy transforming ambitious ideas into exceptional digital experiences. 
-              Elevating brands through technology and design innovation.
+              AsKreativ – Your trusted digital marketing agency for web development, graphic design, automation, SEO, and performance marketing. Let's build something extraordinary together.
             </p>
           </div>
 
@@ -52,7 +51,9 @@ export function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-white/60 text-sm">
                 <Phone className="w-5 h-5 text-primary shrink-0" />
-                <span>+91 9666976611</span>
+                <a href="tel:+919666976611" className="hover:text-white transition-colors">
+                  +91 9666976611
+                </a>
               </li>
               <li className="flex items-start gap-3 text-white/60 text-sm">
                 <Mail className="w-5 h-5 text-primary shrink-0" />
@@ -67,16 +68,19 @@ export function Footer() {
             </ul>
           </div>
 
+
+
           {/* Social */}
           <div>
             <h4 className="font-heading text-lg font-bold text-white mb-6">Follow Us</h4>
             <div className="flex flex-wrap gap-4">
               {[
-                { icon: Instagram, href: "#" },
-                { icon: Linkedin, href: "#" },
-                { icon: Twitter, href: "#" },
-                { icon: Facebook, href: "#" },
-                { icon: Pinterest, href: "#" }
+                { icon: Instagram, href: "https://www.instagram.com/askreativ_1/" },
+                { icon: Linkedin, href: "https://www.linkedin.com/in/askreativ/" },
+                { icon: Twitter, href: "https://x.com/askreativ_1" },
+                { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61588501648124" },
+                { icon: Pinterest, href: "https://in.pinterest.com/helloaskreativ/" },
+                { icon: Youtube, href: "https://www.youtube.com/@AsKreativ" }
               ].map((social, i) => (
                 <a
                   key={i}

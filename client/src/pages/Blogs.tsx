@@ -28,16 +28,11 @@ export default function Blogs() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="font-heading text-5xl md:text-7xl font-bold uppercase mb-12">Latest <span className="text-primary">Insights</span></h1>
-            <div className="grid md:grid-cols-2 gap-8">
-              {blogPosts.map((post) => (
-                <div key={post.id} className="p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-primary/50 transition-all group">
-                  <span className="text-primary font-bold text-sm uppercase tracking-widest">{post.date}</span>
-                  <h2 className="font-heading text-3xl font-bold mt-4 mb-4 group-hover:text-primary transition-colors">{post.title}</h2>
-                  <p className="text-white/60 mb-6">{post.excerpt}</p>
-                  <button className="text-white font-bold uppercase text-sm tracking-widest border-b border-primary pb-1">Read More</button>
-                </div>
-              ))}
+            <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-6">
+              <h2 className="text-4xl font-bold text-white mb-4">Blogs Coming Soon</h2>
+              <p className="text-gray-400 text-lg max-w-md">
+                We're crafting insightful articles on digital marketing, web development, design trends, and more. Stay tuned!
+              </p>
             </div>
           </motion.div>
         </div>
