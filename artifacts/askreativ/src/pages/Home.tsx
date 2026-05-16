@@ -1,370 +1,295 @@
-import { useRef, useEffect, useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import { motion, useInView } from "framer-motion";
-import { Target, Cpu, Search, Code2, Share2, Grid3x3, Smartphone, Palette, ArrowRight, ChevronDown } from "lucide-react";
-import { FaWhatsapp } from "react-icons/fa";
+import {
+  Target, Cpu, Search, Code2, Share2, Grid3x3, Smartphone, Palette,
+  PenTool, Megaphone, ArrowRight, ChevronRight, Star, CheckCircle,
+} from "lucide-react";
 import { useModal } from "@/App";
 
+// ── DATA ─────────────────────────────────────────────────────────────
+const scrollingServices = [
+  "Digital Marketing", "AI Automation", "SEO Solutions",
+  "Website Design", "Business Growth", "Mobile Apps", "Brand Identity",
+];
+
+const heroImages = [
+  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=80",
+  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop&q=80",
+  "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&auto=format&fit=crop&q=80",
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80",
+];
+
 const services = [
-  { num: "01", icon: Target, title: "Digital Marketing", slug: "digital-marketing", desc: "Grow your business visibility, leads, and customer engagement through strategic digital marketing solutions designed for measurable growth." },
-  { num: "02", icon: Cpu, title: "AI Automation", slug: "ai-automation", desc: "Transform manual business operations into smart automated workflows powered by AI, CRM systems, WhatsApp automation, and intelligent lead management." },
-  { num: "03", icon: Search, title: "SEO Services", slug: "seo-services", desc: "Improve search visibility, rankings, and organic traffic through modern SEO strategies built for Google and AI-powered search engines." },
-  { num: "04", icon: Code2, title: "Website Development", slug: "website-development", desc: "We build modern, fast, and conversion-focused websites designed to strengthen branding, improve user experience, and generate business enquiries." },
-  { num: "05", icon: Share2, title: "Social Media Marketing", slug: "social-media-marketing", desc: "Build a strong digital presence through storytelling-driven social media strategies, creative campaigns, reels, and audience engagement." },
-  { num: "06", icon: Grid3x3, title: "ERP Management Systems", slug: "erp-management-systems", desc: "Centralize operations with smart ERP systems for attendance, HR, CRM, billing, workflow management, and operational efficiency." },
-  { num: "07", icon: Smartphone, title: "Mobile App Development", slug: "mobile-app-development", desc: "Launch scalable Android and iOS applications designed to improve customer experience, accessibility, and digital business operations." },
-  { num: "08", icon: Palette, title: "Branding & Creative Design", slug: "branding-creative-design", desc: "Create a strong and memorable business identity through strategic branding, creative visuals, advertising designs, and digital experiences." },
+  { icon: Target, title: "Digital Marketing", slug: "digital-marketing", desc: "Grow visibility, leads, and engagement through strategic digital marketing campaigns." },
+  { icon: Cpu, title: "AI Automation", slug: "ai-automation", desc: "Transform operations into smart automated workflows powered by AI and CRM systems." },
+  { icon: Search, title: "SEO Services", slug: "seo-services", desc: "Improve rankings and organic traffic through modern SEO strategies." },
+  { icon: Code2, title: "Website Development", slug: "website-development", desc: "Build modern, fast, conversion-focused websites for your business." },
+  { icon: Share2, title: "Social Media Marketing", slug: "social-media-marketing", desc: "Build your digital presence through creative campaigns and audience engagement." },
+  { icon: Grid3x3, title: "ERP Management Systems", slug: "erp-management-systems", desc: "Centralize operations with smart ERP systems for efficiency and growth." },
+  { icon: Smartphone, title: "Mobile App Development", slug: "mobile-app-development", desc: "Launch scalable Android and iOS apps for your customers." },
+  { icon: Palette, title: "Branding & Design", slug: "branding-creative-design", desc: "Create strong visual identities through strategic branding and creative design." },
+  { icon: PenTool, title: "Graphic Design", slug: "graphic-design", desc: "Professional designs for social media, ads, brochures, and brand communication." },
+  { icon: Megaphone, title: "Traditional Marketing", slug: "traditional-marketing", desc: "Hoardings, banners, pamphlets, and outdoor campaigns for offline brand presence." },
 ];
 
-const processSteps = [
-  { num: "01", title: "Discover & Understand", desc: "We analyze your business, audience, and goals to build the right digital growth foundation." },
-  { num: "02", title: "Strategize & Structure", desc: "We create customized strategies focused on branding, automation, visibility, and scalable growth." },
-  { num: "03", title: "Create & Build", desc: "We develop websites, apps, ERP systems, and digital experiences designed for performance and engagement." },
-  { num: "04", title: "Automate & Optimize", desc: "We integrate AI-powered automation systems that improve efficiency and customer communication." },
-  { num: "05", title: "Launch & Grow", desc: "We execute growth-driven marketing strategies focused on visibility, leads, and business expansion." },
-  { num: "06", title: "Scale & Evolve", desc: "We continuously optimize systems and strategies to help businesses scale sustainably." },
+const stats = [
+  { num: "200+", label: "Projects Delivered" },
+  { num: "50+", label: "Happy Clients" },
+  { num: "10+", label: "Digital Services" },
+  { num: "5+", label: "Years Experience" },
 ];
 
-const faqs = [
-  { q: "Why should you choose ASKreativ as a digital marketing agency in Hyderabad?", a: "ASKreativ is a digital marketing agency in Hyderabad focused on AI automation, SEO, branding, websites, ERP systems, and scalable business growth solutions." },
-  { q: "How can a digital marketing agency in Hyderabad help your business grow?", a: "A digital marketing agency in Hyderabad helps businesses improve visibility, generate leads, increase customer engagement, and build stronger online branding." },
-  { q: "Does ASKreativ provide AI automation services in Hyderabad?", a: "Yes. ASKreativ provides AI automation services in Hyderabad, including AI chatbots, WhatsApp automation, CRM systems, and workflow automation." },
-  { q: "Why is SEO important for businesses?", a: "SEO helps businesses improve Google rankings, increase organic traffic, attract local customers, and strengthen online visibility." },
-  { q: "Do we provide website development services in Hyderabad?", a: "Yes. ASKreativ develops modern business websites in Hyderabad designed for branding, lead generation, SEO, and customer engagement." },
-  { q: "Do we provide social media marketing services in Hyderabad?", a: "Yes. ASKreativ provides social media marketing services in Hyderabad, including Instagram marketing, Facebook marketing, LinkedIn management, reels, and branding campaigns." },
-  { q: "Can ASKreativ build ERP systems for businesses in Hyderabad?", a: "Yes. We develop ERP management systems in Hyderabad for attendance, HR, CRM, operations, billing, workflow management, and reporting." },
-  { q: "Do we provide mobile app development services in Hyderabad?", a: "Yes. ASKreativ develops Android and iOS mobile applications in Hyderabad for businesses, educational institutions, and startups." },
-  { q: "How long does SEO take for businesses in Hyderabad?", a: "SEO results usually take a few months, depending on competition, industry, website performance, and keyword difficulty." },
-  { q: "Do you provide branding services in Hyderabad?", a: "Yes. ASKreativ provides branding services in Hyderabad, including brand identity design, creative design, advertising creatives, and digital branding solutions." },
-  { q: "How can I contact ASKreativ digital marketing agency Hyderabad?", a: "You can contact ASKreativ through our website, social media platforms, or directly schedule a free business consultation." },
+const whyUs = [
+  { title: "AI-Powered Approach", desc: "We integrate artificial intelligence into our strategies to deliver smarter, faster, and more effective digital growth solutions." },
+  { title: "Multi-Industry Experience", desc: "From education and healthcare to real estate and e-commerce — we've built digital ecosystems across diverse industries." },
+  { title: "Tailored Strategies", desc: "No templates. Every strategy, system, and campaign is custom-built around your specific business goals and audience." },
+  { title: "End-to-End Solutions", desc: "From branding and automation to websites and marketing — we're a complete digital growth partner under one roof." },
 ];
 
 const industries = [
   "Educational Institutions", "Solar Industries", "Healthcare & Clinics",
   "Real Estate Companies", "Sports Academies", "Startups & Entrepreneurs",
   "Local Businesses", "Corporate Companies", "E-Commerce Brands",
-  "Restaurants & Hospitality", "Professional Service Providers",
+  "Restaurants & Hospitality", "Professional Services", "Manufacturing Units",
 ];
 
-const blogs = [
-  { tag: "AI & Automation", title: "How AI Automation is Transforming Business Operations in 2025", excerpt: "Discover how businesses in Hyderabad are using AI-powered automation to cut costs, increase efficiency, and scale faster.", date: "May 2025", slug: "ai-automation-business-2025" },
-  { tag: "Digital Marketing", title: "The Complete Guide to SEO for Businesses in Hyderabad", excerpt: "A step-by-step guide to improving your Google rankings and attracting local customers through modern SEO strategies.", date: "April 2025", slug: "seo-guide-hyderabad" },
-  { tag: "Branding", title: "Why Your Business Needs a Strong Digital Identity in 2025", excerpt: "In a crowded digital marketplace, your brand identity is your competitive edge. Learn how to stand out.", date: "April 2025", slug: "digital-identity-2025" },
+const process = [
+  { num: "01", title: "Discover & Understand", desc: "We analyze your business, audience, and goals to build the right digital growth foundation." },
+  { num: "02", title: "Strategize & Structure", desc: "We create customized strategies focused on branding, automation, visibility, and growth." },
+  { num: "03", title: "Create & Build", desc: "We develop websites, apps, ERP systems, and digital experiences for performance and engagement." },
+  { num: "04", title: "Automate & Optimize", desc: "We integrate AI-powered automation systems to improve efficiency and customer communication." },
+  { num: "05", title: "Launch & Market", desc: "We execute growth-driven marketing strategies focused on visibility, leads, and expansion." },
+  { num: "06", title: "Scale & Evolve", desc: "We continuously optimize systems and strategies to help your business scale sustainably." },
 ];
 
-function FadeUp({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+const testimonials = [
+  { name: "Rahul Sharma", role: "Real Estate Developer, Hyderabad", stars: 5, text: "ASKreativ transformed our digital presence completely. Their SEO and social media strategy brought us over 200 qualified leads in just three months. Exceptional team!" },
+  { name: "Dr. Priya Nair", role: "Healthcare Clinic Owner", stars: 5, text: "We were struggling with online visibility. ASKreativ built our website, set up SEO, and within 6 months we were ranking for all our key services. Highly recommended." },
+  { name: "Kiran Reddy", role: "Educational Institution Director", stars: 5, text: "The ERP system ASKreativ built for us completely transformed how we manage admissions and student communications. Our efficiency improved dramatically." },
+  { name: "Sunita Gupta", role: "E-Commerce Brand Founder", stars: 5, text: "Their branding work gave our startup a completely professional identity. The design consistency across all our platforms has been incredible." },
+];
+
+const faqs = [
+  { q: "What services does ASKreativ Global Solutions provide?", a: "ASKreativ provides digital marketing, AI automation, SEO, website development, social media marketing, ERP systems, mobile app development, branding, graphic design, and traditional marketing services." },
+  { q: "How can digital marketing help my business grow?", a: "Digital marketing improves your online visibility, generates qualified leads, strengthens your brand, and connects you with your target audience through multiple digital channels." },
+  { q: "Does ASKreativ provide AI automation services in Hyderabad?", a: "Yes. We provide AI chatbots, WhatsApp automation, CRM systems, lead management automation, and workflow automation services in Hyderabad." },
+  { q: "How long does SEO take to show results?", a: "SEO typically shows significant results within 3-6 months, depending on competition, industry, and the current state of your website. It's a long-term investment with compounding returns." },
+  { q: "Do you work with businesses outside Hyderabad?", a: "Absolutely. While we're based in Hyderabad, we work with businesses across India and internationally. Our digital services are delivered remotely with full communication support." },
+  { q: "How do I get started with ASKreativ?", a: "Simply book a free consultation using the button on our website. Our team will reach out within 24 hours to understand your business needs and create a customized proposal." },
+];
+
+// ── HELPER COMPONENTS ─────────────────────────────────────────────────
+function FadeUp({ children, delay = 0, className = "", style }: { children: React.ReactNode; delay?: number; className?: string; style?: React.CSSProperties }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-60px" });
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: "easeOut" }}
-      className={className}
-    >
+    <motion.div ref={ref} initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.55, delay, ease: "easeOut" }} className={className} style={style}>
       {children}
     </motion.div>
   );
 }
 
-function CounterStat({ label1, label2 }: { label1: string; label2: string }) {
+function FadeLeft({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true });
+  const inView = useInView(ref, { once: true, margin: "-60px" });
   return (
-    <div ref={ref} className="text-center px-4 flex-1">
-      <motion.p
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={inView ? { opacity: 1, scale: 1 } : {}}
-        transition={{ duration: 0.6 }}
-        className="text-3xl lg:text-4xl font-display font-extrabold text-white mb-1"
-      >
-        {label1}
-      </motion.p>
-      <p className="text-muted-foreground text-sm">{label2}</p>
-    </div>
+    <motion.div ref={ref} initial={{ opacity: 0, x: -40 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.6, delay }}>
+      {children}
+    </motion.div>
   );
 }
 
 function FAQItem({ q, a, defaultOpen = false }: { q: string; a: string; defaultOpen?: boolean }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className={`border border-white/8 rounded-xl overflow-hidden transition-colors ${open ? "border-primary/30" : ""}`}>
+    <div style={{ borderBottom: "1px solid var(--border-c)" }}>
       <button
-        className={`w-full flex items-center justify-between gap-4 px-6 py-5 text-left transition-colors ${open ? "border-l-4 border-primary" : "border-l-4 border-transparent"}`}
         onClick={() => setOpen((v) => !v)}
-        data-testid={`button-faq-${q.slice(0, 20).replace(/\s/g, "-").toLowerCase()}`}
+        style={{
+          width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between",
+          gap: "16px", padding: "20px 0", background: "none", border: "none", cursor: "pointer",
+          textAlign: "left",
+        }}
       >
-        <span className="text-white font-medium text-sm leading-snug">{q}</span>
-        <span className="text-primary shrink-0 text-xl font-light">{open ? "×" : "+"}</span>
+        <span style={{ fontWeight: 500, fontSize: "15px", color: "var(--fg)" }}>{q}</span>
+        <span style={{ fontSize: "22px", color: "var(--orange)", flexShrink: 0, lineHeight: 1 }}>{open ? "×" : "+"}</span>
       </button>
-      <motion.div
-        initial={false}
-        animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-        className="overflow-hidden"
-      >
-        <p className="px-6 pb-5 text-muted-foreground text-sm leading-relaxed">{a}</p>
-      </motion.div>
+      {open && (
+        <div style={{ paddingBottom: "20px" }}>
+          <p style={{ fontSize: "14px", color: "var(--fg-light)", lineHeight: "1.7", margin: 0 }}>{a}</p>
+        </div>
+      )}
     </div>
   );
 }
 
-export default function Home() {
-  const { openModal } = useModal();
-  const heroRef = useRef<HTMLDivElement>(null);
-  const [scrollY, setScrollY] = useState(0);
-
+// ── HERO IMAGE CAROUSEL ───────────────────────────────────────────────
+function HeroCarousel() {
+  const [idx, setIdx] = useState(0);
   useEffect(() => {
-    const onScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const t = setInterval(() => setIdx((i) => (i + 1) % heroImages.length), 3500);
+    return () => clearInterval(t);
   }, []);
 
   return (
-    <main className="overflow-x-hidden">
-      {/* HERO */}
-      <section ref={heroRef} className="relative min-h-screen flex flex-col justify-center pt-20 overflow-hidden">
-        <div className="absolute inset-0 bg-[#0A0B1A]">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full opacity-20" style={{ background: "radial-gradient(circle, #E87722 0%, transparent 70%)" }} />
-          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full opacity-10" style={{ background: "radial-gradient(circle, #1A1F6E 0%, transparent 70%)" }} />
-          <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 0)", backgroundSize: "40px 40px" }} />
-          <style>{`
-            @keyframes float1 { 0%,100% { transform: translateY(0) translateX(0); } 50% { transform: translateY(-20px) translateX(10px); } }
-            @keyframes float2 { 0%,100% { transform: translateY(0) translateX(0); } 50% { transform: translateY(15px) translateX(-8px); } }
-            .particle { position: absolute; border-radius: 50%; background: rgba(232,119,34,0.3); animation: float1 8s ease-in-out infinite; }
-            .particle2 { animation: float2 10s ease-in-out infinite; background: rgba(245,166,35,0.2); }
-          `}</style>
-          {[...Array(8)].map((_, i) => (
-            <div
-              key={i}
-              className={`particle${i % 2 === 0 ? "" : " particle2"}`}
-              style={{
-                width: `${4 + i * 2}px`, height: `${4 + i * 2}px`,
-                top: `${10 + i * 10}%`, left: `${5 + i * 12}%`,
-                animationDelay: `${i * 0.8}s`
-              }}
-            />
-          ))}
-        </div>
+    <div style={{ position: "relative", borderRadius: "20px", overflow: "hidden", aspectRatio: "4/3", boxShadow: "0 20px 60px var(--shadow-md)" }}>
+      {heroImages.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt={`ASKreativ service ${i + 1}`}
+          style={{
+            position: "absolute", inset: 0, width: "100%", height: "100%",
+            objectFit: "cover",
+            opacity: i === idx ? 1 : 0,
+            transition: "opacity 0.9s ease",
+          }}
+        />
+      ))}
+      {/* Overlay badge */}
+      <div style={{
+        position: "absolute", bottom: "20px", left: "20px",
+        background: "rgba(0,0,0,0.65)", backdropFilter: "blur(8px)",
+        borderRadius: "50px", padding: "8px 20px",
+        display: "flex", alignItems: "center", gap: "8px",
+      }}>
+        <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#25D366", flexShrink: 0 }} />
+        <span style={{ color: "#fff", fontSize: "13px", fontWeight: 500 }}>Available for new projects</span>
+      </div>
+      {/* Dots */}
+      <div style={{ position: "absolute", bottom: "20px", right: "20px", display: "flex", gap: "6px" }}>
+        {heroImages.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setIdx(i)}
+            style={{
+              width: i === idx ? "24px" : "8px", height: "8px", borderRadius: "4px",
+              background: i === idx ? "var(--orange)" : "rgba(255,255,255,0.5)",
+              border: "none", cursor: "pointer", transition: "all 0.3s",
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+// ── SCROLLING TEXT ────────────────────────────────────────────────────
+function ScrollingText() {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setIdx((i) => (i + 1) % scrollingServices.length), 2200);
+    return () => clearInterval(t);
+  }, []);
+
+  return (
+    <span style={{ color: "var(--orange)", display: "inline-block", minWidth: "320px" }}>
+      <motion.span
+        key={idx}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.4 }}
+        style={{ display: "block" }}
+      >
+        {scrollingServices[idx]}
+      </motion.span>
+    </span>
+  );
+}
+
+// ── MAIN PAGE ─────────────────────────────────────────────────────────
+export default function Home() {
+  const { openModal } = useModal();
+
+  return (
+    <main>
+      {/* ── HERO ─────────────────────────────────────────────────────── */}
+      <section className="hero-section">
+        <div className="container" style={{ width: "100%" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "60px", alignItems: "center" }} className="max-lg:block">
+            {/* Left */}
             <div>
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-                <span className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary text-xs font-mono px-4 py-2 rounded-full mb-8 tracking-widest">
-                  AI AUTOMATION · DIGITAL MARKETING · HYDERABAD
-                </span>
+                <span className="section-tag">Hyderabad's AI-Powered Growth Agency</span>
               </motion.div>
 
-              <div className="overflow-hidden mb-6">
-                {["Behind Every", "Growing Business", "Is a Vision."].map((line, i) => (
-                  <motion.div
-                    key={line}
-                    initial={{ y: 80, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.7, delay: 0.2 + i * 0.15, ease: "easeOut" }}
-                  >
-                    <h1 className="text-5xl sm:text-6xl lg:text-7xl font-display font-extrabold text-white leading-tight">
-                      {i === 2 ? <span className="text-primary">{line}</span> : line}
-                    </h1>
-                  </motion.div>
-                ))}
-              </div>
+              <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
+                <h1 style={{ fontSize: "clamp(32px, 4.5vw, 54px)", fontWeight: 800, color: "var(--fg)", lineHeight: 1.15, marginBottom: "12px" }}>
+                  We Create
+                </h1>
+                <h1 style={{ fontSize: "clamp(32px, 4.5vw, 54px)", fontWeight: 800, lineHeight: 1.15, marginBottom: "24px", minHeight: "1.3em" }}>
+                  <ScrollingText />
+                </h1>
+              </motion.div>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.7 }}
-                className="text-muted-foreground text-lg leading-relaxed mb-10 max-w-lg"
-              >
-                ASKreativ helps transform that vision into intelligent digital growth — through AI, automation, branding, and modern technology.
+              <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.25 }} style={{ fontSize: "16px", color: "var(--fg-light)", lineHeight: "1.8", marginBottom: "36px", maxWidth: "520px" }}>
+                ASKreativ Global Solutions helps businesses in Hyderabad and across India build intelligent digital ecosystems through AI automation, branding, SEO, websites, ERP systems, and modern marketing.
               </motion.p>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.9 }}
-                className="flex flex-wrap gap-4"
-              >
-                <button
-                  onClick={openModal}
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white font-bold rounded-full hover:bg-primary/90 transition-all hover:shadow-[0_0_40px_rgba(232,119,34,0.5)] hover:scale-105"
-                  data-testid="button-hero-cta"
-                >
-                  Let's Build Your Future <ArrowRight size={18} />
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.35 }} style={{ display: "flex", gap: "14px", flexWrap: "wrap", marginBottom: "48px" }}>
+                <button onClick={openModal} className="btn-primary" data-testid="button-hero-cta">
+                  Get a Free Consultation <ArrowRight size={16} />
                 </button>
-                <Link
-                  href="/services"
-                  className="inline-flex items-center gap-2 px-8 py-4 border border-white/20 text-white font-bold rounded-full hover:border-primary/50 hover:bg-primary/5 transition-all"
-                  data-testid="link-explore-services"
-                >
-                  Explore Our Services
+                <Link href="/portfolio" className="btn-outline" data-testid="link-hero-portfolio">
+                  View Our Work
                 </Link>
+              </motion.div>
+
+              {/* Trust badges */}
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} style={{ display: "flex", gap: "24px", flexWrap: "wrap" }}>
+                {[
+                  { num: "200+", label: "Projects" },
+                  { num: "50+", label: "Clients" },
+                  { num: "5+", label: "Years" },
+                ].map((b) => (
+                  <div key={b.label} style={{ textAlign: "center" }}>
+                    <div style={{ fontSize: "22px", fontWeight: 800, color: "var(--orange)" }}>{b.num}</div>
+                    <div style={{ fontSize: "12px", color: "var(--fg-lighter)" }}>{b.label}</div>
+                  </div>
+                ))}
               </motion.div>
             </div>
 
+            {/* Right */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="hidden lg:grid grid-cols-2 gap-4"
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="hidden lg:block"
             >
-              {services.slice(0, 4).map((s, i) => {
-                const Icon = s.icon;
-                return (
-                  <motion.div
-                    key={s.slug}
-                    animate={{ y: [0, -8, 0] }}
-                    transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
-                    className="bg-[#141630]/80 border border-white/8 rounded-2xl p-5 hover:border-primary/30 hover:shadow-[0_0_20px_rgba(232,119,34,0.1)] transition-all"
-                  >
-                    <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mb-3">
-                      <Icon size={20} className="text-primary" />
-                    </div>
-                    <p className="text-white text-sm font-semibold">{s.title}</p>
-                    <p className="text-muted-foreground text-xs mt-1 leading-relaxed line-clamp-2">{s.desc}</p>
-                  </motion.div>
-                );
-              })}
+              <HeroCarousel />
             </motion.div>
           </div>
-
-          <motion.a
-            href="#story"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5 }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground hover:text-white transition-colors"
-            data-testid="link-scroll-down"
-          >
-            <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-              <ChevronDown size={24} className="text-primary" />
-            </motion.div>
-          </motion.a>
         </div>
       </section>
 
-      {/* STORYTELLING */}
-      <section id="story" className="py-32 bg-[#0F1035] overflow-hidden">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <FadeUp>
-            <p className="text-muted-foreground text-lg mb-12 font-mono">Behind every growing business, there is:</p>
-          </FadeUp>
-          {["A dream,", "A struggle,", "A family,", "and a vision for something bigger."].map((line, i) => (
-            <FadeUp key={line} delay={i * 0.15}>
-              <p className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold text-white leading-tight mb-3">
-                {line}
-              </p>
-            </FadeUp>
-          ))}
-          <FadeUp delay={0.6}>
-            <div className="w-24 h-1 bg-primary mx-auto my-12 rounded-full" />
-            <p className="text-2xl sm:text-3xl font-display font-semibold text-muted-foreground">
-              ASKreativ helps transform that vision into{" "}
-              <span className="text-white">digital growth.</span>
-            </p>
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* ABOUT */}
-      <section className="py-24 bg-[#0A0B1A]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <FadeUp>
-              <span className="text-xs font-mono text-primary tracking-widest uppercase mb-4 block">— ABOUT US</span>
-              <h2 className="text-4xl lg:text-5xl font-display font-bold text-white mb-6 leading-tight">
-                Building Smarter Digital Growth for Modern Businesses
-              </h2>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                ASKreativ Global Solutions is an AI-powered digital growth company helping businesses scale through automation, branding, marketing, websites, ERP systems, and modern digital solutions.
-              </p>
-              <p className="text-muted-foreground leading-relaxed mb-8">
-                We combine creativity, technology, AI, and strategy to build intelligent digital ecosystems designed for visibility, efficiency, and long-term business growth.
-              </p>
-              <Link
-                href="/about"
-                className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all group"
-                data-testid="link-about-more"
-              >
-                Explore More About ASKreativ
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </FadeUp>
-
-            <FadeUp delay={0.2}>
-              <div className="relative border border-primary/20 rounded-2xl p-8 bg-[#141630]/50 hover:border-primary/40 transition-colors hover:shadow-[0_0_40px_rgba(232,119,34,0.08)]">
-                <svg viewBox="0 0 400 300" className="w-full h-auto">
-                  {[
-                    { cx: 200, cy: 150, r: 20, label: "ASKreativ" },
-                    { cx: 80, cy: 80, r: 14, label: "AI" },
-                    { cx: 320, cy: 80, r: 14, label: "SEO" },
-                    { cx: 80, cy: 220, r: 14, label: "ERP" },
-                    { cx: 320, cy: 220, r: 14, label: "Apps" },
-                    { cx: 200, cy: 50, r: 12, label: "Branding" },
-                    { cx: 200, cy: 250, r: 12, label: "Marketing" },
-                  ].map((node, i) => (
-                    <g key={i}>
-                      {i > 0 && (
-                        <motion.line
-                          x1={200} y1={150} x2={node.cx} y2={node.cy}
-                          stroke="#E87722" strokeWidth="1" opacity="0.3"
-                          animate={{ opacity: [0.2, 0.5, 0.2] }}
-                          transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
-                        />
-                      )}
-                      <circle
-                        cx={node.cx} cy={node.cy} r={node.r}
-                        fill={i === 0 ? "#E87722" : "#1A1F6E"}
-                        stroke={i === 0 ? "#F5A623" : "#E87722"}
-                        strokeWidth="1"
-                        opacity={0.9}
-                      />
-                      <text x={node.cx} y={node.cy + 4} textAnchor="middle" fill="white" fontSize={i === 0 ? "8" : "6"} fontFamily="DM Sans">
-                        {node.label}
-                      </text>
-                    </g>
-                  ))}
-                </svg>
-              </div>
-            </FadeUp>
-          </div>
-        </div>
-      </section>
-
-      {/* SERVICES */}
-      <section className="py-24 bg-[#0F1035]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeUp className="text-center mb-16">
-            <span className="text-xs font-mono text-primary tracking-widest uppercase mb-4 block">— OUR SERVICES</span>
-            <h2 className="text-4xl lg:text-5xl font-display font-bold text-white mb-4 max-w-3xl mx-auto leading-tight">
-              AI Automation, Digital Marketing & Development Solutions Built for Modern Business Growth
+      {/* ── SERVICES ─────────────────────────────────────────────────── */}
+      <section className="section" style={{ background: "var(--bg-section)" }}>
+        <div className="container">
+          <FadeUp className="text-center" style={{ textAlign: "center", marginBottom: "48px" }}>
+            <span className="section-tag" style={{ justifyContent: "center" }}>What We Do</span>
+            <h2 className="section-title" style={{ textAlign: "center" }}>
+              Complete Digital Growth <span>Solutions</span>
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              From AI-powered automation to digital marketing, ERP systems, websites, mobile applications, and branding, ASKreativ helps businesses build intelligent digital ecosystems.
+            <p className="section-subtitle" style={{ margin: "0 auto", textAlign: "center" }}>
+              From AI automation to digital marketing, ERP systems, websites, and branding — everything your business needs to grow in one place.
             </p>
-            <Link href="/services" className="inline-flex items-center gap-2 text-primary font-semibold mt-4 hover:gap-3 transition-all group" data-testid="link-all-services">
-              Explore All Services <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
           </FadeUp>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(210px, 1fr))", gap: "20px" }}>
             {services.map((s, i) => {
               const Icon = s.icon;
               return (
-                <FadeUp key={s.slug} delay={i * 0.07}>
+                <FadeUp key={s.slug} delay={Math.floor(i / 4) * 0.1 + (i % 4) * 0.06}>
                   <Link href={`/services/${s.slug}`} data-testid={`card-service-${s.slug}`}>
-                    <div className="group h-full bg-[#141630] border border-white/8 rounded-2xl p-6 hover:border-primary/40 hover:shadow-[0_0_30px_rgba(232,119,34,0.12)] hover:-translate-y-1 transition-all duration-300 cursor-pointer">
-                      <span className="text-xs font-mono text-primary mb-3 block">{s.num} —</span>
-                      <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                        <Icon size={20} className="text-primary" />
+                    <div className="service-icon-card">
+                      <div className="icon-wrap">
+                        <Icon size={24} style={{ color: "var(--orange)" }} />
                       </div>
-                      <h3 className="text-white font-semibold mb-2 font-display">{s.title}</h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">{s.desc}</p>
-                      <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <ArrowRight size={16} className="text-primary" />
-                      </div>
+                      <div className="s-title">{s.title}</div>
+                      <div className="s-desc">{s.desc}</div>
                     </div>
                   </Link>
                 </FadeUp>
@@ -372,222 +297,212 @@ export default function Home() {
             })}
           </div>
 
-          <FadeUp delay={0.3} className="mt-12">
-            <div className="border-l-4 border-primary bg-[#141630] rounded-r-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div>
-                <p className="text-white font-display font-bold text-lg">Your Business Needs More Than Marketing.</p>
-                <p className="text-muted-foreground">It Needs an Intelligent Growth Ecosystem.</p>
-              </div>
-              <button
-                onClick={openModal}
-                className="shrink-0 px-6 py-3 bg-primary text-white font-bold rounded-full hover:bg-primary/90 transition-all hover:shadow-[0_0_20px_rgba(232,119,34,0.4)] whitespace-nowrap"
-                data-testid="button-services-hook"
-              >
-                Let's Build Your Digital Future →
-              </button>
-            </div>
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* CLIENTS */}
-      <section className="py-24 bg-[#0A0B1A]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeUp className="text-center mb-12">
-            <span className="text-xs font-mono text-primary tracking-widest uppercase mb-4 block">— OUR CLIENTS</span>
-            <h2 className="text-4xl font-display font-bold text-white mb-4">Trusted by Growing Businesses & Modern Brands</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              From educational institutions and startups to business owners and growing enterprises, ASKreativ Global Solutions helps organizations build stronger digital visibility, automation systems, branding, and scalable growth ecosystems.
-            </p>
-          </FadeUp>
-
-          <FadeUp className="overflow-hidden py-6 mb-12">
-            <div className="relative flex overflow-x-hidden">
-              <motion.div
-                className="flex gap-4 shrink-0"
-                animate={{ x: [0, -1200] }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              >
-                {[...industries, ...industries].map((ind, i) => (
-                  <span
-                    key={i}
-                    className="shrink-0 px-5 py-2.5 border border-primary/30 text-muted-foreground text-sm rounded-full bg-primary/5 whitespace-nowrap hover:bg-primary/10 hover:text-white transition-colors"
-                  >
-                    {ind}
-                  </span>
-                ))}
-              </motion.div>
-            </div>
-          </FadeUp>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
-            {["A Story", "A Vision and Mission", "A Value", "A Responsibility"].map((item, i) => (
-              <FadeUp key={item} delay={i * 0.1}>
-                <div className="bg-[#141630] border border-white/8 rounded-xl p-6 text-center hover:border-primary/30 transition-colors">
-                  <p className="text-white font-display font-bold text-xl">{item}</p>
-                </div>
-              </FadeUp>
-            ))}
-          </div>
-
-          <FadeUp className="text-center">
-            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-              Every business has a growth story. ASKreativ works as a long-term digital growth partner focused on helping brands grow smarter through AI, automation, branding, and modern digital infrastructure.
-            </p>
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* STATS */}
-      <section className="py-20 bg-[#0F1035] border-y border-primary/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative">
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent" />
-            <div className="flex flex-wrap justify-center divide-x divide-white/10">
-              <CounterStat label1="Multiple" label2="Projects Delivered" />
-              <CounterStat label1="AI-Powered" label2="Growth Solutions" />
-              <CounterStat label1="Multi-Industry" label2="Experience" />
-              <CounterStat label1="Future-Ready" label2="Digital Systems" />
-            </div>
-          </div>
-          <FadeUp delay={0.2} className="mt-16">
-            <div className="bg-gradient-to-r from-primary/20 via-primary/10 to-transparent rounded-2xl border border-primary/20 p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-              <p className="text-2xl font-display font-bold text-white text-center sm:text-left">Let's Build Something Bigger Together</p>
-              <button
-                onClick={openModal}
-                className="shrink-0 px-8 py-4 bg-primary text-white font-bold rounded-full hover:bg-primary/90 transition-all hover:shadow-[0_0_30px_rgba(232,119,34,0.4)] hover:scale-105"
-                data-testid="button-stats-cta"
-              >
-                Partner With ASKreativ →
-              </button>
-            </div>
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* PROCESS */}
-      <section className="py-24 bg-[#0A0B1A]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeUp className="text-center mb-16">
-            <span className="text-xs font-mono text-primary tracking-widest uppercase mb-4 block">— OUR PROCESS</span>
-            <h2 className="text-4xl lg:text-5xl font-display font-bold text-white mb-4 max-w-3xl mx-auto leading-tight">
-              We Build Connected Digital Ecosystems for Long-Term Business Success.
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              At ASKreativ Global Solutions, every project is built with strategy, creativity, AI automation, and measurable growth in mind. We don't just deliver services — we build connected digital ecosystems.
-            </p>
-          </FadeUp>
-
-          <div className="relative">
-            <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-primary/40 to-transparent" />
-            <div className="space-y-12">
-              {processSteps.map((step, i) => (
-                <FadeUp key={step.num} delay={i * 0.1}>
-                  <div className={`flex items-center gap-8 ${i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"}`}>
-                    <div className="flex-1">
-                      <div className={`bg-[#141630] border border-white/8 rounded-2xl p-8 hover:border-primary/30 transition-all hover:shadow-[0_0_30px_rgba(232,119,34,0.08)] ${i % 2 === 0 ? "lg:mr-8" : "lg:ml-8"}`}>
-                        <span className="text-xs font-mono text-primary mb-3 block">{step.num} —</span>
-                        <h3 className="text-white font-display font-bold text-xl mb-2">{step.title}</h3>
-                        <p className="text-muted-foreground text-sm leading-relaxed">{step.desc}</p>
-                      </div>
-                    </div>
-                    <div className="hidden lg:flex w-12 h-12 rounded-full border-2 border-primary bg-[#0A0B1A] items-center justify-center shrink-0 z-10">
-                      <span className="text-primary font-mono text-xs font-bold">{step.num}</span>
-                    </div>
-                    <div className="flex-1 hidden lg:block" />
-                  </div>
-                </FadeUp>
-              ))}
-            </div>
-          </div>
-
-          <FadeUp delay={0.3} className="mt-16 text-center">
-            <div className="bg-[#0F1035] border border-white/8 rounded-2xl p-10">
-              <h3 className="text-3xl font-display font-bold text-white mb-2">
-                From Vision to Digital Growth,{" "}
-                <span className="text-primary">We Build Systems That Scale Businesses.</span>
-              </h3>
-              <button
-                onClick={openModal}
-                className="mt-6 px-8 py-4 bg-primary text-white font-bold rounded-full hover:bg-primary/90 transition-all hover:shadow-[0_0_30px_rgba(232,119,34,0.4)]"
-                data-testid="button-process-cta"
-              >
-                Let's Build Your Future With ASKreativ →
-              </button>
-            </div>
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* BLOG */}
-      <section className="py-24 bg-[#0F1035]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeUp className="text-center mb-12">
-            <span className="text-xs font-mono text-primary tracking-widest uppercase mb-4 block">— LATEST INSIGHTS</span>
-            <h2 className="text-4xl font-display font-bold text-white">From Our Blog</h2>
-          </FadeUp>
-          <div className="grid md:grid-cols-3 gap-6">
-            {blogs.map((post, i) => (
-              <FadeUp key={post.slug} delay={i * 0.1}>
-                <Link href={`/blog/${post.slug}`} data-testid={`card-blog-${post.slug}`}>
-                  <div className="group h-full bg-[#141630] border border-white/8 rounded-2xl p-6 hover:border-primary/30 hover:shadow-[0_0_30px_rgba(232,119,34,0.1)] hover:-translate-y-1 transition-all duration-300">
-                    <span className="inline-block px-3 py-1 bg-primary/10 border border-primary/20 text-primary text-xs rounded-full mb-4">{post.tag}</span>
-                    <h3 className="text-white font-display font-bold text-lg mb-3 group-hover:text-primary transition-colors leading-snug">{post.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-4">{post.excerpt}</p>
-                    <div className="flex items-center justify-between text-xs text-muted-foreground/60">
-                      <span>{post.date}</span>
-                      <span className="text-primary group-hover:gap-2 flex items-center gap-1 transition-all">Read More <ArrowRight size={12} /></span>
-                    </div>
-                  </div>
-                </Link>
-              </FadeUp>
-            ))}
-          </div>
-          <FadeUp delay={0.3} className="text-center mt-8">
-            <Link href="/blog" className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all group" data-testid="link-all-articles">
-              View All Articles <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+          <FadeUp delay={0.3} style={{ textAlign: "center", marginTop: "40px" }}>
+            <Link href="/services" className="btn-outline" data-testid="link-all-services">
+              View All Services <ChevronRight size={16} />
             </Link>
           </FadeUp>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="py-24 bg-[#0A0B1A]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <FadeUp className="text-center mb-12">
-            <span className="text-xs font-mono text-primary tracking-widest uppercase mb-4 block">— FAQs</span>
-            <h2 className="text-4xl font-display font-bold text-white leading-tight">
-              Frequently Asked Questions About<br />Digital Marketing Agency Hyderabad
-            </h2>
-          </FadeUp>
-          <div className="space-y-3">
-            {faqs.map((faq, i) => (
-              <FAQItem key={i} q={faq.q} a={faq.a} defaultOpen={i === 0} />
+      {/* ── STATS ─────────────────────────────────────────────────────── */}
+      <section className="section-sm" style={{ background: "var(--navy)" }}>
+        <div className="container">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "32px" }}>
+            {stats.map((s, i) => (
+              <FadeUp key={s.label} delay={i * 0.1} style={{ textAlign: "center" }}>
+                <div className="stat-num">{s.num}</div>
+                <div style={{ fontSize: "14px", color: "rgba(255,255,255,0.7)", marginTop: "6px" }}>{s.label}</div>
+              </FadeUp>
             ))}
           </div>
-          <FadeUp delay={0.2} className="text-center mt-12">
-            <p className="text-muted-foreground mb-4">Looking for a Digital Marketing Agency in Hyderabad?</p>
-            <button
-              onClick={openModal}
-              className="px-8 py-4 bg-primary text-white font-bold rounded-full hover:bg-primary/90 transition-all hover:shadow-[0_0_30px_rgba(232,119,34,0.4)]"
-              data-testid="button-faq-cta"
-            >
-              Let's Build Your Digital Growth System →
-            </button>
-          </FadeUp>
         </div>
       </section>
 
-      {/* Floating WhatsApp */}
-      <a
-        href="https://wa.me/919999999999"
-        target="_blank"
-        rel="noreferrer"
-        className="fixed bottom-6 right-6 z-[9990] w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
-        data-testid="link-whatsapp"
-      >
-        <FaWhatsapp size={24} className="text-white" />
-      </a>
+      {/* ── WHY CHOOSE US ─────────────────────────────────────────────── */}
+      <section className="section">
+        <div className="container">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "64px", alignItems: "center" }} className="max-lg:block">
+            <FadeLeft>
+              <span className="section-tag">Why ASKreativ</span>
+              <h2 className="section-title">
+                Building Smarter Digital Growth <span>For Modern Businesses</span>
+              </h2>
+              <p style={{ color: "var(--fg-light)", lineHeight: "1.8", marginBottom: "28px" }}>
+                ASKreativ Global Solutions is an AI-powered digital growth company helping businesses scale through automation, branding, marketing, websites, ERP systems, and modern digital solutions. We combine creativity, technology, AI, and strategy.
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "32px" }}>
+                {["AI-Powered Digital Strategies", "End-to-End Digital Solutions", "Multi-Industry Experience", "Hyderabad's Trusted Agency"].map((item) => (
+                  <div key={item} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <CheckCircle size={18} style={{ color: "var(--orange)", flexShrink: 0 }} />
+                    <span style={{ fontSize: "14px", color: "var(--fg-light)" }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+              <button onClick={openModal} className="btn-primary">
+                Book a Free Consultation <ArrowRight size={16} />
+              </button>
+            </FadeLeft>
+
+            <FadeUp delay={0.2}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+                {whyUs.map((w, i) => (
+                  <div key={w.title} className="card" style={{ borderLeft: i === 0 ? "3px solid var(--orange)" : "1px solid var(--card-border)" }}>
+                    <h4 style={{ fontWeight: 700, fontSize: "14px", color: "var(--fg)", marginBottom: "8px" }}>{w.title}</h4>
+                    <p style={{ fontSize: "13px", color: "var(--fg-light)", lineHeight: "1.6", margin: 0 }}>{w.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </FadeUp>
+          </div>
+        </div>
+      </section>
+
+      {/* ── INDUSTRIES / CLIENTS ─────────────────────────────────────── */}
+      <section className="section-sm" style={{ background: "var(--bg-section)", overflow: "hidden" }}>
+        <div className="container" style={{ marginBottom: "32px" }}>
+          <FadeUp style={{ textAlign: "center" }}>
+            <span className="section-tag" style={{ justifyContent: "center" }}>Industries We Serve</span>
+            <h2 className="section-title" style={{ textAlign: "center" }}>
+              Trusted by Businesses <span>Across All Industries</span>
+            </h2>
+          </FadeUp>
+        </div>
+        {/* Marquee */}
+        <div style={{ overflow: "hidden", position: "relative" }}>
+          <div style={{ display: "flex" }} className="marquee-track">
+            {[...industries, ...industries].map((ind, i) => (
+              <div
+                key={i}
+                style={{
+                  flexShrink: 0, padding: "10px 24px", margin: "0 8px",
+                  border: "1px solid var(--border-c)", borderRadius: "50px",
+                  fontSize: "13px", fontWeight: 500, color: "var(--fg-light)",
+                  background: "var(--card-bg)", whiteSpace: "nowrap",
+                }}
+              >
+                {ind}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── PROCESS ──────────────────────────────────────────────────── */}
+      <section className="section">
+        <div className="container">
+          <FadeUp style={{ textAlign: "center", marginBottom: "56px" }}>
+            <span className="section-tag" style={{ justifyContent: "center" }}>How We Work</span>
+            <h2 className="section-title" style={{ textAlign: "center" }}>
+              Our 6-Step Digital <span>Growth Process</span>
+            </h2>
+            <p className="section-subtitle" style={{ margin: "0 auto", textAlign: "center" }}>
+              Every project is built with strategy, creativity, AI automation, and measurable growth in mind.
+            </p>
+          </FadeUp>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "20px" }}>
+            {process.map((step, i) => (
+              <FadeUp key={step.num} delay={i * 0.08}>
+                <div className="card" style={{ position: "relative", paddingTop: "36px" }}>
+                  <div style={{
+                    position: "absolute", top: "-18px", left: "28px",
+                    width: "36px", height: "36px", borderRadius: "50%",
+                    background: "var(--orange)", color: "#fff",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: "13px", fontWeight: 700,
+                  }}>
+                    {step.num}
+                  </div>
+                  <h3 style={{ fontWeight: 700, fontSize: "15px", color: "var(--fg)", marginBottom: "8px" }}>{step.title}</h3>
+                  <p style={{ fontSize: "13px", color: "var(--fg-light)", lineHeight: "1.7", margin: 0 }}>{step.desc}</p>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── TESTIMONIALS ─────────────────────────────────────────────── */}
+      <section className="section" style={{ background: "var(--bg-section)" }}>
+        <div className="container">
+          <FadeUp style={{ textAlign: "center", marginBottom: "48px" }}>
+            <span className="section-tag" style={{ justifyContent: "center" }}>Client Success</span>
+            <h2 className="section-title" style={{ textAlign: "center" }}>
+              What Our <span>Clients Say</span>
+            </h2>
+          </FadeUp>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "20px" }}>
+            {testimonials.map((t, i) => (
+              <FadeUp key={t.name} delay={i * 0.1}>
+                <div className="testi-card">
+                  <div className="testi-stars">
+                    {[...Array(t.stars)].map((_, j) => <Star key={j} size={14} fill="currentColor" />)}
+                  </div>
+                  <p className="testi-text">"{t.text}"</p>
+                  <div>
+                    <div className="testi-name">{t.name}</div>
+                    <div className="testi-role">{t.role}</div>
+                  </div>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ──────────────────────────────────────────────────────── */}
+      <section className="section">
+        <div className="container">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "64px", alignItems: "start" }} className="max-lg:block">
+            <FadeLeft>
+              <span className="section-tag">FAQ</span>
+              <h2 className="section-title">Frequently Asked <span>Questions</span></h2>
+              <p style={{ color: "var(--fg-light)", lineHeight: "1.8", marginBottom: "28px" }}>
+                Have more questions? Book a free consultation and our experts will answer everything.
+              </p>
+              <button onClick={openModal} className="btn-primary">
+                Talk to Our Experts <ArrowRight size={16} />
+              </button>
+            </FadeLeft>
+            <FadeUp delay={0.15}>
+              <div>
+                {faqs.map((faq, i) => (
+                  <FAQItem key={i} q={faq.q} a={faq.a} defaultOpen={i === 0} />
+                ))}
+                <div style={{ marginTop: "20px" }}>
+                  <Link href="/faq" style={{ color: "var(--orange)", fontWeight: 600, fontSize: "14px", display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                    View All FAQs <ChevronRight size={16} />
+                  </Link>
+                </div>
+              </div>
+            </FadeUp>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA BANNER ───────────────────────────────────────────────── */}
+      <section className="cta-banner">
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+          <FadeUp>
+            <p style={{ fontSize: "13px", textTransform: "uppercase", letterSpacing: "2px", color: "rgba(255,255,255,0.6)", marginBottom: "16px" }}>Ready to Grow?</p>
+            <h2 style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, color: "#fff", marginBottom: "16px", lineHeight: 1.25 }}>
+              Let's Build Your Digital <span style={{ color: "var(--gold)" }}>Future Together</span>
+            </h2>
+            <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "16px", marginBottom: "36px", maxWidth: "560px", margin: "0 auto 36px" }}>
+              Partner with Hyderabad's leading AI-powered digital growth agency. Get a free consultation today.
+            </p>
+            <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
+              <button onClick={openModal} className="btn-primary" style={{ background: "var(--orange)", borderColor: "var(--orange)" }}>
+                Book a Free Consultation <ArrowRight size={16} />
+              </button>
+              <Link href="/services" className="btn-outline" style={{ borderColor: "rgba(255,255,255,0.4)", color: "#fff" }}>
+                Explore Services
+              </Link>
+            </div>
+          </FadeUp>
+        </div>
+      </section>
     </main>
   );
 }

@@ -20,29 +20,27 @@ export default function CookieBanner() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ type: "spring", duration: 0.5 }}
-          className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-sm z-[99990] bg-[#141630]/95 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl"
+          style={{
+            position: "fixed", bottom: "80px", right: "24px", maxWidth: "340px",
+            zIndex: 99990, background: "var(--card-bg)", border: "1px solid var(--border-c)",
+            borderRadius: "16px", padding: "20px", boxShadow: "0 12px 40px var(--shadow-md)",
+          }}
+          data-testid="cookie-banner"
         >
-          <p className="text-sm text-muted-foreground mb-4">
-            🍪 We use cookies to improve your experience.
+          <p style={{ fontSize: "13px", color: "var(--fg-light)", marginBottom: "14px" }}>
+            🍪 We use cookies to improve your experience and analyze site traffic.
           </p>
-          <div className="flex gap-2">
+          <div style={{ display: "flex", gap: "8px" }}>
             <button
               onClick={decline}
-              className="flex-1 py-2 text-xs text-muted-foreground border border-white/10 rounded-full hover:border-white/20 transition-colors"
+              style={{ flex: 1, padding: "8px", fontSize: "12px", color: "var(--fg-light)", border: "1px solid var(--border-c)", borderRadius: "50px", background: "none", cursor: "pointer", transition: "all 0.2s" }}
               data-testid="button-cookie-decline"
             >
               Decline
             </button>
-            <a
-              href="#"
-              className="py-2 px-3 text-xs text-muted-foreground hover:text-white transition-colors"
-              data-testid="link-cookie-learn"
-            >
-              Learn More
-            </a>
             <button
               onClick={accept}
-              className="flex-1 py-2 text-xs bg-primary text-white rounded-full hover:bg-primary/90 transition-colors font-semibold"
+              style={{ flex: 1, padding: "8px", fontSize: "12px", background: "var(--orange)", color: "#fff", borderRadius: "50px", border: "2px solid var(--orange)", cursor: "pointer", fontWeight: 600, transition: "all 0.2s" }}
               data-testid="button-cookie-accept"
             >
               Accept All →

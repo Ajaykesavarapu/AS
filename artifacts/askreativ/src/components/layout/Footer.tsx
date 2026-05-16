@@ -1,132 +1,166 @@
 import { Link } from "wouter";
-import { FaInstagram, FaLinkedin, FaFacebook, FaYoutube } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaYoutube, FaLinkedin, FaWhatsapp } from "react-icons/fa";
 import { MapPin, Mail, Phone } from "lucide-react";
 import { useModal } from "@/App";
 import logoPath from "@assets/AS_1778930899290.png";
 
-const companyLinks = ["Home", "About Us", "Services", "Portfolio", "Blog", "Contact", "Careers", "FAQ"];
-const companyHrefs = ["/", "/about", "/services", "/portfolio", "/blog", "/contact", "/careers", "/faq"];
-
-const serviceLinks = [
-  "Digital Marketing",
-  "AI Automation",
-  "SEO Services",
-  "Website Development",
-  "Social Media Marketing",
-  "ERP Systems",
-  "Mobile App Development",
-  "Branding & Design",
+const services = [
+  { label: "Digital Marketing", slug: "digital-marketing" },
+  { label: "AI Automation", slug: "ai-automation" },
+  { label: "SEO Services", slug: "seo-services" },
+  { label: "Website Development", slug: "website-development" },
+  { label: "Social Media Marketing", slug: "social-media-marketing" },
+  { label: "ERP Management Systems", slug: "erp-management-systems" },
+  { label: "Mobile App Development", slug: "mobile-app-development" },
+  { label: "Branding & Creative Design", slug: "branding-creative-design" },
 ];
 
-const serviceSlugs = [
-  "digital-marketing",
-  "ai-automation",
-  "seo-services",
-  "website-development",
-  "social-media-marketing",
-  "erp-management-systems",
-  "mobile-app-development",
-  "branding-creative-design",
+const company = [
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Portfolio", href: "/portfolio" },
+  { label: "Blog", href: "/blog" },
+  { label: "Careers", href: "/careers" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Contact", href: "/contact" },
+];
+
+const socials = [
+  { icon: FaInstagram, href: "https://instagram.com/askreativ", label: "Instagram" },
+  { icon: FaFacebook, href: "https://facebook.com/askreativ", label: "Facebook" },
+  { icon: FaYoutube, href: "https://youtube.com/@askreativ", label: "YouTube" },
+  { icon: FaLinkedin, href: "https://linkedin.com/company/askreativ", label: "LinkedIn" },
+  { icon: FaWhatsapp, href: "https://wa.me/919999999999", label: "WhatsApp" },
 ];
 
 export default function Footer() {
   const { openModal } = useModal();
 
   return (
-    <footer className="bg-[#060711] border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+    <footer className="footer">
+      <div className="container">
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "48px 32px", marginBottom: "48px" }}>
+          {/* Brand */}
           <div>
-            <img src={logoPath} alt="ASKreativ Global Solutions" className="h-12 w-auto mb-4" />
-            <p className="text-accent text-sm font-mono mb-4">Design Your Life</p>
-            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              AI-powered digital growth company helping businesses scale through automation, branding, and modern technology.
+            <img src={logoPath} alt="ASKreativ Global Solutions" style={{ height: "48px", width: "auto", marginBottom: "16px" }} />
+            <p style={{ fontSize: "13px", lineHeight: "1.7", color: "var(--fg-light)", marginBottom: "20px" }}>
+              AI-powered digital growth company helping businesses scale through automation, branding, marketing, and modern technology. Based in Hyderabad, India.
             </p>
-            <div className="flex gap-4">
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-instagram">
-                <FaInstagram size={20} />
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-linkedin">
-                <FaLinkedin size={20} />
-              </a>
-              <a href="https://facebook.com" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-facebook">
-                <FaFacebook size={20} />
-              </a>
-              <a href="https://youtube.com" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-primary transition-colors" data-testid="link-youtube">
-                <FaYoutube size={20} />
-              </a>
+            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+              {socials.map(({ icon: Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={label}
+                  style={{
+                    width: "36px", height: "36px", borderRadius: "8px",
+                    border: "1px solid var(--border-c)", display: "flex",
+                    alignItems: "center", justifyContent: "center",
+                    color: "var(--fg-light)", fontSize: "15px",
+                    transition: "all 0.2s",
+                  }}
+                  className="hover:border-[var(--orange)] hover:text-[var(--orange)]"
+                >
+                  <Icon />
+                </a>
+              ))}
             </div>
           </div>
 
+          {/* Company */}
           <div>
-            <h4 className="text-white font-semibold mb-5 font-display">Company</h4>
-            <ul className="space-y-2.5">
-              {companyLinks.map((label, i) => (
-                <li key={label}>
-                  <Link href={companyHrefs[i]} className="text-muted-foreground text-sm hover:text-primary transition-colors" data-testid={`link-footer-${label.toLowerCase().replace(/\s/g, "-")}`}>
-                    {label}
+            <h4 style={{ fontWeight: 700, fontSize: "15px", color: "var(--fg)", marginBottom: "20px" }}>Company</h4>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "10px" }}>
+              {company.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    style={{ fontSize: "13px", color: "var(--fg-light)", transition: "color 0.2s" }}
+                    className="hover:text-[var(--orange)]"
+                  >
+                    {item.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
+          {/* Services */}
           <div>
-            <h4 className="text-white font-semibold mb-5 font-display">Services</h4>
-            <ul className="space-y-2.5">
-              {serviceLinks.map((label, i) => (
-                <li key={label}>
-                  <Link href={`/services/${serviceSlugs[i]}`} className="text-muted-foreground text-sm hover:text-primary transition-colors" data-testid={`link-footer-service-${serviceSlugs[i]}`}>
-                    {label}
+            <h4 style={{ fontWeight: 700, fontSize: "15px", color: "var(--fg)", marginBottom: "20px" }}>Services</h4>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "10px" }}>
+              {services.map((s) => (
+                <li key={s.slug}>
+                  <Link
+                    href={`/services/${s.slug}`}
+                    style={{ fontSize: "13px", color: "var(--fg-light)", transition: "color 0.2s" }}
+                    className="hover:text-[var(--orange)]"
+                  >
+                    {s.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
+          {/* Contact */}
           <div>
-            <h4 className="text-white font-semibold mb-5 font-display">Contact</h4>
-            <ul className="space-y-3 mb-6">
-              <li className="flex items-start gap-3 text-muted-foreground text-sm">
-                <MapPin size={16} className="text-primary mt-0.5 shrink-0" />
-                Hyderabad, Telangana, India
-              </li>
-              <li>
-                <a href="mailto:hello@askreativ.com" className="flex items-center gap-3 text-muted-foreground text-sm hover:text-primary transition-colors" data-testid="link-email">
-                  <Mail size={16} className="text-primary shrink-0" />
-                  hello@askreativ.com
-                </a>
-              </li>
-              <li>
-                <a href="tel:+91XXXXXXXXXX" className="flex items-center gap-3 text-muted-foreground text-sm hover:text-primary transition-colors" data-testid="link-phone">
-                  <Phone size={16} className="text-primary shrink-0" />
-                  +91 XXXXX XXXXX
-                </a>
-              </li>
-            </ul>
-            <button
-              onClick={openModal}
-              className="w-full py-3 bg-primary text-white text-sm font-semibold rounded-full hover:bg-primary/90 transition-all hover:shadow-[0_0_20px_rgba(232,119,34,0.3)]"
-              data-testid="button-footer-consultation"
-            >
-              Book a Free Consultation →
+            <h4 style={{ fontWeight: 700, fontSize: "15px", color: "var(--fg)", marginBottom: "20px" }}>Contact Us</h4>
+            <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginBottom: "24px" }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
+                <MapPin size={16} style={{ color: "var(--orange)", marginTop: "2px", flexShrink: 0 }} />
+                <span style={{ fontSize: "13px", color: "var(--fg-light)", lineHeight: "1.6" }}>
+                  Hyderabad, Telangana, India
+                </span>
+              </div>
+              <a href="mailto:hello@askreativ.com" style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "13px", color: "var(--fg-light)", transition: "color 0.2s" }} className="hover:text-[var(--orange)]">
+                <Mail size={16} style={{ color: "var(--orange)", flexShrink: 0 }} />
+                hello@askreativ.com
+              </a>
+              <a href="tel:+91XXXXXXXXXX" style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "13px", color: "var(--fg-light)", transition: "color 0.2s" }} className="hover:text-[var(--orange)]">
+                <Phone size={16} style={{ color: "var(--orange)", flexShrink: 0 }} />
+                +91 XXXXX XXXXX
+              </a>
+            </div>
+            <button onClick={openModal} className="btn-primary" style={{ fontSize: "13px", padding: "10px 20px" }}>
+              Free Consultation →
             </button>
           </div>
         </div>
-      </div>
 
-      <div className="border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row justify-between items-center gap-3">
-          <p className="text-muted-foreground text-sm">
+        {/* Bottom bar */}
+        <div style={{ borderTop: "1px solid var(--border-c)", padding: "20px 0", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "12px" }}>
+          <p style={{ fontSize: "13px", color: "var(--fg-lighter)", margin: 0 }}>
             © 2025 ASKreativ Global Solutions. All Rights Reserved.
           </p>
-          <div className="flex gap-5 text-sm text-muted-foreground">
-            <a href="#" className="hover:text-primary transition-colors" data-testid="link-privacy">Privacy Policy</a>
-            <a href="#" className="hover:text-primary transition-colors" data-testid="link-terms">Terms of Service</a>
-            <a href="#" className="hover:text-primary transition-colors" data-testid="link-sitemap">Sitemap</a>
+          <div style={{ display: "flex", gap: "20px" }}>
+            <a href="#" style={{ fontSize: "13px", color: "var(--fg-lighter)", transition: "color 0.2s" }} className="hover:text-[var(--orange)]">Privacy Policy</a>
+            <a href="#" style={{ fontSize: "13px", color: "var(--fg-lighter)", transition: "color 0.2s" }} className="hover:text-[var(--orange)]">Terms of Service</a>
+            <a href="#" style={{ fontSize: "13px", color: "var(--fg-lighter)", transition: "color 0.2s" }} className="hover:text-[var(--orange)]">Sitemap</a>
           </div>
         </div>
       </div>
+
+      {/* Floating WhatsApp */}
+      <a
+        href="https://wa.me/919999999999"
+        target="_blank"
+        rel="noreferrer"
+        style={{
+          position: "fixed", bottom: "20px", right: "20px", zIndex: 9990,
+          width: "52px", height: "52px", borderRadius: "50%", background: "#25D366",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          boxShadow: "0 4px 20px rgba(37,211,102,0.4)", color: "#fff", fontSize: "22px",
+          transition: "transform 0.2s",
+        }}
+        className="hover:scale-110"
+        aria-label="Chat on WhatsApp"
+      >
+        <FaWhatsapp />
+      </a>
     </footer>
   );
 }

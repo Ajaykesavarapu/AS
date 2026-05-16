@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { ChevronDown, X, Menu } from "lucide-react";
 import { useModal } from "@/App";
 import logoPath from "@assets/AS_1778930899290.png";
 
@@ -14,207 +13,208 @@ const services = [
   { label: "ERP Management Systems", slug: "erp-management-systems" },
   { label: "Mobile App Development", slug: "mobile-app-development" },
   { label: "Branding & Creative Design", slug: "branding-creative-design" },
+  { label: "Graphic Design", slug: "graphic-design" },
+  { label: "Traditional Marketing", slug: "traditional-marketing" },
 ];
 
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Services", href: "/services", dropdown: true },
+  { label: "Services", href: "/services", hasDropdown: true },
   { label: "Portfolio", href: "/portfolio" },
   { label: "Blog", href: "/blog" },
+  { label: "Careers", href: "/careers" },
   { label: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [location] = useLocation();
   const { openModal } = useModal();
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+    const handler = (e: MouseEvent) => {
+      if (dropRef.current && !dropRef.current.contains(e.target as Node)) {
         setDropdownOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const scrollProgress = () => {
-    const el = document.documentElement;
-    return ((el.scrollTop || document.body.scrollTop) / (el.scrollHeight - el.clientHeight)) * 100;
-  };
-
-  const [progress, setProgress] = useState(0);
   useEffect(() => {
-    const onScroll = () => setProgress(scrollProgress());
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    setMobileOpen(false);
+    setDropdownOpen(false);
+  }, [location]);
+
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
+  const isActive = (href: string) =>
+    href === "/" ? location === "/" : location.startsWith(href);
 
   return (
     <>
-      <div
-        style={{ width: `${progress}%` }}
-        className="fixed top-0 left-0 h-[3px] bg-primary z-[9999] transition-[width] duration-100"
-      />
-      <motion.nav
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className={`fixed top-[3px] left-0 right-0 z-[9998] transition-all duration-300 ${
-          scrolled
-            ? "bg-[#0A0B1A]/90 backdrop-blur-xl border-b border-white/5 shadow-lg"
-            : "bg-transparent"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+      <nav className="site-nav">
+        <div className="container">
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: "68px" }}>
+            {/* Logo */}
             <Link href="/" data-testid="link-logo">
-              <img src={logoPath} alt="ASKreativ Global Solutions" className="h-10 lg:h-12 w-auto" />
+              <img src={logoPath} alt="ASKreativ Global Solutions" style={{ height: "44px", width: "auto" }} />
             </Link>
 
-            <div className="hidden lg:flex items-center gap-8">
+            {/* Desktop Nav */}
+            <div style={{ display: "flex", alignItems: "center", gap: "4px" }} className="hidden lg:flex">
               {navLinks.map((link) =>
-                link.dropdown ? (
-                  <div key={link.label} className="relative" ref={dropdownRef}>
+                link.hasDropdown ? (
+                  <div key={link.label} style={{ position: "relative" }} ref={dropRef}>
                     <button
-                      className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${
-                        location.startsWith("/services") ? "text-primary" : "text-muted-foreground"
-                      }`}
                       onClick={() => setDropdownOpen((v) => !v)}
+                      style={{
+                        display: "flex", alignItems: "center", gap: "4px",
+                        padding: "8px 14px", fontSize: "14px", fontWeight: 500,
+                        color: isActive(link.href) ? "var(--orange)" : "var(--fg)",
+                        background: "none", border: "none", cursor: "pointer",
+                        borderRadius: "8px", transition: "color 0.2s",
+                      }}
                       data-testid="button-services-dropdown"
                     >
                       {link.label}
-                      <ChevronDown size={14} className={`transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
+                      <ChevronDown size={14} style={{ transform: dropdownOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }} />
                     </button>
-                    <AnimatePresence>
-                      {dropdownOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 8 }}
-                          transition={{ duration: 0.2 }}
-                          className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-72 bg-[#141630] border border-white/8 rounded-xl shadow-2xl overflow-hidden"
-                        >
-                          <div className="p-2">
-                            {services.map((s) => (
-                              <Link
-                                key={s.slug}
-                                href={`/services/${s.slug}`}
-                                onClick={() => setDropdownOpen(false)}
-                                className="block px-4 py-2.5 text-sm text-muted-foreground hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-                                data-testid={`link-service-${s.slug}`}
-                              >
-                                {s.label}
-                              </Link>
-                            ))}
-                          </div>
-                          <div className="p-3 border-t border-white/5 bg-[#0F1035]">
-                            <button
-                              onClick={() => { setDropdownOpen(false); openModal(); }}
-                              className="w-full text-sm text-center text-primary font-medium py-2 rounded-lg hover:bg-primary/10 transition-colors"
-                              data-testid="button-dropdown-cta"
-                            >
-                              Ready to grow? Book a Free Call →
-                            </button>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+
+                    {dropdownOpen && (
+                      <div style={{
+                        position: "absolute", top: "calc(100% + 8px)", left: "50%", transform: "translateX(-50%)",
+                        width: "260px", background: "var(--card-bg)", border: "1px solid var(--card-border)",
+                        borderRadius: "12px", boxShadow: "0 12px 40px var(--shadow-md)", overflow: "hidden",
+                        zIndex: 9999,
+                      }}>
+                        {services.map((s) => (
+                          <Link
+                            key={s.slug}
+                            href={`/services/${s.slug}`}
+                            style={{
+                              display: "block", padding: "10px 18px", fontSize: "14px",
+                              color: "var(--fg-light)", borderBottom: "1px solid var(--border-c)",
+                              transition: "all 0.15s",
+                            }}
+                            className="hover:bg-[var(--muted-bg)] hover:text-[var(--orange)]"
+                            data-testid={`link-service-${s.slug}`}
+                          >
+                            {s.label}
+                          </Link>
+                        ))}
+                        <div style={{ padding: "12px 18px", background: "var(--muted-bg)" }}>
+                          <button
+                            onClick={() => { setDropdownOpen(false); openModal(); }}
+                            className="btn-primary"
+                            style={{ width: "100%", justifyContent: "center", fontSize: "13px", padding: "10px 16px" }}
+                          >
+                            Book a Free Consultation →
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <Link
                     key={link.label}
                     href={link.href}
-                    className={`text-sm font-medium transition-colors hover:text-primary relative group ${
-                      location === link.href ? "text-primary" : "text-muted-foreground"
-                    }`}
+                    style={{
+                      padding: "8px 14px", fontSize: "14px", fontWeight: 500,
+                      color: isActive(link.href) ? "var(--orange)" : "var(--fg)",
+                      borderRadius: "8px", transition: "color 0.2s",
+                      borderBottom: isActive(link.href) ? "2px solid var(--orange)" : "2px solid transparent",
+                    }}
                     data-testid={`link-nav-${link.label.toLowerCase()}`}
                   >
                     {link.label}
-                    <span className={`absolute -bottom-0.5 left-0 h-[2px] bg-primary transition-all duration-300 ${location === link.href ? "w-full" : "w-0 group-hover:w-full"}`} />
                   </Link>
                 )
               )}
             </div>
 
-            <div className="hidden lg:flex items-center gap-3">
+            {/* CTA + Hamburger */}
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
               <button
                 onClick={openModal}
-                className="px-5 py-2.5 bg-primary text-white text-sm font-semibold rounded-full hover:bg-primary/90 transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(232,119,34,0.4)]"
+                className="btn-primary hidden lg:inline-flex"
                 data-testid="button-book-call"
               >
-                Book a Free Call →
+                Book a Free Call
+              </button>
+              <button
+                onClick={() => setMobileOpen(true)}
+                style={{ padding: "8px", color: "var(--fg)", background: "none", border: "none", cursor: "pointer" }}
+                className="lg:hidden"
+                data-testid="button-mobile-menu"
+              >
+                <Menu size={24} />
               </button>
             </div>
+          </div>
+        </div>
+      </nav>
 
+      {/* Mobile Menu */}
+      {mobileOpen && (
+        <div style={{
+          position: "fixed", inset: 0, zIndex: 99999,
+          background: "var(--bg)", display: "flex", flexDirection: "column",
+          overflowY: "auto",
+        }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "20px 24px", borderBottom: "1px solid var(--border-c)" }}>
+            <img src={logoPath} alt="ASKreativ" style={{ height: "40px" }} />
+            <button onClick={() => setMobileOpen(false)} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--fg)" }}>
+              <X size={24} />
+            </button>
+          </div>
+          <div style={{ flex: 1, padding: "24px" }}>
+            {navLinks.map((link) => (
+              <div key={link.label}>
+                <Link
+                  href={link.href}
+                  style={{
+                    display: "block", padding: "16px 0", fontSize: "18px", fontWeight: 600,
+                    color: isActive(link.href) ? "var(--orange)" : "var(--fg)",
+                    borderBottom: "1px solid var(--border-c)",
+                  }}
+                  data-testid={`link-mobile-${link.label.toLowerCase()}`}
+                >
+                  {link.label}
+                </Link>
+                {link.hasDropdown && (
+                  <div style={{ paddingLeft: "16px" }}>
+                    {services.map((s) => (
+                      <Link
+                        key={s.slug}
+                        href={`/services/${s.slug}`}
+                        style={{ display: "block", padding: "10px 0", fontSize: "14px", color: "var(--fg-light)", borderBottom: "1px solid var(--border-c)" }}
+                      >
+                        {s.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          <div style={{ padding: "24px" }}>
             <button
-              className="lg:hidden text-white p-2"
-              onClick={() => setMobileOpen(true)}
-              data-testid="button-mobile-menu"
+              onClick={() => { setMobileOpen(false); openModal(); }}
+              className="btn-primary"
+              style={{ width: "100%", justifyContent: "center", padding: "16px" }}
             >
-              <Menu size={24} />
+              Book a Free Consultation →
             </button>
           </div>
         </div>
-      </motion.nav>
-
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "tween", duration: 0.3 }}
-            className="fixed inset-0 z-[99999] bg-[#0A0B1A] flex flex-col"
-          >
-            <div className="flex justify-between items-center px-6 py-5 border-b border-white/8">
-              <img src={logoPath} alt="ASKreativ" className="h-10 w-auto" />
-              <button onClick={() => setMobileOpen(false)} data-testid="button-close-menu">
-                <X size={24} className="text-white" />
-              </button>
-            </div>
-            <div className="flex-1 flex flex-col justify-center px-8 gap-2">
-              {navLinks.map((link, i) => (
-                <motion.div
-                  key={link.label}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={() => setMobileOpen(false)}
-                    className={`block text-2xl font-display font-bold py-3 border-b border-white/5 transition-colors hover:text-primary ${location === link.href ? "text-primary" : "text-white"}`}
-                    data-testid={`link-mobile-${link.label.toLowerCase()}`}
-                  >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-            <div className="px-8 pb-10">
-              <button
-                onClick={() => { setMobileOpen(false); openModal(); }}
-                className="w-full py-4 bg-primary text-white text-lg font-bold rounded-full hover:bg-primary/90 transition-colors"
-                data-testid="button-mobile-cta"
-              >
-                Book a Free Call →
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      )}
     </>
   );
 }

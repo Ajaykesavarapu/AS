@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, CheckCircle } from "lucide-react";
+import { X, CheckCircle, ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -23,20 +23,20 @@ interface Props {
   onClose: () => void;
 }
 
+const inputStyle: React.CSSProperties = {
+  width: "100%", padding: "11px 16px", fontSize: "14px",
+  background: "var(--bg-section)", color: "var(--fg)",
+  border: "1px solid var(--border-c)", borderRadius: "10px",
+  outline: "none", transition: "border-color 0.2s",
+  fontFamily: "Poppins, sans-serif",
+};
+
 export default function ConsultationModal({ open, onClose }: Props) {
   const mutation = useSubmitContact();
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      fullName: "",
-      businessName: "",
-      email: "",
-      phone: "",
-      service: "",
-      message: "",
-      honeypot: "",
-    },
+    defaultValues: { fullName: "", businessName: "", email: "", phone: "", service: "", message: "", honeypot: "" },
   });
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function ConsultationModal({ open, onClose }: Props) {
   }, [open, onClose]);
 
   useEffect(() => {
-    if (open) { document.body.style.overflow = "hidden"; } else { document.body.style.overflow = ""; }
+    document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
@@ -68,45 +68,48 @@ export default function ConsultationModal({ open, onClose }: Props) {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[100000] flex items-center justify-center p-4"
+          style={{ position: "fixed", inset: 0, zIndex: 100000, display: "flex", alignItems: "center", justifyContent: "center", padding: "16px" }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
         >
-          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+          <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.7)", backdropFilter: "blur(6px)" }} />
           <motion.div
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
             transition={{ type: "spring", duration: 0.4 }}
-            className="relative w-full max-w-lg bg-[#141630] border border-primary/30 rounded-2xl shadow-[0_0_60px_rgba(232,119,34,0.15)] overflow-hidden max-h-[90vh] overflow-y-auto"
+            style={{
+              position: "relative", width: "100%", maxWidth: "520px",
+              background: "var(--card-bg)", border: "1px solid var(--card-border)",
+              borderRadius: "20px", boxShadow: "0 20px 60px var(--shadow-md)",
+              maxHeight: "90vh", overflowY: "auto",
+            }}
             onClick={(e) => e.stopPropagation()}
+            data-testid="consultation-modal"
           >
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent" />
+            {/* Top accent bar */}
+            <div style={{ height: "3px", background: "linear-gradient(90deg, var(--orange), var(--gold))", borderRadius: "20px 20px 0 0" }} />
+
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 text-muted-foreground hover:text-white transition-colors z-10"
+              style={{ position: "absolute", top: "16px", right: "16px", background: "none", border: "none", cursor: "pointer", color: "var(--fg-light)", lineHeight: 1, zIndex: 10 }}
               data-testid="button-close-modal"
             >
               <X size={20} />
             </button>
 
-            <div className="p-8">
+            <div style={{ padding: "32px" }}>
               {mutation.isSuccess ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="text-center py-8"
-                >
-                  <div className="flex justify-center mb-4">
-                    <CheckCircle size={60} className="text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-display font-bold text-white mb-2">Message Sent!</h3>
-                  <p className="text-muted-foreground">We'll be in touch within 24 hours.</p>
+                <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} style={{ textAlign: "center", padding: "32px 0" }}>
+                  <CheckCircle size={60} style={{ color: "var(--orange)", margin: "0 auto 16px" }} />
+                  <h3 style={{ fontSize: "24px", fontWeight: 800, color: "var(--fg)", marginBottom: "8px" }}>Message Sent!</h3>
+                  <p style={{ color: "var(--fg-light)", marginBottom: "24px" }}>We'll be in touch within 24 hours.</p>
                   <button
                     onClick={() => { mutation.reset(); form.reset(); onClose(); }}
-                    className="mt-6 px-6 py-2.5 bg-primary text-white rounded-full text-sm font-semibold hover:bg-primary/90 transition-colors"
+                    className="btn-primary"
+                    style={{ margin: "0 auto" }}
                     data-testid="button-modal-done"
                   >
                     Close
@@ -114,74 +117,44 @@ export default function ConsultationModal({ open, onClose }: Props) {
                 </motion.div>
               ) : (
                 <>
-                  <span className="text-xs font-mono text-primary tracking-widest uppercase mb-3 block">— FREE CONSULTATION</span>
-                  <h2 className="text-2xl font-display font-bold text-white mb-1">Let's Build Your</h2>
-                  <h2 className="text-2xl font-display font-bold text-primary mb-3">Digital Growth System</h2>
-                  <p className="text-muted-foreground text-sm mb-6">Share your details and our team will reach out within 24 hours.</p>
+                  <span style={{ fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "2px", color: "var(--orange)", display: "block", marginBottom: "10px" }}>
+                    Free Consultation
+                  </span>
+                  <h2 style={{ fontSize: "22px", fontWeight: 800, color: "var(--fg)", marginBottom: "4px" }}>Let's Build Your</h2>
+                  <h2 style={{ fontSize: "22px", fontWeight: 800, color: "var(--orange)", marginBottom: "12px" }}>Digital Growth System</h2>
+                  <p style={{ fontSize: "13px", color: "var(--fg-light)", marginBottom: "24px" }}>Share your details and our team will reach out within 24 hours.</p>
 
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                    <input type="text" {...form.register("honeypot")} className="hidden" tabIndex={-1} autoComplete="off" />
+                  <form onSubmit={form.handleSubmit(onSubmit)} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                    <input type="text" {...form.register("honeypot")} style={{ display: "none" }} tabIndex={-1} autoComplete="off" />
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
                       <div>
-                        <label className="text-xs text-muted-foreground mb-1.5 block">Full Name *</label>
-                        <input
-                          {...form.register("fullName")}
-                          className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 transition-colors"
-                          placeholder="Your name"
-                          data-testid="input-fullname"
-                        />
-                        {form.formState.errors.fullName && (
-                          <p className="text-xs text-red-400 mt-1">{form.formState.errors.fullName.message}</p>
-                        )}
+                        <label style={{ display: "block", fontSize: "11px", fontWeight: 600, color: "var(--fg-light)", marginBottom: "5px", textTransform: "uppercase", letterSpacing: "0.5px" }}>Full Name *</label>
+                        <input {...form.register("fullName")} placeholder="Your Name" style={inputStyle} data-testid="input-fullname" />
+                        {form.formState.errors.fullName && <p style={{ fontSize: "11px", color: "#ef4444", marginTop: "3px" }}>{form.formState.errors.fullName.message}</p>}
                       </div>
                       <div>
-                        <label className="text-xs text-muted-foreground mb-1.5 block">Business Name</label>
-                        <input
-                          {...form.register("businessName")}
-                          className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 transition-colors"
-                          placeholder="Your company"
-                          data-testid="input-business"
-                        />
+                        <label style={{ display: "block", fontSize: "11px", fontWeight: 600, color: "var(--fg-light)", marginBottom: "5px", textTransform: "uppercase", letterSpacing: "0.5px" }}>Business Name</label>
+                        <input {...form.register("businessName")} placeholder="Your Company" style={inputStyle} data-testid="input-business" />
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
                       <div>
-                        <label className="text-xs text-muted-foreground mb-1.5 block">Email Address *</label>
-                        <input
-                          {...form.register("email")}
-                          type="email"
-                          className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 transition-colors"
-                          placeholder="you@company.com"
-                          data-testid="input-email"
-                        />
-                        {form.formState.errors.email && (
-                          <p className="text-xs text-red-400 mt-1">{form.formState.errors.email.message}</p>
-                        )}
+                        <label style={{ display: "block", fontSize: "11px", fontWeight: 600, color: "var(--fg-light)", marginBottom: "5px", textTransform: "uppercase", letterSpacing: "0.5px" }}>Email *</label>
+                        <input {...form.register("email")} type="email" placeholder="you@company.com" style={inputStyle} data-testid="input-email" />
+                        {form.formState.errors.email && <p style={{ fontSize: "11px", color: "#ef4444", marginTop: "3px" }}>{form.formState.errors.email.message}</p>}
                       </div>
                       <div>
-                        <label className="text-xs text-muted-foreground mb-1.5 block">Phone Number *</label>
-                        <input
-                          {...form.register("phone")}
-                          type="tel"
-                          className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 transition-colors"
-                          placeholder="+91 XXXXX XXXXX"
-                          data-testid="input-phone"
-                        />
-                        {form.formState.errors.phone && (
-                          <p className="text-xs text-red-400 mt-1">{form.formState.errors.phone.message}</p>
-                        )}
+                        <label style={{ display: "block", fontSize: "11px", fontWeight: 600, color: "var(--fg-light)", marginBottom: "5px", textTransform: "uppercase", letterSpacing: "0.5px" }}>Phone *</label>
+                        <input {...form.register("phone")} type="tel" placeholder="+91 XXXXX XXXXX" style={inputStyle} data-testid="input-phone" />
+                        {form.formState.errors.phone && <p style={{ fontSize: "11px", color: "#ef4444", marginTop: "3px" }}>{form.formState.errors.phone.message}</p>}
                       </div>
                     </div>
 
                     <div>
-                      <label className="text-xs text-muted-foreground mb-1.5 block">Service Interested</label>
-                      <select
-                        {...form.register("service")}
-                        className="w-full bg-[#0F1035] border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary/50 transition-colors appearance-none"
-                        data-testid="select-service"
-                      >
+                      <label style={{ display: "block", fontSize: "11px", fontWeight: 600, color: "var(--fg-light)", marginBottom: "5px", textTransform: "uppercase", letterSpacing: "0.5px" }}>Service Interested</label>
+                      <select {...form.register("service")} style={{ ...inputStyle, cursor: "pointer", background: "var(--bg-section)" }} data-testid="select-service">
                         <option value="">Select a service...</option>
                         <option value="digital-marketing">Digital Marketing</option>
                         <option value="ai-automation">AI Automation</option>
@@ -193,36 +166,26 @@ export default function ConsultationModal({ open, onClose }: Props) {
                         <option value="branding-design">Branding & Design</option>
                         <option value="other">Other / Not Sure</option>
                       </select>
-                      {form.formState.errors.service && (
-                        <p className="text-xs text-red-400 mt-1">{form.formState.errors.service.message}</p>
-                      )}
+                      {form.formState.errors.service && <p style={{ fontSize: "11px", color: "#ef4444", marginTop: "3px" }}>{form.formState.errors.service.message}</p>}
                     </div>
 
                     <div>
-                      <label className="text-xs text-muted-foreground mb-1.5 block">Message (Optional)</label>
-                      <textarea
-                        {...form.register("message")}
-                        rows={3}
-                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 transition-colors resize-none"
-                        placeholder="Tell us about your project..."
-                        data-testid="textarea-message"
-                      />
+                      <label style={{ display: "block", fontSize: "11px", fontWeight: 600, color: "var(--fg-light)", marginBottom: "5px", textTransform: "uppercase", letterSpacing: "0.5px" }}>Message (Optional)</label>
+                      <textarea {...form.register("message")} rows={3} placeholder="Tell us about your project..." style={{ ...inputStyle, resize: "vertical" }} data-testid="textarea-message" />
                     </div>
 
-                    {mutation.isError && (
-                      <p className="text-sm text-red-400">Something went wrong. Please try again.</p>
-                    )}
+                    {mutation.isError && <p style={{ fontSize: "13px", color: "#ef4444" }}>Something went wrong. Please try again.</p>}
 
                     <button
                       type="submit"
                       disabled={mutation.isPending}
-                      className="w-full py-3.5 bg-primary text-white font-bold rounded-full hover:bg-primary/90 transition-all hover:shadow-[0_0_30px_rgba(232,119,34,0.4)] disabled:opacity-60 disabled:cursor-not-allowed"
+                      className="btn-primary"
+                      style={{ justifyContent: "center", padding: "14px", opacity: mutation.isPending ? 0.6 : 1, cursor: mutation.isPending ? "not-allowed" : "pointer" }}
                       data-testid="button-submit-consultation"
                     >
-                      {mutation.isPending ? "Sending..." : "→ Send My Request"}
+                      {mutation.isPending ? "Sending..." : "Send My Request"} <ArrowRight size={16} />
                     </button>
-
-                    <p className="text-xs text-center text-muted-foreground">We respect your privacy. No spam, ever.</p>
+                    <p style={{ fontSize: "12px", textAlign: "center", color: "var(--fg-lighter)", margin: 0 }}>We respect your privacy. No spam, ever.</p>
                   </form>
                 </>
               )}

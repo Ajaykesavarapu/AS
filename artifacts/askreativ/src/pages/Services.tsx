@@ -1,25 +1,67 @@
 import { useRef } from "react";
 import { Link } from "wouter";
 import { motion, useInView } from "framer-motion";
-import { Target, Cpu, Search, Code2, Share2, Grid3x3, Smartphone, Palette, ArrowRight } from "lucide-react";
+import { Target, Cpu, Search, Code2, Share2, Grid3x3, Smartphone, Palette, PenTool, Megaphone, ArrowRight, ChevronRight } from "lucide-react";
 import { useModal } from "@/App";
 
 const services = [
-  { num: "01", icon: Target, title: "Digital Marketing", slug: "digital-marketing", desc: "Grow your business visibility, leads, and customer engagement through strategic digital marketing solutions designed for measurable growth." },
-  { num: "02", icon: Cpu, title: "AI Automation", slug: "ai-automation", desc: "Transform manual business operations into smart automated workflows powered by AI, CRM systems, WhatsApp automation, and intelligent lead management." },
-  { num: "03", icon: Search, title: "SEO Services", slug: "seo-services", desc: "Improve search visibility, rankings, and organic traffic through modern SEO strategies built for Google and AI-powered search engines." },
-  { num: "04", icon: Code2, title: "Website Development", slug: "website-development", desc: "We build modern, fast, and conversion-focused websites designed to strengthen branding, improve user experience, and generate business enquiries." },
-  { num: "05", icon: Share2, title: "Social Media Marketing", slug: "social-media-marketing", desc: "Build a strong digital presence through storytelling-driven social media strategies, creative campaigns, reels, and audience engagement." },
-  { num: "06", icon: Grid3x3, title: "ERP Management Systems", slug: "erp-management-systems", desc: "Centralize operations with smart ERP systems for attendance, HR, CRM, billing, workflow management, and operational efficiency." },
-  { num: "07", icon: Smartphone, title: "Mobile App Development", slug: "mobile-app-development", desc: "Launch scalable Android and iOS applications designed to improve customer experience, accessibility, and digital business operations." },
-  { num: "08", icon: Palette, title: "Branding & Creative Design", slug: "branding-creative-design", desc: "Create a strong and memorable business identity through strategic branding, creative visuals, advertising designs, and digital experiences." },
+  {
+    icon: Target, slug: "digital-marketing", title: "Digital Marketing",
+    short: "Grow your business visibility, leads, and customer engagement through strategic digital marketing campaigns.",
+    tags: ["SEO", "PPC", "Email Marketing", "Content Strategy"],
+  },
+  {
+    icon: Cpu, slug: "ai-automation", title: "AI Automation",
+    short: "Transform manual operations into smart automated workflows with AI, CRM, and WhatsApp automation.",
+    tags: ["AI Chatbots", "CRM Automation", "WhatsApp Bots", "Lead Automation"],
+  },
+  {
+    icon: Search, slug: "seo-services", title: "SEO Services",
+    short: "Improve search rankings and organic traffic through modern SEO strategies built for Google.",
+    tags: ["Technical SEO", "Local SEO", "On-Page SEO", "Link Building"],
+  },
+  {
+    icon: Code2, slug: "website-development", title: "Website Development",
+    short: "Build modern, fast, conversion-focused websites designed for strong branding and lead generation.",
+    tags: ["Business Websites", "E-Commerce", "Landing Pages", "Web Apps"],
+  },
+  {
+    icon: Share2, slug: "social-media-marketing", title: "Social Media Marketing",
+    short: "Build a strong digital presence through storytelling-driven strategies, creative campaigns, and reels.",
+    tags: ["Instagram", "Facebook", "LinkedIn", "Reels & Videos"],
+  },
+  {
+    icon: Grid3x3, slug: "erp-management-systems", title: "ERP Management Systems",
+    short: "Centralize operations with smart ERP for attendance, HR, CRM, billing, and workflow management.",
+    tags: ["Student ERP", "HR Systems", "Attendance", "Billing & Finance"],
+  },
+  {
+    icon: Smartphone, slug: "mobile-app-development", title: "Mobile App Development",
+    short: "Launch scalable Android and iOS applications designed for customer experience and business growth.",
+    tags: ["Android Apps", "iOS Apps", "Business Apps", "CRM-Integrated"],
+  },
+  {
+    icon: Palette, slug: "branding-creative-design", title: "Branding & Creative Design",
+    short: "Create a strong, memorable business identity through strategic branding and creative visual experiences.",
+    tags: ["Logo Design", "Brand Identity", "Brand Guidelines", "Creative Design"],
+  },
+  {
+    icon: PenTool, slug: "graphic-design", title: "Graphic Design",
+    short: "Professional designs for social media, advertisements, brochures, events, and business communication.",
+    tags: ["Social Media Creatives", "Ad Designs", "Brochures", "Event Branding"],
+  },
+  {
+    icon: Megaphone, slug: "traditional-marketing", title: "Traditional Marketing",
+    short: "Offline brand visibility through hoardings, banners, newspaper ads, pamphlets, and outdoor campaigns.",
+    tags: ["Hoardings", "Banners", "Newspaper Ads", "Pamphlets"],
+  },
 ];
 
-function FadeUp({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   return (
-    <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay }} className={className}>
+    <motion.div ref={ref} initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.55, delay }}>
       {children}
     </motion.div>
   );
@@ -27,40 +69,51 @@ function FadeUp({ children, delay = 0, className = "" }: { children: React.React
 
 export default function Services() {
   const { openModal } = useModal();
+
   return (
-    <main className="pt-24 overflow-x-hidden">
-      <section className="py-20 bg-[#0A0B1A] relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10" style={{ background: "radial-gradient(circle, #E87722, transparent)" }} />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <FadeUp>
-            <span className="text-xs font-mono text-primary tracking-widest uppercase mb-4 block">— OUR SERVICES</span>
-            <h1 className="text-5xl lg:text-6xl font-display font-extrabold text-white leading-tight mb-6 max-w-3xl mx-auto">
-              AI Automation, Digital Marketing & Development Solutions
-            </h1>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              From AI-powered automation to digital marketing, ERP systems, websites, mobile applications, and branding — ASKreativ helps businesses build intelligent digital ecosystems.
-            </p>
-          </FadeUp>
+    <main>
+      {/* Hero */}
+      <section style={{ background: "var(--bg-section)", padding: "100px 0 80px" }}>
+        <div className="container" style={{ textAlign: "center" }}>
+          <span className="section-tag" style={{ justifyContent: "center" }}>Our Services</span>
+          <h1 style={{ fontSize: "clamp(32px, 4.5vw, 52px)", fontWeight: 800, color: "var(--fg)", marginBottom: "20px" }}>
+            Complete Digital Growth <span style={{ color: "var(--orange)" }}>Solutions</span>
+          </h1>
+          <p style={{ fontSize: "16px", color: "var(--fg-light)", maxWidth: "640px", margin: "0 auto 36px", lineHeight: "1.8" }}>
+            From AI-powered automation to digital marketing, ERP systems, websites, mobile applications, and branding — ASKreativ helps businesses build intelligent digital ecosystems.
+          </p>
+          <button onClick={openModal} className="btn-primary" style={{ margin: "0 auto" }}>
+            Book a Free Consultation <ArrowRight size={16} />
+          </button>
         </div>
       </section>
 
-      <section className="py-20 bg-[#0F1035]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      {/* Services Grid */}
+      <section className="section">
+        <div className="container">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "24px" }}>
             {services.map((s, i) => {
               const Icon = s.icon;
               return (
-                <FadeUp key={s.slug} delay={i * 0.07}>
-                  <Link href={`/services/${s.slug}`} data-testid={`card-service-${s.slug}`}>
-                    <div className="group h-full bg-[#141630] border border-white/8 rounded-2xl p-6 hover:border-primary/40 hover:shadow-[0_0_30px_rgba(232,119,34,0.12)] hover:-translate-y-1 transition-all duration-300 cursor-pointer">
-                      <span className="text-xs font-mono text-primary mb-3 block">{s.num} —</span>
-                      <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                        <Icon size={20} className="text-primary" />
+                <FadeUp key={s.slug} delay={i * 0.06}>
+                  <Link href={`/services/${s.slug}`} data-testid={`card-service-${s.slug}`} style={{ display: "block", height: "100%" }}>
+                    <div className="card" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+                      <div style={{ display: "flex", alignItems: "flex-start", gap: "16px", marginBottom: "16px" }}>
+                        <div style={{ width: "52px", height: "52px", borderRadius: "12px", background: "rgba(232,119,34,0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                          <Icon size={24} style={{ color: "var(--orange)" }} />
+                        </div>
+                        <h2 style={{ fontWeight: 700, fontSize: "17px", color: "var(--fg)", marginTop: "8px" }}>{s.title}</h2>
                       </div>
-                      <h3 className="text-white font-display font-bold mb-2">{s.title}</h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed mb-4">{s.desc}</p>
-                      <div className="flex items-center gap-1 text-primary text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity">
-                        Learn More <ArrowRight size={14} />
+                      <p style={{ fontSize: "14px", color: "var(--fg-light)", lineHeight: "1.7", marginBottom: "20px", flex: 1 }}>{s.short}</p>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "20px" }}>
+                        {s.tags.map((tag) => (
+                          <span key={tag} style={{ padding: "3px 12px", fontSize: "11px", fontWeight: 600, background: "rgba(232,119,34,0.08)", color: "var(--orange)", borderRadius: "50px", border: "1px solid rgba(232,119,34,0.2)" }}>
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <div style={{ display: "flex", alignItems: "center", gap: "4px", color: "var(--orange)", fontSize: "13px", fontWeight: 600 }}>
+                        Learn More <ChevronRight size={14} />
                       </div>
                     </div>
                   </Link>
@@ -71,19 +124,18 @@ export default function Services() {
         </div>
       </section>
 
-      <section className="py-20 bg-[#0A0B1A]">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <FadeUp>
-            <h2 className="text-3xl font-display font-bold text-white mb-4">Not Sure Which Service You Need?</h2>
-            <p className="text-muted-foreground mb-8">Book a free consultation and our experts will identify the right growth strategy for your business.</p>
-            <button
-              onClick={openModal}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white font-bold rounded-full hover:bg-primary/90 transition-all hover:shadow-[0_0_30px_rgba(232,119,34,0.4)]"
-              data-testid="button-services-cta"
-            >
-              Book a Free Consultation <ArrowRight size={18} />
-            </button>
-          </FadeUp>
+      {/* CTA */}
+      <section className="cta-banner">
+        <div className="container" style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+          <h2 style={{ fontSize: "clamp(26px, 3.5vw, 38px)", fontWeight: 800, color: "#fff", marginBottom: "16px" }}>
+            Not Sure Which Service You Need?
+          </h2>
+          <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "32px" }}>
+            Book a free consultation and our experts will identify the right growth strategy for your business.
+          </p>
+          <button onClick={openModal} className="btn-primary">
+            Book a Free Consultation <ArrowRight size={16} />
+          </button>
         </div>
       </section>
     </main>

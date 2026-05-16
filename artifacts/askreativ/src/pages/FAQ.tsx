@@ -1,85 +1,153 @@
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import { useModal } from "@/App";
 
-const faqs = [
-  { q: "Why should you choose ASKreativ as a digital marketing agency in Hyderabad?", a: "ASKreativ is a digital marketing agency in Hyderabad focused on AI automation, SEO, branding, websites, ERP systems, and scalable business growth solutions. We combine creativity, technology, and strategy to deliver measurable results for businesses across all industries." },
-  { q: "How can a digital marketing agency in Hyderabad help your business grow?", a: "A digital marketing agency in Hyderabad helps businesses improve visibility, generate leads, increase customer engagement, and build stronger online branding. We create customized strategies that align with your business goals and target audience." },
-  { q: "Does ASKreativ provide AI automation services in Hyderabad?", a: "Yes. ASKreativ provides AI automation services in Hyderabad, including AI chatbots, WhatsApp automation, CRM systems, and workflow automation. We help businesses automate repetitive tasks and focus on what matters most — growing their business." },
-  { q: "Why is SEO important for businesses?", a: "SEO helps businesses improve Google rankings, increase organic traffic, attract local customers, and strengthen online visibility. In a competitive market, ranking on the first page of Google is one of the most cost-effective ways to grow your business." },
-  { q: "Do we provide website development services in Hyderabad?", a: "Yes. ASKreativ develops modern business websites in Hyderabad designed for branding, lead generation, SEO, and customer engagement. Every website we build is optimized for performance, mobile responsiveness, and conversion." },
-  { q: "Do we provide social media marketing services in Hyderabad?", a: "Yes. ASKreativ provides social media marketing services in Hyderabad, including Instagram marketing, Facebook marketing, LinkedIn management, reels, and branding campaigns. We help businesses build strong social media presences that drive real business results." },
-  { q: "Can ASKreativ build ERP systems for businesses in Hyderabad?", a: "Yes. We develop ERP management systems in Hyderabad for attendance, HR, CRM, operations, billing, workflow management, and reporting. Our ERP systems are custom-built to match your specific business processes and scale with your growth." },
-  { q: "Do we provide mobile app development services in Hyderabad?", a: "Yes. ASKreativ develops Android and iOS mobile applications in Hyderabad for businesses, educational institutions, and startups. We build scalable, user-friendly apps that enhance customer experience and drive business growth." },
-  { q: "How long does SEO take for businesses in Hyderabad?", a: "SEO results usually take a few months, depending on competition, industry, website performance, and keyword difficulty. Most businesses see significant improvements within 3-6 months of consistent, strategic SEO work. The important thing is to start now." },
-  { q: "Do you provide branding services in Hyderabad?", a: "Yes. ASKreativ provides branding services in Hyderabad, including brand identity design, creative design, advertising creatives, and digital branding solutions. We help businesses build strong, memorable brand identities that stand out in crowded markets." },
-  { q: "How can I contact ASKreativ digital marketing agency Hyderabad?", a: "You can contact ASKreativ through our website contact form, email us at hello@askreativ.com, or directly schedule a free business consultation using the 'Book a Free Call' button on our website. We respond within 24 hours." },
-  { q: "What industries does ASKreativ work with?", a: "We work with educational institutions, solar industries, healthcare and clinics, real estate companies, sports academies, startups and entrepreneurs, local businesses, corporate companies, e-commerce brands, restaurants and hospitality, and professional service providers." },
-  { q: "Do you offer packages or custom pricing?", a: "All our solutions are customized to your specific business needs and budget. We don't believe in one-size-fits-all packages. Book a free consultation and we'll build a proposal tailored to your goals." },
-];
-
-function FAQItem({ q, a, defaultOpen = false }: { q: string; a: string; defaultOpen?: boolean }) {
-  const [open, setOpen] = useState(defaultOpen);
-  return (
-    <div className={`border border-white/8 rounded-xl overflow-hidden transition-all ${open ? "border-primary/30" : ""}`}>
-      <button
-        className={`w-full flex items-center justify-between gap-4 px-6 py-5 text-left transition-colors ${open ? "border-l-4 border-primary" : "border-l-4 border-transparent"}`}
-        onClick={() => setOpen(v => !v)}
-        data-testid={`button-faq-${q.slice(0, 20).replace(/\s/g, "-").toLowerCase()}`}
-      >
-        <span className="text-white font-medium leading-snug">{q}</span>
-        <span className="text-primary shrink-0 text-xl font-light">{open ? "×" : "+"}</span>
-      </button>
-      <motion.div
-        initial={false}
-        animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-        className="overflow-hidden"
-      >
-        <p className="px-6 pb-5 text-muted-foreground leading-relaxed">{a}</p>
-      </motion.div>
-    </div>
-  );
-}
-
-function FadeUp({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   return (
-    <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay }} className={className}>
+    <motion.div ref={ref} initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.55, delay }}>
       {children}
     </motion.div>
   );
 }
 
+const categories = [
+  {
+    title: "SEO & Digital Marketing",
+    faqs: [
+      { q: "What is SEO?", a: "SEO (Search Engine Optimization) is the process of improving your website visibility on search engines like Google. SEO helps businesses rank higher in search results, attract organic traffic, and improve online presence without paid advertising." },
+      { q: "What is PPC and what are its benefits?", a: "PPC (Pay-Per-Click) is a digital advertising method where businesses pay only when someone clicks on their advertisement. PPC helps businesses generate instant visibility, targeted traffic, faster leads, and measurable campaign performance." },
+      { q: "What is the difference between SEO and SEM?", a: "SEO focuses on improving organic search visibility naturally over time, while SEM (Search Engine Marketing) includes paid advertising strategies such as Google Ads to generate faster visibility and traffic." },
+      { q: "What is Local SEO, and how do I do Local SEO?", a: "Local SEO helps businesses improve visibility in location-based searches. It includes optimizing Google Business Profiles, local keywords, customer reviews, location pages, and local citations." },
+      { q: "What are the most important Google ranking factors?", a: "Some important ranking factors include quality content, website speed, mobile responsiveness, backlinks, user experience, keyword relevance, and technical SEO optimization." },
+      { q: "How long does it take to rank a new website in Google?", a: "SEO is a long-term process. Ranking timelines depend on competition, keyword difficulty, website quality, content strategy, and optimization efforts. Most businesses see significant improvements within 3–6 months." },
+    ],
+  },
+  {
+    title: "Digital Services",
+    faqs: [
+      { q: "Does my business benefit from digital marketing?", a: "Yes. Digital marketing helps businesses improve visibility, attract customers, generate leads, strengthen branding, and grow online through multiple digital platforms." },
+      { q: "What's the difference between On-Page SEO and Technical SEO?", a: "On-Page SEO focuses on optimizing content, keywords, headings, and website pages, while Technical SEO focuses on website speed, indexing, mobile responsiveness, crawlability, and backend optimization." },
+      { q: "What is A/B Testing in digital marketing?", a: "A/B Testing is the process of comparing two versions of a webpage, advertisement, or content element to identify which version performs better." },
+      { q: "What kind of websites do you work on?", a: "We work on business websites, corporate websites, educational websites, e-commerce platforms, landing pages, and customized web solutions." },
+      { q: "Which social media platforms should I use for my business?", a: "The right platform depends on your business goals and audience. Common platforms include Instagram, Facebook, LinkedIn, YouTube, and X (Twitter)." },
+      { q: "What is email marketing?", a: "Email marketing is a digital communication strategy used to send promotional content, updates, campaigns, and customer engagement emails directly to audiences." },
+    ],
+  },
+  {
+    title: "About ASKreativ",
+    faqs: [
+      { q: "Do we serve overseas clients?", a: "Yes. ASKreativ Global Solutions works with both domestic and international clients across different industries and business sectors." },
+      { q: "Difference between performance marketing and digital marketing?", a: "Digital marketing is a broad category that includes SEO, social media, branding, and content marketing. Performance marketing focuses specifically on measurable outcomes such as leads, conversions, and ROI." },
+      { q: "What level of communication and support can I expect?", a: "ASKreativ provides regular communication, performance updates, reporting, campaign discussions, and ongoing strategic support throughout the project." },
+      { q: "Do you offer social media marketing, SEO, and PPC advertising services?", a: "Yes. ASKreativ provides complete digital marketing solutions including SEO, PPC advertising, social media marketing, branding, content creation, and automation services." },
+      { q: "What metrics do you use to measure the success of digital marketing campaigns?", a: "We track website traffic, engagement, conversions, leads, ROI, keyword rankings, and campaign performance metrics." },
+      { q: "What is an SSL Certificate and why is it important?", a: "An SSL Certificate secures website data and creates a secure connection between users and the website. It also improves customer trust and helps with SEO rankings." },
+      { q: "Can I lose Google ranking if I redesign my website?", a: "Yes, improper redesign can affect SEO rankings. Proper SEO migration and technical optimization help maintain search visibility during website updates." },
+    ],
+  },
+];
+
+function FAQItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ borderBottom: "1px solid var(--border-c)" }}>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "16px", padding: "20px 0", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}
+      >
+        <span style={{ fontWeight: 500, fontSize: "15px", color: "var(--fg)" }}>{q}</span>
+        <span style={{ fontSize: "24px", color: "var(--orange)", flexShrink: 0, lineHeight: 1 }}>{open ? "×" : "+"}</span>
+      </button>
+      {open && (
+        <div style={{ paddingBottom: "20px" }}>
+          <p style={{ fontSize: "14px", color: "var(--fg-light)", lineHeight: "1.7", margin: 0 }}>{a}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function FAQ() {
   const { openModal } = useModal();
+
   return (
-    <main className="pt-24 overflow-x-hidden">
-      <section className="py-20 bg-[#0A0B1A] relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10" style={{ background: "radial-gradient(circle, #E87722, transparent)" }} />
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <FadeUp className="text-center mb-12">
-            <span className="text-xs font-mono text-primary tracking-widest uppercase mb-4 block">— FAQs</span>
-            <h1 className="text-5xl font-display font-extrabold text-white leading-tight mb-6">
-              Frequently Asked Questions About Digital Marketing Agency Hyderabad
-            </h1>
-            <p className="text-muted-foreground">Everything you need to know about ASKreativ and our services.</p>
-          </FadeUp>
-          <div className="space-y-3">
-            {faqs.map((faq, i) => <FAQItem key={i} q={faq.q} a={faq.a} defaultOpen={i === 0} />)}
+    <main>
+      {/* Hero */}
+      <section style={{ background: "var(--bg-section)", padding: "100px 0 80px", textAlign: "center" }}>
+        <div className="container">
+          <span className="section-tag" style={{ justifyContent: "center" }}>FAQ</span>
+          <h1 style={{ fontSize: "clamp(32px, 4vw, 50px)", fontWeight: 800, color: "var(--fg)", marginBottom: "16px" }}>
+            Frequently Asked <span style={{ color: "var(--orange)" }}>Questions</span>
+          </h1>
+          <p style={{ fontSize: "16px", color: "var(--fg-light)", maxWidth: "600px", margin: "0 auto", lineHeight: "1.8" }}>
+            Everything you need to know about ASKreativ's services, approach, and how we can help your business grow digitally.
+          </p>
+        </div>
+      </section>
+
+      {/* FAQ Content */}
+      <section className="section">
+        <div className="container">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "60px", alignItems: "start" }} className="max-lg:block">
+            {/* Sidebar */}
+            <FadeUp>
+              <div style={{ position: "sticky", top: "88px" }}>
+                <h3 style={{ fontWeight: 700, fontSize: "16px", color: "var(--fg)", marginBottom: "16px" }}>Categories</h3>
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "32px" }}>
+                  {categories.map((cat) => (
+                    <a
+                      key={cat.title}
+                      href={`#${cat.title.replace(/\s/g, "-").toLowerCase()}`}
+                      style={{ fontSize: "14px", color: "var(--fg-light)", padding: "8px 12px", borderRadius: "8px", border: "1px solid var(--border-c)", display: "block", transition: "all 0.2s" }}
+                      className="hover:border-[var(--orange)] hover:text-[var(--orange)]"
+                    >
+                      {cat.title}
+                    </a>
+                  ))}
+                </div>
+                <div className="card" style={{ textAlign: "center" }}>
+                  <p style={{ fontWeight: 600, color: "var(--fg)", marginBottom: "8px", fontSize: "14px" }}>Still have questions?</p>
+                  <button onClick={openModal} className="btn-primary" style={{ width: "100%", justifyContent: "center", fontSize: "13px" }}>
+                    Talk to Our Team <ArrowRight size={14} />
+                  </button>
+                </div>
+              </div>
+            </FadeUp>
+
+            {/* FAQ Sections */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "48px" }}>
+              {categories.map((cat, i) => (
+                <FadeUp key={cat.title} delay={i * 0.1}>
+                  <div id={cat.title.replace(/\s/g, "-").toLowerCase()}>
+                    <h2 style={{ fontWeight: 700, fontSize: "20px", color: "var(--orange)", marginBottom: "24px", paddingBottom: "12px", borderBottom: "2px solid var(--orange)" }}>
+                      {cat.title}
+                    </h2>
+                    {cat.faqs.map((faq) => (
+                      <FAQItem key={faq.q} q={faq.q} a={faq.a} />
+                    ))}
+                  </div>
+                </FadeUp>
+              ))}
+            </div>
           </div>
-          <FadeUp delay={0.2} className="mt-16 text-center">
-            <p className="text-white font-display font-bold text-2xl mb-3">Looking for a Digital Marketing Agency in Hyderabad?</p>
-            <p className="text-muted-foreground mb-6">Get a free consultation and discover how ASKreativ can grow your business.</p>
-            <button
-              onClick={openModal}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white font-bold rounded-full hover:bg-primary/90 transition-all hover:shadow-[0_0_30px_rgba(232,119,34,0.4)]"
-              data-testid="button-faq-cta"
-            >
-              Let's Build Your Digital Growth System →
-            </button>
-          </FadeUp>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="cta-banner">
+        <div className="container" style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+          <h2 style={{ fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 800, color: "#fff", marginBottom: "16px" }}>
+            Ready to Build Your Digital Growth System?
+          </h2>
+          <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "32px" }}>
+            Let's create a customized digital strategy for your business.
+          </p>
+          <button onClick={openModal} className="btn-primary">
+            Book a Free Consultation <ArrowRight size={16} />
+          </button>
         </div>
       </section>
     </main>

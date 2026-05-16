@@ -1,102 +1,149 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Briefcase, MapPin, Clock, ArrowRight, Users, Zap, Heart } from "lucide-react";
-import { useModal } from "@/App";
+import { Briefcase, MapPin, Clock, ArrowRight, Users, Zap, Heart, Star } from "lucide-react";
 
-const openings = [
-  { title: "Digital Marketing Specialist", type: "Full-time", location: "Hyderabad", dept: "Marketing", desc: "Drive digital marketing campaigns across SEO, SEM, social media, and content marketing for our clients." },
-  { title: "AI/Automation Engineer", type: "Full-time", location: "Hyderabad", dept: "Technology", desc: "Build and deploy AI automation systems, chatbots, and workflow automation solutions for businesses." },
-  { title: "SEO Analyst", type: "Full-time", location: "Hyderabad", dept: "Marketing", desc: "Execute technical and content SEO strategies for clients across various industries." },
-  { title: "Web Developer (React/Next.js)", type: "Full-time", location: "Hyderabad / Remote", dept: "Technology", desc: "Build modern, performant websites and web applications using React, Next.js, and TypeScript." },
-  { title: "Brand & Creative Designer", type: "Full-time", location: "Hyderabad", dept: "Design", desc: "Create compelling brand identities, marketing collateral, and digital designs that drive business results." },
-  { title: "Business Development Executive", type: "Full-time", location: "Hyderabad", dept: "Sales", desc: "Identify and develop new business opportunities, manage client relationships, and drive revenue growth." },
-];
-
-const culture = [
-  { icon: Zap, title: "Fast-paced Growth", desc: "Work on cutting-edge AI and digital projects that are shaping the future of business in India." },
-  { icon: Users, title: "Collaborative Team", desc: "Join a tight-knit team of creative and technical professionals who support each other's growth." },
-  { icon: Heart, title: "Purpose-driven Work", desc: "Help real businesses in Hyderabad and across India build stronger digital futures." },
-];
-
-function FadeUp({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+function FadeUp({ children, delay = 0, style }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   return (
-    <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay }} className={className}>
+    <motion.div ref={ref} initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.55, delay }} style={style}>
       {children}
     </motion.div>
   );
 }
 
+const openings = [
+  { title: "Digital Marketing Specialist", type: "Full-time", location: "Hyderabad", dept: "Marketing", desc: "Drive digital marketing campaigns across SEO, SEM, social media, and content marketing for our clients." },
+  { title: "AI / Automation Engineer", type: "Full-time", location: "Hyderabad", dept: "Technology", desc: "Build and deploy AI automation systems, chatbots, CRM integrations, and workflow automation solutions." },
+  { title: "SEO Analyst", type: "Full-time", location: "Hyderabad", dept: "Marketing", desc: "Execute technical and content SEO strategies for clients across various industries." },
+  { title: "Web Developer (React / Next.js)", type: "Full-time", location: "Hyderabad / Remote", dept: "Technology", desc: "Build modern, performant websites and web applications using React, Next.js, and TypeScript." },
+  { title: "Brand & Creative Designer", type: "Full-time", location: "Hyderabad", dept: "Design", desc: "Create compelling brand identities, marketing collateral, and digital designs that drive business results." },
+  { title: "Business Development Executive", type: "Full-time", location: "Hyderabad", dept: "Sales", desc: "Identify new business opportunities, manage client relationships, and drive revenue growth." },
+  { title: "Social Media Manager", type: "Full-time", location: "Hyderabad", dept: "Marketing", desc: "Create and manage social media strategies, content calendars, and campaigns across platforms." },
+  { title: "Mobile App Developer (Flutter)", type: "Full-time", location: "Hyderabad", dept: "Technology", desc: "Develop cross-platform Android and iOS mobile applications using Flutter and Dart." },
+];
+
+const culture = [
+  { icon: Zap, title: "Fast-Paced Growth", desc: "Work on cutting-edge AI and digital projects shaping the future of business in India." },
+  { icon: Users, title: "Collaborative Culture", desc: "Join a tight-knit team of creative and technical professionals who support each other's growth." },
+  { icon: Heart, title: "Purpose-Driven Work", desc: "Help real businesses in Hyderabad and across India build stronger digital futures." },
+  { icon: Star, title: "Learning & Development", desc: "Continuous learning opportunities, certifications, and skill development programs." },
+];
+
+const perks = [
+  "Competitive salary packages", "Flexible working hours", "Remote work options",
+  "Health insurance coverage", "Learning & certification support", "Career growth opportunities",
+  "Dynamic work environment", "Performance bonuses",
+];
+
+const deptColors: Record<string, string> = {
+  Marketing: "rgba(232, 119, 34, 0.1)", Technology: "rgba(26, 31, 110, 0.1)",
+  Design: "rgba(245, 166, 35, 0.15)", Sales: "rgba(37, 211, 102, 0.1)",
+};
+
 export default function Careers() {
-  const { openModal } = useModal();
   const [applied, setApplied] = useState<string | null>(null);
 
   return (
-    <main className="pt-24 overflow-x-hidden">
-      <section className="py-20 bg-[#0A0B1A] relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10" style={{ background: "radial-gradient(circle, #E87722, transparent)" }} />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <FadeUp>
-            <span className="text-xs font-mono text-primary tracking-widest uppercase mb-4 block">— CAREERS</span>
-            <h1 className="text-5xl lg:text-6xl font-display font-extrabold text-white leading-tight mb-6">Join the ASKreativ Team</h1>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Build your career at one of Hyderabad's fastest-growing AI and digital marketing agencies. Help businesses grow while growing yourself.
-            </p>
-          </FadeUp>
+    <main>
+      {/* Hero */}
+      <section style={{ background: "var(--bg-section)", padding: "100px 0 80px" }}>
+        <div className="container">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "60px", alignItems: "center" }} className="max-lg:block">
+            <div>
+              <span className="section-tag">Join Our Team</span>
+              <h1 style={{ fontSize: "clamp(32px, 4vw, 50px)", fontWeight: 800, color: "var(--fg)", marginBottom: "16px" }}>
+                Build Your Career at <span style={{ color: "var(--orange)" }}>ASKreativ</span>
+              </h1>
+              <p style={{ fontSize: "16px", color: "var(--fg-light)", lineHeight: "1.8", marginBottom: "24px" }}>
+                Join Hyderabad's fastest-growing AI and digital marketing agency. Help businesses grow while growing yourself.
+              </p>
+              <a href="mailto:hello@askreativ.com?subject=Job Application - ASKreativ" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+                Send Your Resume <ArrowRight size={16} />
+              </a>
+            </div>
+            <FadeUp delay={0.2}>
+              <img
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=700&auto=format&fit=crop&q=80"
+                alt="ASKreativ team"
+                style={{ width: "100%", borderRadius: "20px", boxShadow: "0 20px 60px var(--shadow-md)" }}
+              />
+            </FadeUp>
+          </div>
         </div>
       </section>
 
-      <section className="py-16 bg-[#0F1035]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeUp className="text-center mb-10">
-            <h2 className="text-3xl font-display font-bold text-white mb-3">Why Work at ASKreativ?</h2>
+      {/* Why Join Us */}
+      <section className="section">
+        <div className="container">
+          <FadeUp style={{ textAlign: "center", marginBottom: "48px" }}>
+            <span className="section-tag" style={{ justifyContent: "center" }}>Why ASKreativ</span>
+            <h2 className="section-title" style={{ textAlign: "center" }}>Why Work at <span>ASKreativ?</span></h2>
           </FadeUp>
-          <div className="grid sm:grid-cols-3 gap-5 mb-16">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: "20px", marginBottom: "48px" }}>
             {culture.map((c, i) => {
               const Icon = c.icon;
               return (
                 <FadeUp key={c.title} delay={i * 0.1}>
-                  <div className="bg-[#141630] border border-white/8 rounded-2xl p-6 text-center hover:border-primary/30 transition-colors">
-                    <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-                      <Icon size={24} className="text-primary" />
+                  <div className="card" style={{ textAlign: "center" }}>
+                    <div style={{ width: "56px", height: "56px", borderRadius: "14px", background: "rgba(232,119,34,0.1)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
+                      <Icon size={24} style={{ color: "var(--orange)" }} />
                     </div>
-                    <h3 className="text-white font-display font-bold mb-2">{c.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{c.desc}</p>
+                    <h3 style={{ fontWeight: 700, fontSize: "16px", color: "var(--fg)", marginBottom: "8px" }}>{c.title}</h3>
+                    <p style={{ fontSize: "13px", color: "var(--fg-light)", lineHeight: "1.7", margin: 0 }}>{c.desc}</p>
                   </div>
                 </FadeUp>
               );
             })}
           </div>
 
-          <FadeUp className="mb-8">
-            <h2 className="text-3xl font-display font-bold text-white mb-3">Open Positions</h2>
-            <p className="text-muted-foreground">Current openings at ASKreativ Global Solutions, Hyderabad.</p>
+          <FadeUp delay={0.2}>
+            <div className="card" style={{ background: "var(--bg-section)" }}>
+              <h3 style={{ fontWeight: 700, fontSize: "18px", color: "var(--fg)", marginBottom: "20px" }}>Employee Perks & Benefits</h3>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "12px" }}>
+                {perks.map((perk) => (
+                  <div key={perk} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px", color: "var(--fg-light)" }}>
+                    <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "var(--orange)", flexShrink: 0 }} />
+                    {perk}
+                  </div>
+                ))}
+              </div>
+            </div>
           </FadeUp>
-          <div className="space-y-4">
+        </div>
+      </section>
+
+      {/* Open Positions */}
+      <section className="section" style={{ background: "var(--bg-section)" }}>
+        <div className="container">
+          <FadeUp style={{ marginBottom: "36px" }}>
+            <span className="section-tag">Current Openings</span>
+            <h2 className="section-title">Open Positions at <span>ASKreativ</span></h2>
+          </FadeUp>
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             {openings.map((job, i) => (
-              <FadeUp key={job.title} delay={i * 0.07}>
-                <div className="bg-[#141630] border border-white/8 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:border-primary/30 transition-all">
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
-                      <Briefcase size={18} className="text-primary" />
+              <FadeUp key={job.title} delay={i * 0.06}>
+                <div className="card" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "20px", flexWrap: "wrap" }}>
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: "16px", flex: 1 }}>
+                    <div style={{ width: "44px", height: "44px", borderRadius: "10px", background: deptColors[job.dept] || "rgba(232,119,34,0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <Briefcase size={18} style={{ color: "var(--orange)" }} />
                     </div>
                     <div>
-                      <h3 className="text-white font-display font-bold mb-1">{job.title}</h3>
-                      <p className="text-muted-foreground text-sm mb-2">{job.desc}</p>
-                      <div className="flex flex-wrap gap-3 text-xs text-muted-foreground/60">
-                        <span className="flex items-center gap-1"><MapPin size={12} />{job.location}</span>
-                        <span className="flex items-center gap-1"><Clock size={12} />{job.type}</span>
-                        <span className="px-2 py-0.5 bg-white/5 rounded">{job.dept}</span>
+                      <h3 style={{ fontWeight: 700, fontSize: "16px", color: "var(--fg)", marginBottom: "4px" }}>{job.title}</h3>
+                      <p style={{ fontSize: "13px", color: "var(--fg-light)", marginBottom: "8px" }}>{job.desc}</p>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", fontSize: "12px", color: "var(--fg-lighter)" }}>
+                        <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><MapPin size={12} />{job.location}</span>
+                        <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><Clock size={12} />{job.type}</span>
+                        <span style={{ padding: "2px 10px", background: deptColors[job.dept] || "rgba(232,119,34,0.1)", borderRadius: "50px", color: "var(--orange)", fontWeight: 600 }}>{job.dept}</span>
                       </div>
                     </div>
                   </div>
                   <button
                     onClick={() => setApplied(job.title)}
-                    className="shrink-0 px-5 py-2.5 bg-primary text-white text-sm font-semibold rounded-full hover:bg-primary/90 transition-all hover:shadow-[0_0_20px_rgba(232,119,34,0.3)]"
-                    data-testid={`button-apply-${job.title.toLowerCase().replace(/\s/g, "-")}`}
+                    className="btn-primary"
+                    style={{ fontSize: "13px", padding: "10px 20px" }}
                   >
-                    {applied === job.title ? "Applied!" : "Apply Now →"}
+                    {applied === job.title ? "Applied! ✓" : "Apply Now →"}
                   </button>
                 </div>
               </FadeUp>
@@ -105,19 +152,18 @@ export default function Careers() {
         </div>
       </section>
 
-      <section className="py-20 bg-[#0A0B1A]">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <FadeUp>
-            <h2 className="text-3xl font-display font-bold text-white mb-4">Don't See the Right Role?</h2>
-            <p className="text-muted-foreground mb-8">Send us your resume and we'll reach out when a matching position opens up.</p>
-            <a
-              href="mailto:hello@askreativ.com?subject=Job Application - ASKreativ"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white font-bold rounded-full hover:bg-primary/90 transition-all hover:shadow-[0_0_30px_rgba(232,119,34,0.4)]"
-              data-testid="link-send-resume"
-            >
-              Send Your Resume <ArrowRight size={18} />
-            </a>
-          </FadeUp>
+      {/* CTA */}
+      <section className="cta-banner">
+        <div className="container" style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+          <h2 style={{ fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 800, color: "#fff", marginBottom: "16px" }}>
+            Don't See the Right Role?
+          </h2>
+          <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "32px" }}>
+            Send your resume and we'll reach out when a matching position opens.
+          </p>
+          <a href="mailto:hello@askreativ.com?subject=Job Application - ASKreativ" className="btn-primary">
+            Send Your Resume <ArrowRight size={16} />
+          </a>
         </div>
       </section>
     </main>

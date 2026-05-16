@@ -1,75 +1,107 @@
 import { useState, useRef } from "react";
 import { Link } from "wouter";
 import { motion, useInView } from "framer-motion";
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowRight, Search, Clock } from "lucide-react";
 
-const categories = ["All", "AI & Automation", "Digital Marketing", "SEO", "Branding", "Website Development", "Social Media"];
-
-const posts = [
-  { tag: "AI & Automation", title: "How AI Automation is Transforming Business Operations in 2025", excerpt: "Discover how businesses in Hyderabad are using AI-powered automation to cut costs, increase efficiency, and scale faster than ever before.", date: "May 15, 2025", readTime: "6 min read", slug: "ai-automation-business-2025" },
-  { tag: "Digital Marketing", title: "The Complete Guide to SEO for Businesses in Hyderabad", excerpt: "A step-by-step guide to improving your Google rankings and attracting local customers through modern SEO strategies tailored for Hyderabad businesses.", date: "May 10, 2025", readTime: "8 min read", slug: "seo-guide-hyderabad" },
-  { tag: "Branding", title: "Why Your Business Needs a Strong Digital Identity in 2025", excerpt: "In a crowded digital marketplace, your brand identity is your competitive edge. Learn how to build a brand that stands out and drives growth.", date: "April 28, 2025", readTime: "5 min read", slug: "digital-identity-2025" },
-  { tag: "Social Media", title: "Instagram Marketing Strategies That Actually Work in 2025", excerpt: "Cut through the noise on Instagram with proven strategies for reels, stories, and engagement that convert followers into loyal customers.", date: "April 20, 2025", readTime: "7 min read", slug: "instagram-marketing-2025" },
-  { tag: "Website Development", title: "Why Your Business Website Is Your Most Important Digital Asset", excerpt: "Your website is working 24/7. Learn why investing in a modern, conversion-focused website is the single best digital investment for any business.", date: "April 15, 2025", readTime: "6 min read", slug: "business-website-importance" },
-  { tag: "SEO", title: "Local SEO: How to Dominate Google Search in Hyderabad", excerpt: "Rank #1 for local searches in Hyderabad with these proven local SEO tactics that bring more customers to your business.", date: "April 5, 2025", readTime: "9 min read", slug: "local-seo-hyderabad" },
-];
-
-function FadeUp({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   return (
-    <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay }} className={className}>
+    <motion.div ref={ref} initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.55, delay }}>
       {children}
     </motion.div>
   );
 }
 
+const categories = ["All", "AI & Automation", "Digital Marketing", "SEO", "Branding", "Website Development", "Social Media"];
+
+const posts = [
+  { tag: "AI & Automation", title: "How AI Automation is Transforming Business Operations in 2025", excerpt: "Discover how businesses in Hyderabad are using AI-powered automation to cut costs, increase efficiency, and scale faster than ever before.", date: "May 15, 2025", readTime: "6 min read", slug: "ai-automation-business-2025", img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&auto=format&fit=crop&q=70" },
+  { tag: "SEO", title: "The Complete Guide to SEO for Businesses in Hyderabad", excerpt: "A step-by-step guide to improving your Google rankings and attracting local customers through modern SEO strategies tailored for Hyderabad businesses.", date: "May 10, 2025", readTime: "8 min read", slug: "seo-guide-hyderabad", img: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=600&auto=format&fit=crop&q=70" },
+  { tag: "Branding", title: "Why Your Business Needs a Strong Digital Identity in 2025", excerpt: "In a crowded digital marketplace, your brand identity is your competitive edge. Learn how to build a brand that stands out and drives growth.", date: "April 28, 2025", readTime: "5 min read", slug: "digital-identity-2025", img: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&auto=format&fit=crop&q=70" },
+  { tag: "Social Media", title: "Instagram Marketing Strategies That Actually Work in 2025", excerpt: "Cut through the noise on Instagram with proven strategies for reels, stories, and engagement that convert followers into loyal customers.", date: "April 20, 2025", readTime: "7 min read", slug: "instagram-marketing-2025", img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&auto=format&fit=crop&q=70" },
+  { tag: "Website Development", title: "Why Your Business Website Is Your Most Important Digital Asset", excerpt: "Your website is working 24/7. Learn why investing in a modern, conversion-focused website is the single best digital investment for any business.", date: "April 15, 2025", readTime: "6 min read", slug: "business-website-importance", img: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&auto=format&fit=crop&q=70" },
+  { tag: "SEO", title: "Local SEO: How to Dominate Google Search in Hyderabad", excerpt: "Rank #1 for local searches in Hyderabad with proven local SEO tactics that bring more customers to your business.", date: "April 5, 2025", readTime: "9 min read", slug: "local-seo-hyderabad", img: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&auto=format&fit=crop&q=70" },
+  { tag: "Digital Marketing", title: "Performance Marketing vs. Digital Marketing: What's the Difference?", excerpt: "Understand the key differences between performance marketing and digital marketing, and which approach is right for your business goals.", date: "March 28, 2025", readTime: "5 min read", slug: "performance-vs-digital-marketing", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=70" },
+  { tag: "AI & Automation", title: "WhatsApp Business Automation: The Complete Guide for 2025", excerpt: "Learn how to automate your WhatsApp Business to generate leads, follow up with customers, and improve sales — all on autopilot.", date: "March 20, 2025", readTime: "7 min read", slug: "whatsapp-automation-guide", img: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&auto=format&fit=crop&q=70" },
+  { tag: "Branding", title: "10 Branding Mistakes That Hurt Your Business Growth", excerpt: "Avoid these common branding mistakes that damage credibility, confuse customers, and slow down your business growth.", date: "March 10, 2025", readTime: "6 min read", slug: "branding-mistakes-business", img: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&auto=format&fit=crop&q=70" },
+];
+
 export default function Blog() {
   const [active, setActive] = useState("All");
   const [search, setSearch] = useState("");
 
-  const filtered = posts.filter(p => {
+  const filtered = posts.filter((p) => {
     const matchCat = active === "All" || p.tag === active;
-    const matchSearch = p.title.toLowerCase().includes(search.toLowerCase()) || p.excerpt.toLowerCase().includes(search.toLowerCase());
+    const matchSearch = search === "" || p.title.toLowerCase().includes(search.toLowerCase()) || p.excerpt.toLowerCase().includes(search.toLowerCase());
     return matchCat && matchSearch;
   });
 
+  const featured = posts[0];
+
   return (
-    <main className="pt-24 overflow-x-hidden">
-      <section className="py-20 bg-[#0A0B1A] relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10" style={{ background: "radial-gradient(circle, #E87722, transparent)" }} />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <FadeUp>
-            <span className="text-xs font-mono text-primary tracking-widest uppercase mb-4 block">— LATEST INSIGHTS</span>
-            <h1 className="text-5xl lg:text-6xl font-display font-extrabold text-white leading-tight mb-6">From Our Blog</h1>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Insights, strategies, and guides on AI automation, digital marketing, SEO, and business growth from the ASKreativ team.
-            </p>
-          </FadeUp>
+    <main>
+      {/* Hero */}
+      <section style={{ background: "var(--bg-section)", padding: "100px 0 80px" }}>
+        <div className="container">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "60px", alignItems: "center" }} className="max-lg:block">
+            <div>
+              <span className="section-tag">Blog & Insights</span>
+              <h1 style={{ fontSize: "clamp(32px, 4vw, 50px)", fontWeight: 800, color: "var(--fg)", marginBottom: "16px" }}>
+                Digital Growth <span style={{ color: "var(--orange)" }}>Insights</span>
+              </h1>
+              <p style={{ fontSize: "16px", color: "var(--fg-light)", lineHeight: "1.8", marginBottom: "28px" }}>
+                Strategies, guides, and insights on AI automation, digital marketing, SEO, and business growth from the ASKreativ team.
+              </p>
+              <div style={{ position: "relative", maxWidth: "400px" }}>
+                <Search size={16} style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", color: "var(--fg-lighter)" }} />
+                <input
+                  type="search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search articles..."
+                  style={{
+                    width: "100%", padding: "12px 16px 12px 40px", fontSize: "14px",
+                    background: "var(--card-bg)", color: "var(--fg)",
+                    border: "1px solid var(--border-c)", borderRadius: "50px", outline: "none",
+                  }}
+                />
+              </div>
+            </div>
+            {/* Featured Post */}
+            <FadeUp delay={0.2}>
+              <Link href={`/blog/${featured.slug}`} style={{ display: "block" }}>
+                <div className="card" style={{ padding: 0, overflow: "hidden" }}>
+                  <img src={featured.img} alt={featured.title} style={{ width: "100%", aspectRatio: "16/9", objectFit: "cover" }} />
+                  <div style={{ padding: "20px" }}>
+                    <span style={{ padding: "3px 10px", fontSize: "11px", fontWeight: 700, background: "rgba(232,119,34,0.1)", color: "var(--orange)", borderRadius: "50px", display: "inline-block", marginBottom: "10px" }}>Featured · {featured.tag}</span>
+                    <h3 style={{ fontWeight: 700, fontSize: "17px", color: "var(--fg)", marginBottom: "8px", lineHeight: "1.4" }}>{featured.title}</h3>
+                    <p style={{ fontSize: "13px", color: "var(--fg-light)", lineHeight: "1.6" }}>{featured.excerpt.slice(0, 100)}...</p>
+                  </div>
+                </div>
+              </Link>
+            </FadeUp>
+          </div>
         </div>
       </section>
 
-      <section className="py-20 bg-[#0F1035]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeUp className="flex flex-col sm:flex-row gap-4 mb-8">
-            <div className="relative flex-1 max-w-sm">
-              <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
-              <input
-                type="search"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search articles..."
-                className="w-full bg-[#141630] border border-white/10 rounded-full pl-10 pr-4 py-2.5 text-white text-sm placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/50 transition-colors"
-                data-testid="input-blog-search"
-              />
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {categories.map(cat => (
+      {/* Articles */}
+      <section className="section">
+        <div className="container">
+          {/* Filter */}
+          <FadeUp>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "40px" }}>
+              {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActive(cat)}
-                  className={`px-4 py-2 rounded-full text-xs font-medium transition-all ${active === cat ? "bg-primary text-white" : "bg-[#141630] border border-white/10 text-muted-foreground hover:border-primary/30 hover:text-white"}`}
-                  data-testid={`button-cat-${cat.toLowerCase().replace(/\s/g, "-")}`}
+                  style={{
+                    padding: "7px 18px", borderRadius: "50px", fontSize: "13px", fontWeight: 600,
+                    cursor: "pointer", transition: "all 0.2s", border: "2px solid",
+                    borderColor: active === cat ? "var(--orange)" : "var(--border-c)",
+                    background: active === cat ? "var(--orange)" : "transparent",
+                    color: active === cat ? "#fff" : "var(--fg-light)",
+                  }}
                 >
                   {cat}
                 </button>
@@ -78,23 +110,27 @@ export default function Blog() {
           </FadeUp>
 
           {filtered.length === 0 ? (
-            <div className="text-center py-20 text-muted-foreground">No articles found matching your search.</div>
+            <div style={{ textAlign: "center", padding: "60px 0", color: "var(--fg-light)" }}>No articles found matching your search.</div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "24px" }}>
               {filtered.map((post, i) => (
                 <FadeUp key={post.slug} delay={i * 0.07}>
-                  <Link href={`/blog/${post.slug}`} data-testid={`card-blog-${post.slug}`}>
-                    <div className="group h-full bg-[#141630] border border-white/8 rounded-2xl p-6 hover:border-primary/30 hover:shadow-[0_0_30px_rgba(232,119,34,0.1)] hover:-translate-y-1 transition-all duration-300">
-                      <span className="inline-block px-3 py-1 bg-primary/10 border border-primary/20 text-primary text-xs rounded-full mb-4">{post.tag}</span>
-                      <h2 className="text-white font-display font-bold text-lg mb-3 group-hover:text-primary transition-colors leading-snug">{post.title}</h2>
-                      <p className="text-muted-foreground text-sm leading-relaxed mb-4">{post.excerpt}</p>
-                      <div className="flex items-center justify-between text-xs text-muted-foreground/60">
-                        <div className="flex items-center gap-3">
-                          <span>{post.date}</span>
-                          <span>·</span>
-                          <span>{post.readTime}</span>
+                  <Link href={`/blog/${post.slug}`} style={{ display: "block", height: "100%" }}>
+                    <div className="card" style={{ padding: 0, overflow: "hidden", height: "100%", display: "flex", flexDirection: "column" }}>
+                      <div style={{ overflow: "hidden" }}>
+                        <img src={post.img} alt={post.title} style={{ width: "100%", aspectRatio: "16/9", objectFit: "cover", transition: "transform 0.4s" }} />
+                      </div>
+                      <div style={{ padding: "20px 24px", flex: 1, display: "flex", flexDirection: "column" }}>
+                        <span style={{ padding: "3px 10px", fontSize: "11px", fontWeight: 700, background: "rgba(232,119,34,0.1)", color: "var(--orange)", borderRadius: "50px", display: "inline-block", marginBottom: "10px", alignSelf: "flex-start" }}>{post.tag}</span>
+                        <h3 style={{ fontWeight: 700, fontSize: "16px", color: "var(--fg)", marginBottom: "10px", lineHeight: "1.4", flex: 1 }}>{post.title}</h3>
+                        <p style={{ fontSize: "13px", color: "var(--fg-light)", lineHeight: "1.6", marginBottom: "16px" }}>{post.excerpt.slice(0, 100)}...</p>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "12px", color: "var(--fg-lighter)" }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                            <span>{post.date}</span>
+                            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}><Clock size={12} /> {post.readTime}</span>
+                          </div>
+                          <span style={{ color: "var(--orange)", display: "flex", alignItems: "center", gap: "4px" }}>Read <ArrowRight size={12} /></span>
                         </div>
-                        <span className="text-primary flex items-center gap-1">Read <ArrowRight size={12} /></span>
                       </div>
                     </div>
                   </Link>

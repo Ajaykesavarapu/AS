@@ -3,80 +3,99 @@ import { motion, useInView } from "framer-motion";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { useModal } from "@/App";
 
-const categories = ["All", "Digital Marketing", "Website Development", "AI Automation", "Branding", "SEO", "Mobile App"];
-
-const projects = [
-  { title: "Solar Energy Brand Launch", category: "Branding", industry: "Solar Industries", desc: "Complete brand identity, logo design, and digital marketing campaign for a Hyderabad-based solar energy company.", tags: ["Branding", "Digital Marketing"] },
-  { title: "Healthcare Clinic Website", category: "Website Development", industry: "Healthcare", desc: "Modern, conversion-focused website with online appointment booking and patient portal integration.", tags: ["Website Development", "SEO"] },
-  { title: "Real Estate Lead Generation", category: "Digital Marketing", industry: "Real Estate", desc: "Comprehensive digital marketing campaign generating 500+ qualified leads per month for a real estate developer.", tags: ["Digital Marketing", "SEO"] },
-  { title: "Sports Academy App", category: "Mobile App", industry: "Sports", desc: "Custom Android and iOS application for a sports academy with attendance, progress tracking, and parent communication.", tags: ["Mobile App"] },
-  { title: "Restaurant Automation", category: "AI Automation", industry: "Hospitality", desc: "WhatsApp automation system for order management, customer follow-ups, and table reservations for a restaurant chain.", tags: ["AI Automation"] },
-  { title: "E-Commerce SEO Growth", category: "SEO", industry: "E-Commerce", desc: "300% increase in organic traffic for an e-commerce brand through comprehensive SEO strategy and content marketing.", tags: ["SEO", "Digital Marketing"] },
-  { title: "Corporate ERP System", category: "AI Automation", industry: "Corporate", desc: "Custom ERP solution integrating HR, attendance, billing, and operations for a 200+ employee company.", tags: ["AI Automation"] },
-  { title: "Educational Institution Platform", category: "Website Development", industry: "Education", desc: "Feature-rich educational website with student portal, online admissions, and course management system.", tags: ["Website Development", "SEO"] },
-  { title: "Startup Brand Identity", category: "Branding", industry: "Startup", desc: "Complete brand identity system including logo, brand guidelines, social media templates, and pitch deck design.", tags: ["Branding"] },
-];
-
-function FadeUp({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   return (
-    <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay }} className={className}>
+    <motion.div ref={ref} initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.55, delay }}>
       {children}
     </motion.div>
   );
 }
 
+const categories = ["All", "Digital Marketing", "Website Development", "AI Automation", "Branding", "SEO", "Mobile App", "Graphic Design"];
+
+const projects = [
+  { title: "Solar Energy Brand Launch", category: "Branding", industry: "Solar Industries", tags: ["Branding", "Digital Marketing"], img: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=500&auto=format&fit=crop&q=70", desc: "Complete brand identity, logo design, and digital marketing campaign for a Hyderabad-based solar company." },
+  { title: "Healthcare Clinic Website", category: "Website Development", industry: "Healthcare", tags: ["Website Development", "SEO"], img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=500&auto=format&fit=crop&q=70", desc: "Modern website with online appointment booking and patient portal for a Hyderabad clinic." },
+  { title: "Real Estate Lead Generation", category: "Digital Marketing", industry: "Real Estate", tags: ["Digital Marketing", "SEO"], img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=500&auto=format&fit=crop&q=70", desc: "Comprehensive digital campaign generating 500+ qualified leads per month for a real estate developer." },
+  { title: "Sports Academy Mobile App", category: "Mobile App", industry: "Sports", tags: ["Mobile App"], img: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=500&auto=format&fit=crop&q=70", desc: "Custom Android and iOS application with attendance, progress tracking, and parent communication." },
+  { title: "Restaurant WhatsApp Automation", category: "AI Automation", industry: "Hospitality", tags: ["AI Automation"], img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=500&auto=format&fit=crop&q=70", desc: "WhatsApp automation for order management, customer follow-ups, and reservations for a restaurant chain." },
+  { title: "E-Commerce SEO Growth", category: "SEO", industry: "E-Commerce", tags: ["SEO", "Digital Marketing"], img: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=500&auto=format&fit=crop&q=70", desc: "300% increase in organic traffic for an e-commerce brand through strategic SEO and content marketing." },
+  { title: "Corporate ERP System", category: "AI Automation", industry: "Corporate", tags: ["AI Automation"], img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&auto=format&fit=crop&q=70", desc: "Custom ERP integrating HR, attendance, billing, and operations for a 200+ employee company." },
+  { title: "Educational Institution Platform", category: "Website Development", industry: "Education", tags: ["Website Development", "SEO"], img: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=500&auto=format&fit=crop&q=70", desc: "Feature-rich educational website with student portal, online admissions, and course management." },
+  { title: "Startup Brand Identity", category: "Branding", industry: "Startup", tags: ["Branding", "Graphic Design"], img: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=500&auto=format&fit=crop&q=70", desc: "Complete brand identity system including logo, guidelines, social media templates, and pitch deck." },
+  { title: "Social Media Campaign", category: "Digital Marketing", industry: "Retail", tags: ["Digital Marketing", "Graphic Design"], img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=500&auto=format&fit=crop&q=70", desc: "Instagram and Facebook campaign achieving 10x engagement growth for a fashion retail brand." },
+  { title: "AI Lead Management System", category: "AI Automation", industry: "Finance", tags: ["AI Automation"], img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=500&auto=format&fit=crop&q=70", desc: "AI-powered lead scoring and automated nurturing system for a financial services firm." },
+  { title: "Event Branding & Graphics", category: "Graphic Design", industry: "Events", tags: ["Graphic Design", "Branding"], img: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500&auto=format&fit=crop&q=70", desc: "Complete event branding package including stage design, digital materials, and social media creatives." },
+];
+
 export default function Portfolio() {
   const [active, setActive] = useState("All");
   const { openModal } = useModal();
 
-  const filtered = active === "All" ? projects : projects.filter(p => p.tags.includes(active));
+  const filtered = active === "All" ? projects : projects.filter((p) => p.tags.includes(active));
 
   return (
-    <main className="pt-24 overflow-x-hidden">
-      <section className="py-20 bg-[#0A0B1A] relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10" style={{ background: "radial-gradient(circle, #E87722, transparent)" }} />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <FadeUp>
-            <span className="text-xs font-mono text-primary tracking-widest uppercase mb-4 block">— OUR PORTFOLIO</span>
-            <h1 className="text-5xl lg:text-6xl font-display font-extrabold text-white leading-tight mb-6">Our Work Speaks For Itself</h1>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              A collection of projects where we've helped businesses across Hyderabad and India build stronger digital futures.
-            </p>
-          </FadeUp>
+    <main>
+      {/* Hero */}
+      <section style={{ background: "var(--bg-section)", padding: "100px 0 80px", textAlign: "center" }}>
+        <div className="container">
+          <span className="section-tag" style={{ justifyContent: "center" }}>Our Portfolio</span>
+          <h1 style={{ fontSize: "clamp(32px, 4vw, 50px)", fontWeight: 800, color: "var(--fg)", marginBottom: "16px" }}>
+            Our Work <span style={{ color: "var(--orange)" }}>Speaks For Itself</span>
+          </h1>
+          <p style={{ fontSize: "16px", color: "var(--fg-light)", maxWidth: "600px", margin: "0 auto", lineHeight: "1.8" }}>
+            A curated collection of projects where we've helped businesses across Hyderabad and India build stronger digital futures.
+          </p>
         </div>
       </section>
 
-      <section className="py-20 bg-[#0F1035]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeUp className="flex flex-wrap justify-center gap-3 mb-12">
-            {categories.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setActive(cat)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${active === cat ? "bg-primary text-white shadow-[0_0_20px_rgba(232,119,34,0.3)]" : "bg-[#141630] border border-white/10 text-muted-foreground hover:border-primary/30 hover:text-white"}`}
-                data-testid={`button-filter-${cat.toLowerCase().replace(/\s/g, "-")}`}
-              >
-                {cat}
-              </button>
-            ))}
+      {/* Filter + Grid */}
+      <section className="section">
+        <div className="container">
+          {/* Filter Tabs */}
+          <FadeUp>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", justifyContent: "center", marginBottom: "48px" }}>
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActive(cat)}
+                  style={{
+                    padding: "8px 20px", borderRadius: "50px", fontSize: "13px", fontWeight: 600,
+                    cursor: "pointer", transition: "all 0.2s", border: "2px solid",
+                    borderColor: active === cat ? "var(--orange)" : "var(--border-c)",
+                    background: active === cat ? "var(--orange)" : "transparent",
+                    color: active === cat ? "#fff" : "var(--fg-light)",
+                  }}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
           </FadeUp>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {filtered.map((project, i) => (
-              <FadeUp key={project.title} delay={i * 0.07}>
-                <div className="group h-full bg-[#141630] border border-white/8 rounded-2xl p-6 hover:border-primary/30 hover:shadow-[0_0_30px_rgba(232,119,34,0.1)] hover:-translate-y-1 transition-all duration-300">
-                  <div className="flex items-start justify-between mb-4">
-                    <span className="px-3 py-1 bg-primary/10 border border-primary/20 text-primary text-xs rounded-full">{project.industry}</span>
-                    <ExternalLink size={16} className="text-muted-foreground group-hover:text-primary transition-colors" />
+          {/* Grid */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "24px" }}>
+            {filtered.map((p, i) => (
+              <FadeUp key={p.title} delay={i * 0.06}>
+                <div className="card" style={{ padding: 0, overflow: "hidden" }}>
+                  <div style={{ position: "relative", overflow: "hidden", aspectRatio: "16/9" }}>
+                    <img src={p.img} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.4s ease" }} className="group-hover:scale-105" />
+                    <div style={{ position: "absolute", top: "12px", right: "12px" }}>
+                      <span style={{ padding: "4px 12px", background: "rgba(0,0,0,0.7)", color: "#fff", fontSize: "11px", borderRadius: "50px" }}>{p.industry}</span>
+                    </div>
                   </div>
-                  <h3 className="text-white font-display font-bold text-lg mb-2 group-hover:text-primary transition-colors">{project.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-4">{project.desc}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map(tag => (
-                      <span key={tag} className="text-xs text-muted-foreground/60 bg-white/5 px-2 py-1 rounded">{tag}</span>
-                    ))}
+                  <div style={{ padding: "20px 24px" }}>
+                    <h3 style={{ fontWeight: 700, fontSize: "16px", color: "var(--fg)", marginBottom: "8px" }}>{p.title}</h3>
+                    <p style={{ fontSize: "13px", color: "var(--fg-light)", lineHeight: "1.7", marginBottom: "16px" }}>{p.desc}</p>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                      {p.tags.map((tag) => (
+                        <span key={tag} style={{ padding: "3px 10px", fontSize: "11px", fontWeight: 600, background: "rgba(232,119,34,0.08)", color: "var(--orange)", borderRadius: "50px", border: "1px solid rgba(232,119,34,0.2)" }}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </FadeUp>
@@ -85,19 +104,16 @@ export default function Portfolio() {
         </div>
       </section>
 
-      <section className="py-20 bg-[#0A0B1A]">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <FadeUp>
-            <h2 className="text-3xl font-display font-bold text-white mb-4">Ready to Add Your Business to Our Portfolio?</h2>
-            <p className="text-muted-foreground mb-8">Let's create something remarkable together.</p>
-            <button
-              onClick={openModal}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white font-bold rounded-full hover:bg-primary/90 transition-all hover:shadow-[0_0_30px_rgba(232,119,34,0.4)]"
-              data-testid="button-portfolio-cta"
-            >
-              Start Your Project <ArrowRight size={18} />
-            </button>
-          </FadeUp>
+      {/* CTA */}
+      <section className="cta-banner">
+        <div className="container" style={{ position: "relative", zIndex: 1, textAlign: "center" }}>
+          <h2 style={{ fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 800, color: "#fff", marginBottom: "16px" }}>
+            Ready to Add Your Business to Our Portfolio?
+          </h2>
+          <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "32px" }}>Let's create something remarkable together.</p>
+          <button onClick={openModal} className="btn-primary">
+            Start Your Project <ArrowRight size={16} />
+          </button>
         </div>
       </section>
     </main>
