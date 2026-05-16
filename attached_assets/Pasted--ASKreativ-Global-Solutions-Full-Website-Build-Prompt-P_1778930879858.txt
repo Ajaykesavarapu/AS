@@ -1,0 +1,920 @@
+# ASKreativ Global Solutions — Full Website Build Prompt
+
+---
+
+## 🎯 PROJECT OVERVIEW
+
+Build a **full-stack, production-grade marketing website** for **ASKreativ Global Solutions** — an AI automation and digital marketing agency based in Hyderabad, India.
+
+The website must be inspired by the **UI/UX structure and feel of https://shiftwave.com/** — including its layout architecture, scroll behaviors, section sequencing, sticky navigation, animated stats, service cards, client strips, process steps, FAQ accordion, and CTA sections — but fully redesigned using **ASKreativ's brand identity, color palette, content, and personality**.
+
+---
+
+## 🎨 BRAND IDENTITY & COLOR PALETTE
+
+### Logo
+- The ASKreativ logo contains:
+  - **"As"** in **Dark Navy Blue** (`#1A1F6E` or close)
+  - **"K" arrow icon** in **Orange** (`#E87722`)
+  - **"reativ"** in **Orange** (`#E87722`)
+  - Tagline: **"Design Your Life"** in **Amber/Gold** (`#F5A623`)
+- Always show the logo in the navbar and footer on a **dark background**.
+
+### Primary Color Palette
+| Role | Color | Hex |
+|---|---|---|
+| Primary Brand Navy | Deep Blue | `#1A1F6E` |
+| Primary Accent | Vibrant Orange | `#E87722` |
+| Highlight / Gold | Amber Gold | `#F5A623` |
+| Background Dark | Near Black | `#0A0B1A` |
+| Background Mid | Dark Navy | `#0F1035` |
+| Card Surface | Subtle Dark | `#141630` |
+| Text Primary | White | `#FFFFFF` |
+| Text Muted | Light Gray | `#A0A8C0` |
+| Border Subtle | Blue-tinted | `rgba(255,255,255,0.08)` |
+
+### Typography
+- **Display / Hero headings**: `Clash Display` or `Syne` (Bold, 700–800 weight) — modern, geometric
+- **Body / Subheadings**: `DM Sans` or `Plus Jakarta Sans` — clean and readable
+- **Accent / Labels**: `Space Mono` — for numbered labels, tags (e.g., "01 —")
+- Import from Google Fonts or CDN
+
+### Design Aesthetic
+- **Dark, premium, futuristic** — deep navy/black backgrounds with orange and gold accents
+- Subtle **animated gradient meshes** in hero sections
+- **Glassmorphism cards** with orange glow borders on hover
+- **Orange underline / accent lines** as section dividers
+- Smooth **scroll-triggered fade-in and slide-up** animations on all sections
+- Staggered reveal animations on lists and cards
+- Custom **scroll progress bar** (orange, top of page)
+- Sticky navigation with **blur backdrop** on scroll
+- **Cursor glow effect** (subtle orange radial glow following cursor on desktop)
+
+---
+
+## 🏗️ TECH STACK
+
+### Frontend
+- **Next.js 14** (App Router) — SSR + SSG for SEO
+- **TypeScript**
+- **Tailwind CSS** + custom CSS variables
+- **Framer Motion** — page transitions, scroll animations, staggered reveals
+- **GSAP** (optional) — for hero text animation and number counters
+
+### Backend / CMS
+- **Contentful** or **Sanity.io** — CMS for blogs, FAQs, services (structured content)
+- **Next.js API Routes** — for contact form handling
+- **Nodemailer** or **Resend** — email on form submission
+- **Vercel** — deployment (with edge functions)
+
+### SEO (Technical)
+- `next/metadata` API for meta tags per page
+- Structured data (JSON-LD): `Organization`, `LocalBusiness`, `WebPage`, `FAQPage`
+- `sitemap.xml` and `robots.txt` auto-generated
+- Open Graph + Twitter Card images per page
+- `next/image` for all images (WebP, lazy loading)
+- Canonical tags on all pages
+
+---
+
+## 📐 SITE ARCHITECTURE
+
+```
+/ (Home)
+/about
+/services
+  /digital-marketing
+  /ai-automation
+  /seo-services
+  /website-development
+  /social-media-marketing
+  /erp-management-systems
+  /mobile-app-development
+  /branding-creative-design
+/portfolio
+/blog
+  /[slug]
+/contact
+/careers
+/faq
+```
+
+---
+
+## 🖥️ HOME PAGE — COMPLETE SECTION-BY-SECTION SPECIFICATION
+
+### META / SEO
+```
+Slug: /
+Meta Title: AI Automation & Digital Marketing Agency Hyderabad
+Meta Description: ASKreativ is an AI automation and digital marketing agency in Hyderabad, helping businesses with SEO, branding, websites, ERP systems, and apps.
+Focus Keyword: AI digital marketing company
+JSON-LD: Organization + LocalBusiness schema
+```
+
+---
+
+### SECTION 1 — STICKY NAVIGATION (Fixed / Glassmorphic)
+
+**Behavior:**
+- Transparent on load, becomes **dark navy with blur** (`backdrop-filter: blur(20px)`) after 80px scroll
+- Orange scroll progress bar at very top of viewport
+- Smooth 300ms transition on scroll
+
+**Layout (Desktop):**
+```
+[ASKreativ Logo]    [Home] [About] [Services ▾] [Portfolio] [Blog] [Contact]    [Book a Free Call →]
+```
+
+**Services Megamenu** on hover — 2-column dropdown:
+- Left column: service name + one-line description
+- Right column: highlight CTA card ("Ready to grow? Book a Free Call")
+
+**Mobile:**
+- Hamburger → full-screen slide-over menu with staggered link animation
+- Orange animated underline on active link
+- "Book a Free Call" as prominent bottom CTA in mobile menu
+
+---
+
+### SECTION 2 — HERO (Full Viewport)
+
+**Layout:** Full-screen dark section with animated gradient mesh background (navy + subtle orange particles)
+
+**Background Effect:**
+- Animated radial gradient mesh: deep navy center, subtle orange bloom top-right, purple-navy bottom-left
+- Floating particle dots (very subtle, CSS keyframe animation)
+- Optional: looping background video (dark abstract, like shiftwave.com) with `mix-blend-mode: overlay`
+
+**Content — Left-aligned, large typographic layout:**
+
+```
+[Small label tag — orange pill badge]
+ AI AUTOMATION · DIGITAL MARKETING · HYDERABAD
+
+[Hero Heading — 3 lines, Clash Display font, 72–96px]
+Behind Every
+Growing Business
+Is a Vision.
+
+[Subheading — muted, DM Sans, 20px]
+ASKreativ helps transform that vision into
+intelligent digital growth — through AI,
+automation, branding, and modern technology.
+
+[CTA Buttons — side by side]
+[→ Let's Build Your Future]  [Explore Our Services]
+  (Orange filled)               (Ghost / outline)
+
+[Scroll indicator — animated downward chevron]
+```
+
+**Right side (desktop):** 3D-style floating card stack or abstract grid of service icons with orange glow
+
+**Animated text:** Hero headline words animate in with staggered character/word reveal (Framer Motion `variants`)
+
+---
+
+### SECTION 3 — HUMAN STORYTELLING
+
+**Layout:** Centered, cinematic text section — large typography on dark background
+
+**Style:** Inspired by Apple-style scroll storytelling — large spaced-out text, each line fades in on scroll
+
+```
+Behind every growing business, there is:
+
+  A dream,         ← fades in first
+  A struggle,      ← fades in second
+  A family,        ← fades in third
+  and a vision for something bigger.  ← fades in last
+
+[Pause / divider line in orange]
+
+ASKreativ helps transform that vision
+into digital growth.
+```
+
+**Typography:** 48–64px, `Clash Display`, white, generous line-height, centered
+**Animation:** Each line fades in + slides up as user scrolls (Framer Motion `useInView`)
+
+---
+
+### SECTION 4 — ABOUT US
+
+**Layout:** Two-column (text left, visual right on desktop; stacked on mobile)
+
+**Left Column — Text:**
+```
+[Section Label — Space Mono, orange, small caps]
+— ABOUT US
+
+[Heading — Clash Display, 48px]
+Building Smarter Digital Growth
+for Modern Businesses
+
+[Body — DM Sans, 18px, muted gray]
+ASKreativ Global Solutions is an AI-powered digital 
+growth company helping businesses scale through 
+automation, branding, marketing, websites, ERP 
+systems, and modern digital solutions.
+
+We combine creativity, technology, AI, and strategy 
+to build intelligent digital ecosystems designed for 
+visibility, efficiency, and long-term business growth.
+
+[Link]
+→ Explore More About ASKreativ
+  (Orange text, animated underline on hover)
+```
+
+**Right Column — Visual:**
+- Abstract animated graphic: interconnected nodes/graph representing digital ecosystem
+- OR: grid of 4 stat cards (see Stats section content) arranged in 2×2
+- Orange glow border on the container
+
+---
+
+### SECTION 5 — SERVICES
+
+**Section Header:**
+```
+[Label] — OUR SERVICES
+
+[Heading]
+AI Automation, Digital Marketing & Development
+Solutions Built for Modern Business Growth
+
+[Subtext]
+From AI-powered automation to digital marketing, 
+ERP systems, websites, mobile applications, and 
+branding — ASKreativ helps businesses build 
+intelligent digital ecosystems.
+
+[CTA]  → Explore All Services
+```
+
+**Services Grid:**
+- **Desktop:** 4 columns × 2 rows (8 cards)
+- **Mobile:** 1 column scroll
+- **Card style:** Glassmorphic dark card, orange number label top-left, icon, title, one-line description
+- **Hover effect:** Orange border glow + slight scale-up + arrow icon reveals
+
+| # | Service | Icon Concept |
+|---|---|---|
+| 01 | Digital Marketing | Target/growth arrow |
+| 02 | AI Automation | Circuit/robot brain |
+| 03 | SEO Services | Search/magnifier |
+| 04 | Website Development | Code brackets |
+| 05 | Social Media Marketing | Social graph |
+| 06 | ERP Management Systems | Grid/system |
+| 07 | Mobile App Development | Phone frame |
+| 08 | Branding & Creative Design | Pen/palette |
+
+**Card Content per service:**
+Each card shows: Number · Title · 1-line description (from content doc) · Arrow icon
+
+**Below grid — Hook Banner:**
+Dark navy strip with orange left border:
+```
+Your Business Needs More Than Marketing.
+It Needs an Intelligent Growth Ecosystem.
+                              [Let's Build Your Digital Future →]
+```
+
+---
+
+### SECTION 6 — CLIENTS / TRUST
+
+**Section Header:**
+```
+[Label] — OUR CLIENTS
+
+[Heading]
+Trusted by Growing Businesses & Modern Brands
+
+[Subtext]
+From educational institutions and startups to 
+business owners and growing enterprises...
+
+We believe every client relationship is built on:
+  Trust · Transparency · Innovation · Measurable Growth
+```
+
+**Infinite Logo Marquee Strip:**
+Horizontally scrolling marquee of client/industry icons (auto-scroll, pause on hover)
+Industries listed as pill badges since no specific client logos are provided:
+```
+Educational Institutions · Solar Industries · Healthcare & Clinics ·
+Real Estate Companies · Sports Academies · Startups & Entrepreneurs ·
+Local Businesses · Corporate Companies · E-Commerce Brands ·
+Restaurants & Hospitality · Professional Service Providers
+```
+Style: Orange-bordered pill badges scrolling on dark background
+
+**Client Trust Statement (Storytelling block):**
+```
+Every business has:
+
+  A Story          A Vision and Mission
+  A Value          A Responsibility
+  and a growth story.
+
+ASKreativ works as a long-term digital growth partner 
+focused on helping brands grow smarter through AI, 
+automation, branding, and modern digital infrastructure.
+```
+Layout: 2×2 grid of phrases, then paragraph — centered, fade-in on scroll
+
+---
+
+### SECTION 7 — STATS
+
+**Layout:** 4-column stat bar (dark background with orange accent line above)
+**Animation:** Count-up numbers on scroll into view (GSAP or custom JS counter)
+
+```
+[Multiple]          [AI-Powered]       [Multi-Industry]    [Future-Ready]
+Projects Delivered  Growth Solutions   Experience          Digital Systems
+```
+
+Style: Large number (or word) in white/orange, label below in muted gray, separated by vertical orange lines
+
+**Below stats — CTA strip:**
+```
+Let's Build Something Bigger Together
+                    [Partner With ASKreativ →]
+```
+Orange gradient background strip, white text, dark button with orange border
+
+---
+
+### SECTION 8 — OUR PROCESS
+
+**Section Header:**
+```
+[Label] — OUR PROCESS
+
+[Heading]
+We Build Connected Digital Ecosystems
+for Long-Term Business Success.
+
+[Subtext]
+We don't just deliver services.
+We build connected digital ecosystems designed 
+for long-term business success.
+```
+
+**Process Steps Layout:**
+- **Desktop:** Alternating left/right timeline (like a zigzag, with a central vertical orange line)
+- **Mobile:** Vertical stacked with orange left border line
+
+| # | Step | Description |
+|---|---|---|
+| 01 | Discover & Understand | We analyze your business, audience, and goals to build the right digital growth foundation. |
+| 02 | Strategize & Structure | We create customized strategies focused on branding, automation, visibility, and scalable growth. |
+| 03 | Create & Build | We develop websites, apps, ERP systems, and digital experiences designed for performance and engagement. |
+| 04 | Automate & Optimize | We integrate AI-powered automation systems that improve efficiency and customer communication. |
+| 05 | Launch & Grow | We execute growth-driven marketing strategies focused on visibility, leads, and business expansion. |
+| 06 | Scale & Evolve | We continuously optimize systems and strategies to help businesses scale sustainably. |
+
+**Animation:** Each step slides in from alternating sides on scroll
+
+**Process Bottom CTA Banner:**
+```
+From Vision to Digital Growth,
+We Build Systems That Scale Businesses.
+
+              [Let's Build Your Future With ASKreativ →]
+```
+Dark background, orange gradient text on heading, filled orange button
+
+---
+
+### SECTION 9 — BLOG PREVIEW
+
+**Layout:** 3-column card grid (latest 3 blog posts from CMS)
+**Card style:** Dark glass card, orange category tag, title, excerpt, date, "Read More →"
+**Section Header:**
+```
+[Label] — LATEST INSIGHTS
+
+[Heading]  From Our Blog
+```
+**CTA:** `→ View All Articles`
+
+*Note: Pull from Contentful/Sanity via Next.js `generateStaticParams`*
+
+---
+
+### SECTION 10 — FAQ
+
+**Section Header:**
+```
+[Label] — FAQs
+
+[Heading]
+Frequently Asked Questions About
+Digital Marketing Agency Hyderabad
+```
+
+**Accordion Component:**
+- 11 FAQ items from content doc (see below)
+- Animated expand/collapse with Framer Motion
+- Orange `+` → `×` icon toggle
+- Smooth height animation
+- First item open by default
+- Orange left border on open item
+
+**FAQ Items:**
+1. Why should you choose ASKreativ as a digital marketing agency in Hyderabad?
+2. How can a digital marketing agency in Hyderabad help your business grow?
+3. Does ASKreativ provide AI automation services in Hyderabad?
+4. Why is SEO important for businesses?
+5. Do we provide website development services in Hyderabad?
+6. Do we provide social media marketing services in Hyderabad?
+7. Can ASKreativ build ERP systems for businesses in Hyderabad?
+8. Do we provide mobile app development services in Hyderabad?
+9. How long does SEO take for businesses in Hyderabad?
+10. Do you provide branding services in Hyderabad?
+11. How can I contact ASKreativ digital marketing agency Hyderabad?
+
+**Below FAQ — CTA:**
+```
+Looking for a Digital Marketing Agency in Hyderabad?
+
+[Let's Build Your Digital Growth System →]
+```
+
+---
+
+### SECTION 11 — FOOTER
+
+**Layout:** Dark navy footer (darker than main background), 4-column grid + bottom bar
+
+**Column 1 — Brand:**
+- ASKreativ logo (light version)
+- Tagline: "Design Your Life"
+- Short brand description (2 lines)
+- Social media icons: Instagram, LinkedIn, Facebook, YouTube (orange on hover)
+
+**Column 2 — Company:**
+Home · About Us · Services · Portfolio · Blog · Contact · Careers · FAQ
+
+**Column 3 — Services:**
+Digital Marketing · AI Automation · SEO Services · Website Development · Social Media Marketing · ERP Systems · Mobile App Development · Branding & Design
+
+**Column 4 — Contact:**
+- 📍 Hyderabad, Telangana, India
+- 📧 hello@askreativ.com (placeholder)
+- 📞 +91 XXXXX XXXXX (placeholder)
+- [Book a Free Consultation →] (orange button)
+
+**Bottom Bar:**
+```
+© 2025 ASKreativ Global Solutions. All Rights Reserved.
+Privacy Policy · Terms of Service · Sitemap
+```
+
+---
+
+### POPUP — FREE CONSULTATION MODAL
+
+**Trigger:** "Book a Free Call" CTA button anywhere on site
+**Style:** Centered modal, dark glass background, orange border, blur backdrop
+**Close:** `×` top right, click outside, `Escape` key
+
+**Modal Content:**
+```
+[Small label] — FREE CONSULTATION
+
+[Heading]
+Let's Build Your
+Digital Growth System
+
+[Subtext]
+Share your details and our team will reach out
+within 24 hours.
+
+[Form Fields]
+Full Name *         [________________]
+Business Name       [________________]
+Email Address *     [________________]
+Phone Number *      [________________]
+Service Interested  [Dropdown ▾]
+                    → Digital Marketing
+                    → AI Automation
+                    → SEO Services
+                    → Website Development
+                    → Social Media Marketing
+                    → ERP Systems
+                    → Mobile App Development
+                    → Branding & Design
+                    → Other / Not Sure
+
+Message (Optional)  [________________]
+                    [________________]
+
+[Submit Button — full width orange]
+→ Send My Request
+
+[Privacy note — tiny text]
+We respect your privacy. No spam, ever.
+```
+
+**On Submit:** Success state with animated checkmark + "We'll be in touch within 24 hours!"
+
+---
+
+### POPUP — COOKIE CONSENT BANNER
+
+**Position:** Bottom of screen, slide-up on first visit
+**Style:** Dark glass, compact, orange accept button
+
+```
+🍪 We use cookies to improve your experience.
+[Learn More]    [Decline]    [Accept All →]
+```
+
+---
+
+### POPUP — EXIT INTENT (Optional)
+
+**Trigger:** Mouse moves toward top of browser (exit intent detection)
+**Content:**
+```
+Wait! Before you go...
+
+Get a FREE Digital Growth Audit
+for your business.
+
+[Name]  [Email]  [→ Claim Free Audit]
+
+No commitment. 100% free.
+```
+
+---
+
+## 📱 RESPONSIVE DESIGN REQUIREMENTS
+
+| Breakpoint | Behavior |
+|---|---|
+| Mobile (< 640px) | Single column, full-width CTAs, hamburger nav |
+| Tablet (640–1024px) | 2-column grids, condensed nav |
+| Desktop (> 1024px) | Full multi-column layouts, megamenu |
+| Large (> 1440px) | Max-width container 1280px, centered |
+
+- Touch-friendly tap targets (min 44px)
+- No horizontal scroll on any breakpoint
+- Swipeable service cards on mobile (use Embla Carousel or Swiper.js)
+
+---
+
+## ✨ ANIMATIONS & INTERACTIONS
+
+### Page Load
+- Logo fades in first (300ms)
+- Nav links stagger in (50ms delay each)
+- Hero heading character-by-character reveal (Framer Motion `staggerChildren`)
+- Hero subtext and CTAs fade up after heading
+
+### Scroll Animations (all sections)
+- Section headings: fade up + slide from bottom
+- Cards: staggered fade-in (100ms delay per card)
+- Process steps: alternate left/right slide-in
+- Stats: count-up numbers (Intersection Observer trigger)
+- Story lines: sequential fade-in on scroll
+
+### Hover States
+- Nav links: orange underline slides in from left
+- Service cards: border glow + `translateY(-4px)` + arrow slides right
+- CTA buttons: slight scale + background color shift
+- Footer links: orange color transition
+
+### Cursor (Desktop only)
+- Custom circular cursor: small white dot + larger orange ring (slightly delayed)
+- Orange ring scales up on hover over interactive elements
+
+---
+
+## ⚡ PERFORMANCE REQUIREMENTS
+
+- Lighthouse score: **95+** on all metrics
+- `next/image` for all images (WebP, AVIF, lazy loading, blur placeholder)
+- Critical CSS inlined
+- Font subsetting (only required characters)
+- Defer non-critical JS
+- No layout shift (CLS < 0.1)
+- First Contentful Paint < 1.5s
+
+---
+
+## 🔒 CONTACT FORM & BACKEND
+
+- Form submissions → API Route `/api/contact`
+- Validate with **Zod** (server-side) + **React Hook Form** (client-side)
+- Email via **Resend** or **Nodemailer** with SMTP
+- Send confirmation email to user + notification to ASKreativ team
+- **Honeypot** field for spam protection
+- **Rate limiting** (max 5 submissions / IP / hour)
+- Store leads in **Supabase** or **Airtable** (optional)
+
+---
+
+## 📋 ADDITIONAL PAGES (Brief specs — content to be provided later)
+
+| Page | Key Sections |
+|---|---|
+| `/about` | Story, Mission/Vision, Team, Values, Timeline |
+| `/services` | All 8 service cards + individual service pages |
+| `/portfolio` | Filterable grid by service type |
+| `/blog` | Grid layout, category filter, search |
+| `/blog/[slug]` | Article layout, TOC, related posts, CTA |
+| `/contact` | Map, form, contact details, social |
+| `/faq` | Full FAQ page (expanded from homepage) |
+| `/careers` | Open positions, culture, application form |
+
+---
+
+## 🗂️ FILE STRUCTURE (Next.js App Router)
+
+```
+/app
+  /layout.tsx           ← Root layout with nav + footer
+  /page.tsx             ← Home page
+  /about/page.tsx
+  /services/page.tsx
+  /services/[slug]/page.tsx
+  /portfolio/page.tsx
+  /blog/page.tsx
+  /blog/[slug]/page.tsx
+  /contact/page.tsx
+  /faq/page.tsx
+  /api/contact/route.ts
+/components
+  /layout
+    Navbar.tsx
+    Footer.tsx
+    MobileMenu.tsx
+  /ui
+    Button.tsx
+    Badge.tsx
+    Card.tsx
+    Modal.tsx
+    Accordion.tsx
+    CounterStat.tsx
+    Marquee.tsx
+  /sections
+    Hero.tsx
+    StorySection.tsx
+    AboutSection.tsx
+    ServicesSection.tsx
+    ClientsSection.tsx
+    StatsSection.tsx
+    ProcessSection.tsx
+    BlogPreview.tsx
+    FAQSection.tsx
+  /popups
+    ConsultationModal.tsx
+    CookieBanner.tsx
+    ExitIntentPopup.tsx
+/lib
+  /fonts.ts
+  /metadata.ts
+  /animations.ts       ← Framer Motion variants
+  /schema.ts           ← Zod validation
+/public
+  /images
+  /fonts
+/styles
+  globals.css          ← CSS variables + base styles
+```
+
+---
+
+## 🎨 CSS VARIABLES (globals.css)
+
+```css
+:root {
+  --color-navy: #1A1F6E;
+  --color-orange: #E87722;
+  --color-gold: #F5A623;
+  --color-bg-dark: #0A0B1A;
+  --color-bg-mid: #0F1035;
+  --color-surface: #141630;
+  --color-text: #FFFFFF;
+  --color-muted: #A0A8C0;
+  --color-border: rgba(255,255,255,0.08);
+  --font-display: 'Clash Display', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --radius-card: 16px;
+  --shadow-orange: 0 0 30px rgba(232,119,34,0.2);
+  --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+```
+
+---
+
+## ✅ LAUNCH CHECKLIST
+
+- [ ] Google Analytics 4 integrated
+- [ ] Google Search Console verified
+- [ ] Meta Pixel integrated (Facebook)
+- [ ] WhatsApp Chat floating button (bottom right, orange)
+- [ ] Back-to-top button (appears after 300px scroll)
+- [ ] All forms tested (submission + email delivery)
+- [ ] 404 page designed (on-brand)
+- [ ] Favicon: ASKreativ logo icon
+- [ ] OG images for all main pages
+- [ ] robots.txt and sitemap.xml live
+- [ ] SSL certificate active
+- [ ] All links working (internal + external)
+- [ ] Mobile navigation tested across devices
+- [ ] Accessibility audit (ARIA labels, keyboard nav, contrast)
+
+---
+
+*Built for ASKreativ Global Solutions — Hyderabad, India*
+*"Design Your Life"*
+
+ I AM ATTACHING THE CONTENT ALSO FOR THE WEBSITE, I AM ATTACHING THE CONTENT FOR ONLY HOME PAGE , LATER I WILL REPLACE THE CONTENT FOR OTHER PAGES ALSO , HOME PAGE, I WANT SAME LIKE THE REFERNCE WEBSITE WITH OUR THOUGHTS ,LOGO AND COLOUR PALATTE, CLEAN NEAT
+
+this is the home page content
+HOME PAGE
+Slug: /
+Meta Title (60 Characters)
+AI Automation & Digital Marketing Agency Hyderabad
+Meta Description: ASKreativ is an AI automation and digital marketing agency in Hyderabad, helping businesses with SEO, branding, websites, ERP systems, and apps. 
+Focus Keyword: AI digital marketing company
+
+Home page 
+Human Storytelling
+Behind every growing business, there is:
+ A dream,
+ A struggle,
+ A family,
+ and a vision for something bigger.
+ASKreativ helps transform that vision into digital growth.
+
+ABOUT US
+Building Smarter Digital Growth for Modern Businesses
+ASKreativ Global Solutions is an AI-powered digital growth company helping businesses scale through automation, branding, marketing, websites, ERP systems, and modern digital solutions.
+We combine creativity, technology, AI, and strategy to build intelligent digital ecosystems designed for visibility, efficiency, and long-term business growth.
+Explore More About ASKreativ →
+
+
+OUR SERVICES
+AI Automation, Digital Marketing & Development Solutions Built for Modern Business Growth
+From AI-powered automation to digital marketing, ERP systems, websites, mobile applications, and branding, ASKreativ Global Solutions helps businesses build intelligent digital ecosystems designed for visibility, efficiency, customer engagement, and long-term scalability.
+Explore All Services →
+
+01 — Digital Marketing
+Grow your business visibility, leads, and customer engagement through strategic digital marketing solutions designed for measurable growth.
+
+02 — AI Automation
+Transform manual business operations into smart automated workflows powered by AI, CRM systems, WhatsApp automation, and intelligent lead management.
+
+03 — SEO Services
+Improve search visibility, rankings, and organic traffic through modern SEO strategies built for Google and AI-powered search engines.
+
+04 — Website Development
+We build modern, fast, and conversion-focused websites designed to strengthen branding, improve user experience, and generate business enquiries.
+
+05 — Social Media Marketing
+Build a strong digital presence through storytelling-driven social media strategies, creative campaigns, reels, and audience engagement.
+
+06 — ERP Management Systems
+Centralize operations with smart ERP systems for attendance, HR, CRM, billing, workflow management, and operational efficiency.
+
+07 — Mobile App Development
+Launch scalable Android and iOS applications designed to improve customer experience, accessibility, and digital business operations.
+
+08 — Branding & Creative Design
+Create a strong and memorable business identity through strategic branding, creative visuals, advertising designs, and digital experiences.
+
+Bottom Hook Section
+Your Business Needs More Than Marketing.
+It Needs an Intelligent Growth Ecosystem.
+Let’s Build Your Digital Future →
+
+
+
+
+OUR CLIENTS
+Trusted by Growing Businesses & Modern Brands
+From educational institutions and startups to business owners and growing enterprises, ASKreativ Global Solutions helps organizations build stronger digital visibility, automation systems, branding, and scalable growth ecosystems.
+We believe every client relationship is built on:
+Trust,
+Transparency,
+Innovation,
+And measurable growth.
+
+Businesses We Work With 
+Educational Institutions
+Solar Industries
+Healthcare & Clinics
+Real Estate Companies
+Sports Academies
+Startups & Entrepreneurs
+Local Businesses
+Corporate Companies
+E-Commerce Brands
+Restaurants & Hospitality
+Professional Service Providers
+
+
+Client Trust Statement
+Every business has:
+A Story
+A Vision and Mission
+A value
+A responsibility,
+and a growth story.
+ASKreativ works as a long-term digital growth partner focused on helping brands grow smarter through AI, automation, branding, and modern digital infrastructure
+
+Stats Section
+Multiple Projects Delivered
+AI-Powered Growth Solutions
+Multi-Industry Experience
+Future-Ready Digital Systems
+CTA Section
+Let’s Build Something Bigger Together
+Partner With ASKreativ →
+
+
+OUR PROCESS 
+At ASKreativ Global Solutions, every project is built with strategy, creativity, AI automation, and measurable growth in mind.
+We don’t just deliver services.
+We build connected digital ecosystems designed for long-term business success.
+
+01 — Discover & Understand
+We analyze your business, audience, and goals to build the right digital growth foundation.
+
+02 — Strategize & Structure
+We create customized strategies focused on branding, automation, visibility, and scalable growth.
+
+03 — Create & Build
+We develop websites, apps, ERP systems, and digital experiences designed for performance and engagement.
+
+04 — Automate & Optimize
+We integrate AI-powered automation systems that improve efficiency and customer communication.
+
+05 — Launch & Grow
+We execute growth-driven marketing strategies focused on visibility, leads, and business expansion.
+
+06 — Scale & Evolve
+We continuously optimize systems and strategies to help businesses scale sustainably.
+
+Bottom CTA
+From Vision to Digital Growth, We Build Systems That Scale Businesses.
+Let’s Build Your Future With ASKreativ →
+
+
+BLOGS
+
+FAQs
+Frequently Asked Questions About Digital Marketing Agency Hyderabad
+
+Why should you choose ASKreativ as a digital marketing agency in Hyderabad?
+ASKreativ is a digital marketing agency in Hyderabad focused on AI automation, SEO, branding, websites, ERP systems, and scalable business growth solutions.
+
+How can a digital marketing agency in Hyderabad help your business grow?
+A digital marketing agency in Hyderabad helps businesses improve visibility, generate leads, increase customer engagement, and build stronger online branding.
+
+Does ASKreativ provide AI automation services in Hyderabad?
+Yes. ASKreativ provides AI automation services in Hyderabad, including AI chatbots, WhatsApp automation, CRM systems, and workflow automation.
+
+Why is SEO important for businesses?
+SEO helps businesses improve Google rankings, increase organic traffic, attract local customers, and strengthen online visibility.
+
+Do we provide website development services in Hyderabad?
+Yes. ASKreativ develops modern business websites in Hyderabad designed for branding, lead generation, SEO, and customer engagement.
+
+Do we provide social media marketing services in Hyderabad?
+Yes. ASKreativ provides social media marketing services in Hyderabad, including Instagram marketing, Facebook marketing, LinkedIn management, reels, and branding campaigns.
+
+Can ASKreativ build ERP systems for businesses in Hyderabad?
+Yes. We develop ERP management systems in Hyderabad for attendance, HR, CRM, operations, billing, workflow management, and reporting.
+
+Do we provide mobile app development services in Hyderabad?
+Yes. ASKreativ develops Android and iOS mobile applications in Hyderabad for businesses, educational institutions, and startups.
+
+How long does SEO take for businesses in Hyderabad?
+SEO results usually take a few months, depending on competition, industry, website performance, and keyword difficulty.
+
+Do you provide branding services in Hyderabad?
+Yes. ASKreativ provides branding services in Hyderabad, including brand identity design, creative design, advertising creatives, and digital branding solutions.
+
+How can I contact ASKreativ digital marketing agency Hyderabad?
+You can contact ASKreativ through our website, social media platforms, or directly schedule a free business consultation.
+
+FAQ CTA
+Looking for a Digital Marketing Agency in Hyderabad?
+Let’s Build Your Digital Growth System →
+
+
+
+everything like the shift wave use the attached background colour and use the colours i attached with you the brand kit of as kreativ , add images also, the whole ui/ux design and the frontend to everything from icons to everything ,should be like the same as shift wave
+
+use the atttached colour for the background whole website and also add the daylight and night mode in left side bottom, https://shiftwave.com/, i want everything like this website from navibar to everything, and also add the images to website,take the content from this document for every page in the website ,https://docs.google.com/document/d/1v2ngf_CIy6-vrqvlkW_k8kdW5nBdmjpwDaJDmH0tbj8/edit?usp=sharing,use the background colour has shiftwave and every thing like that and for attached section should be in the hero section like scrolling one by one like how in lottery machine scrolls one after one, without overhauling, increase the logo, logo is not visible properly,i want everything like the shiftwave with icons , from popups to everything even the small thing, just clone the ui/ux design and frontend part with proper alignment like shift wave with neat and clean , even navibar also , should look like the same , only content will change for shiftwave and as kreativ remaining all same to same , i attached with you the content document for every page in the website build a perfect full stack website, without any further modifications,

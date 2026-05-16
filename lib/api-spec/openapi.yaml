@@ -3,13 +3,15 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: ASKreativ Global Solutions API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: contact
+    description: Contact form operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,37 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /contact:
+    post:
+      operationId: submitContact
+      tags: [contact]
+      summary: Submit consultation request
+      description: Submit a free consultation request form
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactInput"
+      responses:
+        "200":
+          description: Submission successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactResponse"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "429":
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +66,55 @@ components:
           type: string
       required:
         - status
-
+    ContactInput:
+      type: object
+      required:
+        - fullName
+        - email
+        - phone
+        - service
+      properties:
+        fullName:
+          type: string
+          minLength: 2
+        businessName:
+          type: ["string", "null"]
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          minLength: 7
+        service:
+          type: string
+          enum:
+            - digital-marketing
+            - ai-automation
+            - seo-services
+            - website-development
+            - social-media-marketing
+            - erp-systems
+            - mobile-app-development
+            - branding-design
+            - other
+        message:
+          type: ["string", "null"]
+        honeypot:
+          type: ["string", "null"]
+    ContactResponse:
+      type: object
+      required:
+        - success
+        - message
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
