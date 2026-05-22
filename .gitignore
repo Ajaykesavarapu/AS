@@ -47,3 +47,11 @@ Thumbs.db
 # Replit
 .cache/
 .local/
+
+# root packages
+client/node_modules
+client/dist
+client/build
+server/node_modules
+server/dist
+server/build
