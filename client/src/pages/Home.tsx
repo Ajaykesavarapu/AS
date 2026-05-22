@@ -12,9 +12,9 @@ import { homeContent, siteConfig } from "@/constants/siteData";
 import HeroSection from "@/components/layout/HeroSection";
 
 // ── ASSETS ───────────────────────────────────────────────────────────
-import igniteLogo from "@assets/ignite_logo.jpg";
-import zenithhLogo from "@assets/zenithh_logo.png";
-import rooftopLogo from "@assets/rooftop_urja_logo.png";
+import igniteLogo from "@/assets/ignite_logo.jpg";
+import zenithhLogo from "@/assets/zenithh_logo.png";
+import rooftopLogo from "@/assets/rooftop_urja_logo.png";
 
 // ── DATA ─────────────────────────────────────────────────────────────
 // Data is now imported from @/constants/siteData
