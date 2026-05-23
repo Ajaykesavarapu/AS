@@ -367,10 +367,9 @@ export default function Navbar() {
                   </Link>
                   {link.hasDropdown && (
                     <div style={{ 
-                      paddingLeft: "16px", 
+                      paddingLeft: "12px", 
                       marginTop: "8px", 
-                      borderLeft: "2px solid var(--border-c)",
-                      paddingLeft: "12px" 
+                      borderLeft: "2px solid var(--border-c)"
                     }}>
                       {link.items?.map((s) => (
                         <Link
