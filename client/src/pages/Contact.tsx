@@ -52,15 +52,8 @@ export default function Contact() {
        <HeroSection
          backgroundType="image"
          backgroundSrc="/Images/contact-hero.jpeg"
-         title="Let's Talk About Your Growth"
-         description="Every massive growth story begins with a single conversation. Whether you’re scaling a startup or dominating an industry, our engine is ready to power your vision."
          ctaText="Contact Us"
          ctaOnClick={() => openModal()}
-         stats={[
-           { label: "Projects", value: "4000+" },
-           { label: "Years Experience", value: "19+" },
-           { label: "Client Rating", value: "5★" }
-         ]}
        />
 
       {/* ── INFO & FORM ──────────────────────────────────────────────── */}

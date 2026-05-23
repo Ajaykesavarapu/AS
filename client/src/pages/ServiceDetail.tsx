@@ -362,7 +362,7 @@ const serviceData: Record<string, ServiceData> = {
     icon: Megaphone,
     title: "Traditional Marketing Services",
     subtitle: "Digital Marketing May Be the Future, But Traditional Still Always Matters.",
-    heroImg: "/Images/services-hero.jpeg",
+    heroImg: "/Images/Advertising_hero.jpeg",
     seo: {
       title: "Traditional Marketing Services Hyderabad | ASKreativ",
       description: "ASKreativ provides traditional marketing services in Hyderabad including hoardings, banners, newspaper ads, outdoor campaigns, and promotions."

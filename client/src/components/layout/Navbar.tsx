@@ -11,7 +11,7 @@ const services = navLinks.find(l => l.label === "Services")?.items || [];
 const industriesDropdown = navLinks.find(l => l.label === "Industries")?.items || [];
 
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [location] = useLocation();
@@ -39,21 +39,21 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    setMobileOpen(false);
+    setMenuOpen(false);
     setActiveDropdown(null);
   }, [location]);
 
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [mobileOpen]);
+  }, [menuOpen]);
 
   const isActive = useCallback((href: string) =>
     href === "/" ? location === "/" : location.startsWith(href),
     [location]);
 
   // Optimized navbar height
-  const navbarHeight = scrolled ? 64 : 72;
+  const navbarHeight = scrolled ? 90 : 120;
 
   return (
     <>
@@ -83,7 +83,7 @@ export default function Navbar() {
                 src={logoPath}
                 alt="ASKreativ Global Solutions"
                 style={{
-                  height: scrolled ? "45px" : "60px", // Reduced size for better proportion
+                  height: scrolled ? "70px" : "100px", // Increased size for better visibility
                   width: "auto",
                   display: "block",
                   transition: "height 0.3s ease",
@@ -260,160 +260,147 @@ export default function Navbar() {
               >
                 Get a Free Quote
               </button>
+
+              {/* Unified Animated Menu Toggle */}
               <button
-                onClick={() => setMobileOpen(true)}
+                onClick={() => setMenuOpen(!menuOpen)}
                 style={{
-                  padding: "8px", // Optimized padding
-                  color: "var(--fg)",
-                  background: "var(--card-bg-glass)",
-                  border: "1px solid var(--card-border)",
-                  borderRadius: "8px", // Reduced border radius
-                  cursor: "pointer",
+                  width: "48px",
+                  height: "48px",
+                  borderRadius: "50%",
+                  border: menuOpen ? "1px solid transparent" : "1px solid var(--orange)",
                   display: "flex",
+                  flexDirection: "column",
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
+                  background: menuOpen ? "var(--orange)" : "var(--card-bg-glass)",
+                  backdropFilter: "blur(8px)",
+                  cursor: "pointer",
+                  transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+                  marginLeft: "8px",
+                  zIndex: 100000,
                 }}
-                className="lg:hidden"
-                aria-label="Open menu"
+                aria-label="Toggle Menu"
+                className="hover:scale-105"
               >
-                <Menu size={20} /> {/* Reduced size */}
+                <div style={{ position: "relative", width: "22px", height: "16px" }}>
+                  <span style={{ 
+                    position: "absolute", left: 0, top: menuOpen ? "7px" : "0", 
+                    width: "100%", height: "2px", 
+                    background: menuOpen ? "#fff" : "var(--orange)", 
+                    transition: "all 0.3s ease", 
+                    transform: menuOpen ? "rotate(45deg)" : "none" 
+                  }}></span>
+                  <span style={{ 
+                    position: "absolute", left: 0, top: "7px", 
+                    width: "100%", height: "2px", 
+                    background: menuOpen ? "#fff" : "var(--orange)", 
+                    transition: "all 0.3s ease", 
+                    opacity: menuOpen ? 0 : 1 
+                  }}></span>
+                  <span style={{ 
+                    position: "absolute", left: 0, top: menuOpen ? "7px" : "14px", 
+                    width: "100%", height: "2px", 
+                    background: menuOpen ? "#fff" : "var(--orange)", 
+                    transition: "all 0.3s ease", 
+                    transform: menuOpen ? "rotate(-45deg)" : "none" 
+                  }}></span>
+                </div>
               </button>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Menu - Optimized for better UX */}
+      {/* Unified Trendy Mega Menu / Mobile Menu */}
       <AnimatePresence>
-        {mobileOpen && (
+        {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: "-100%" }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: "-100%" }}
-            transition={{
-              type: "spring",
-              damping: 20,
-              stiffness: 170,
-              duration: 0.3
-            }}
+            initial={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
+            animate={{ opacity: 1, clipPath: "circle(150% at 100% 0%)" }}
+            exit={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             style={{
               position: "fixed",
-              inset: 0,
-              zIndex: 99999,
-              background: "var(--bg)",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: "rgba(10, 10, 12, 0.98)", // Trendy dark background
+              backdropFilter: "blur(20px)",
+              zIndex: 9999,
               display: "flex",
               flexDirection: "column",
               overflowY: "auto",
-              height: "100dvh", // Use dynamic viewport height
-              maxHeight: "100vh"
+              paddingTop: `${navbarHeight + 20}px`,
+              paddingBottom: "40px"
             }}
           >
-            <div style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: "16px 20px", // Optimized padding
-              borderBottom: "1px solid var(--border-c)"
-            }}>
-              <img
-                src={logoPath}
-                alt="ASKreativ"
-                style={{
-                  height: "36px", // Optimized size
-                  filter: "var(--logo-filter)"
-                }}
-              />
-              <button
-                onClick={() => setMobileOpen(false)}
-                style={{
-                  width: "36px", // Optimized size
-                  height: "36px", // Optimized size
-                  borderRadius: "8px", // Reduced border radius
-                  background: "var(--card-bg-glass)",
-                  border: "1px solid var(--card-border)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  color: "var(--fg)"
-                }}
-                aria-label="Close menu"
-              >
-                <X size={20} /> {/* Reduced size */}
-              </button>
-            </div>
-            <div style={{
-              flex: 1,
-              padding: "24px 20px", // Optimized padding
-              overflowY: "auto"
-            }}>
-              {navLinks.map((link) => (
-                <div key={link.label}>
-                  <Link
-                    href={link.href}
-                    style={{
-                      display: "block",
-                      padding: "14px 0", // Optimized padding
-                      fontSize: "18px", // Optimized font size for touch
-                      fontWeight: 700,
-                      color: isActive(link.href) ? "var(--orange)" : "var(--fg)",
-                      borderBottom: isActive(link.href) ? "2px solid var(--orange)" : "1px solid var(--border-c)",
-                      letterSpacing: "-0.01em",
-                      textTransform: "uppercase",
-                      transition: "all 0.2s ease"
-                    }}
-                  >
-                    {link.label}
-                  </Link>
-                  {link.hasDropdown && (
-                    <div style={{
-                      paddingLeft: "12px",
-                      marginTop: "8px",
-                      borderLeft: "2px solid var(--border-c)"
-                    }}>
-                      {link.items?.map((s) => (
-                        <Link
-                          key={s.label}
-                          href={s.slug.startsWith("/") ? s.slug : `/${s.slug}`}
-                          style={{
-                            display: "block",
-                            padding: "10px 0", // Optimized padding
-                            fontSize: "16px", // Optimized font size for touch
-                            fontWeight: 600,
-                            color: "var(--fg-light)",
-                            borderBottom: "1px solid var(--border-c)",
-                            opacity: 0.9,
-                            transition: "all 0.2s ease"
-                          }}
-                        >
-                          {s.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-            <div style={{
-              padding: "24px 20px", // Optimized padding
-              borderTop: "1px solid var(--border-c)"
-            }}>
-              <button
-                onClick={() => {
-                  setMobileOpen(false);
-                  openModal();
-                }}
-                className="btn-primary"
-                style={{
+            <div className="container" style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+              <div 
+                className="grid gap-10 md:gap-16 lg:gap-20"
+                style={{ 
+                  gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
                   width: "100%",
-                  justifyContent: "center",
-                  padding: "12px 24px", // Optimized padding
-                  fontSize: "16px", // Optimized font size
-                  fontWeight: 800
                 }}
               >
-                Get a Free Quote →
-              </button>
+                {/* Column 1: Company */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }}
+                >
+                   <h3 style={{ fontSize: "14px", fontWeight: 800, marginBottom: "32px", color: "var(--orange)", textTransform: "uppercase", letterSpacing: "0.15em" }}>Company</h3>
+                   <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                     {navLinks.filter(l => !l.hasDropdown).map(l => (
+                       <Link key={l.label} href={l.href} onClick={() => setMenuOpen(false)} style={{ color: "#fff", fontSize: "28px", fontWeight: 700, transition: "all 0.3s", textDecoration: "none", display: "inline-block" }} className="hover:text-[var(--orange)] hover:translate-x-2">{l.label}</Link>
+                     ))}
+                   </div>
+                </motion.div>
+
+                {/* Column 2: Our Services */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }}
+                >
+                   <h3 style={{ fontSize: "14px", fontWeight: 800, marginBottom: "32px", color: "var(--orange)", textTransform: "uppercase", letterSpacing: "0.15em" }}>Our Services</h3>
+                   <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                     {services.map(s => (
+                       <Link key={s.label} href={s.slug.startsWith("/") ? s.slug : `/${s.slug}`} onClick={() => setMenuOpen(false)} style={{ color: "rgba(255,255,255,0.7)", fontSize: "18px", fontWeight: 500, transition: "all 0.3s", textDecoration: "none" }} className="hover:text-[var(--orange)] hover:translate-x-2">{s.label}</Link>
+                     ))}
+                   </div>
+                </motion.div>
+
+                {/* Column 3: Industries We Serve */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.5 }}
+                >
+                   <h3 style={{ fontSize: "14px", fontWeight: 800, marginBottom: "32px", color: "var(--orange)", textTransform: "uppercase", letterSpacing: "0.15em" }}>Industries</h3>
+                   <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                     {industriesDropdown.slice(0, 7).map(s => (
+                       <Link key={s.label} href={s.slug.startsWith("/") ? s.slug : `/${s.slug}`} onClick={() => setMenuOpen(false)} style={{ color: "rgba(255,255,255,0.7)", fontSize: "18px", fontWeight: 500, transition: "all 0.3s", textDecoration: "none" }} className="hover:text-[var(--orange)] hover:translate-x-2">{s.label}</Link>
+                     ))}
+                   </div>
+                </motion.div>
+
+                {/* Column 4: More Industries / Info */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.5 }}
+                >
+                   <h3 style={{ fontSize: "14px", fontWeight: 800, marginBottom: "32px", color: "rgba(255,255,255,0.2)", textTransform: "uppercase", letterSpacing: "0.15em" }}>More</h3>
+                   <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                     {industriesDropdown.slice(7).map(s => (
+                       <Link key={s.label} href={s.slug.startsWith("/") ? s.slug : `/${s.slug}`} onClick={() => setMenuOpen(false)} style={{ color: "rgba(255,255,255,0.5)", fontSize: "16px", fontWeight: 500, transition: "all 0.3s", textDecoration: "none" }} className="hover:text-[var(--orange)] hover:translate-x-2">{s.label}</Link>
+                     ))}
+                   </div>
+                   
+                   <div style={{ marginTop: "40px", padding: "32px", background: "rgba(255,255,255,0.03)", borderRadius: "24px", border: "1px solid rgba(255,255,255,0.05)" }}>
+                      <h4 style={{ color: "#fff", fontSize: "20px", fontWeight: 800, marginBottom: "12px" }}>Start Your Project</h4>
+                      <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "14px", marginBottom: "24px", lineHeight: 1.6 }}>Ready to engineer your digital growth? Let's discuss your vision.</p>
+                      <button onClick={() => { setMenuOpen(false); openModal(); }} className="btn-primary" style={{ width: "100%", justifyContent: "center" }}>
+                        Get a Free Quote
+                      </button>
+                   </div>
+                </motion.div>
+
+              </div>
             </div>
           </motion.div>
         )}

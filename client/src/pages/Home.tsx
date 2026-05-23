@@ -126,6 +126,8 @@ export default function Home() {
        <HeroSection
          backgroundType="video"
          backgroundSrc="/hero-video.mp4"
+         ctaText="Get Started"
+         ctaOnClick={openModal}
        />
 
       {/* ═══════════════════════════════════════════════════════════════
@@ -198,6 +200,7 @@ export default function Home() {
                     <img
                       src={c.logo}
                       alt={c.name}
+                      loading="lazy"
                       style={{
                         maxWidth: "100%", maxHeight: "100%", objectFit: "contain",
                       }}
@@ -387,7 +390,7 @@ export default function Home() {
                     style={{ background: "var(--card-bg)", borderRadius: "24px", overflow: "hidden", border: "1px solid var(--card-border)", height: "100%", display: "flex", flexDirection: "column" }}
                   >
                     <div style={{ position: "relative", height: "220px", overflow: "hidden" }}>
-                      <img src={b.img} alt={b.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} className="hover:scale-105 transition-transform duration-700" />
+                      <img src={b.img} alt={b.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} className="hover:scale-105 transition-transform duration-700" />
                     </div>
                     <div style={{ padding: "32px", display: "flex", flexDirection: "column", flex: 1 }}>
                       <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--orange)", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "16px" }}>{b.tag}</span>

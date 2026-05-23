@@ -108,18 +108,40 @@ export default function Careers() {
   return (
     <main>
       {/* ── HERO ─────────────────────────────────────────────────────── */}
-      <HeroSection
-        backgroundType="image"
-        backgroundSrc="/Images/Advertising_hero.jpeg"
-        title="Join the Engine"
-        description="We're not looking for employees. We're looking for architects, builders, and visionaries ready to scale the digital world. Join ASKreativ Global Solutions."
-        showCta={false}
-        stats={[
-          { label: "Open Positions", value: "8+" },
-          { label: "Years Experience", value: "19+" },
-          { label: "Locations", value: "1" }
-        ]}
-      />
+      <section className="relative overflow-hidden" style={{ minHeight: "max(70vh, 500px)", background: "var(--bg-alt)" }}>
+        <div className="container" style={{ height: "100%", display: "flex", alignItems: "center", padding: "80px 20px" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "60px", width: "100%" }}>
+            <div style={{ flex: "1 1 400px" }}>
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                style={{ fontSize: "clamp(36px, 6vw, 64px)", fontWeight: 900, color: "var(--fg)", marginBottom: "24px", lineHeight: 1.15 }}
+              >
+                Join the Engine
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                style={{ fontSize: "20px", color: "var(--fg-light)", lineHeight: 1.6, maxWidth: "600px" }}
+              >
+                We're not looking for employees. We're looking for architects, builders, and visionaries ready to scale the digital world. Join ASKreativ Global Solutions.
+              </motion.p>
+            </div>
+            <div style={{ flex: "1 1 400px", display: "flex", justifyContent: "center" }}>
+              <motion.img
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                src={avatarImg}
+                alt="Careers Avatar"
+                style={{ width: "100%", maxWidth: "450px", objectFit: "contain", dropShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ── CULTURE ──────────────────────────────────────────────────── */}
       <section className="section">

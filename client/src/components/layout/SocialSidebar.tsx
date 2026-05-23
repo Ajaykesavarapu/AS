@@ -1,35 +1,31 @@
-import { FaFacebook, FaInstagram, FaYoutube, FaLinkedin, FaXTwitter } from "react-icons/fa6";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 
 const links = [
-  { icon: FaInstagram, href: "https://www.instagram.com/askreativ_1/", cls: "insta", label: "Instagram" },
-  { icon: FaFacebook, href: "https://www.facebook.com/profile.php?id=61588501648124", cls: "fb", label: "Facebook" },
-  { icon: FaXTwitter, href: "https://x.com/askreativ_1", cls: "xtw", label: "XTwitter" },
-  { icon: FaYoutube, href: "https://www.youtube.com/@AsKreativ", cls: "yt", label: "YouTube" },
-  { icon: FaLinkedin, href: "https://www.linkedin.com/in/askreativ/", cls: "li", label: "LinkedIn" },
+  { icon: FaFacebookF, href: "https://www.facebook.com/profile.php?id=61588501648124", cls: "fb", bg: "#3b5998" },
+  { icon: FaInstagram, href: "https://www.instagram.com/askreativ_1/", cls: "insta", bg: "#e1306c" },
+  { icon: FaXTwitter, href: "https://x.com/askreativ_1", cls: "xtw", bg: "#000000" },
+  { icon: FaLinkedinIn, href: "https://www.linkedin.com/in/askreativ/", cls: "li", bg: "#007ab9" },
 ];
 
 export default function SocialSidebar() {
   return (
-    <div className="fixed inset-y-0 right-0 flex items-center space-x-4 px-4 py-8 z-50" role="navigation" aria-label="Social media links">
-      <div className="w-0.5 bg-[var(--border-c)]" /> {/* Vertical separator */}
-      {links.map(({ icon: Icon, href, cls, label }) => (
+    <div 
+      className="fixed left-0 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col items-start"
+      role="navigation" 
+      aria-label="Social media links"
+    >
+      {links.map(({ icon: Icon, href, cls, bg }) => (
         <a
           key={cls}
           href={href}
           target="_blank"
           rel="noreferrer"
-          className={`social-link ${cls} hover:opacity-80 transition-opacity`}
-          aria-label={label}
+          className="flex items-center justify-center w-[44px] h-[44px] text-white transition-opacity hover:opacity-90"
+          aria-label={cls}
           data-testid={`link-social-${cls}`}
+          style={{ background: bg }}
         >
-          <Icon
-            style={{
-              color: 'var(--fg)',
-              width: '28px',
-              height: '28px',
-              transition: 'color 0.3s ease'
-            }}
-          />
+          <Icon size={20} />
         </a>
       ))}
     </div>
