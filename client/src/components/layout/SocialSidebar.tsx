@@ -10,22 +10,22 @@ const links = [
 
 export default function SocialSidebar() {
   return (
-    <div className="social-sidebar" role="navigation" aria-label="Social media links">
+    <div className="fixed inset-y-0 right-0 flex items-center space-x-4 px-4 py-8 hidden sm:flex z-50" role="navigation" aria-label="Social media links">
       {links.map(({ icon: Icon, href, cls, label }) => (
         <a
           key={cls}
           href={href}
           target="_blank"
           rel="noreferrer"
-          className={`social-link ${cls}`}
+          className={`social-link ${cls} hover:opacity-80 transition-opacity`}
           aria-label={label}
           data-testid={`link-social-${cls}`}
         >
           <Icon
             style={{
               color: 'var(--fg)',
-              width: '24px',
-              height: '24px',
+              width: '28px',
+              height: '28px',
               transition: 'color 0.3s ease'
             }}
           />

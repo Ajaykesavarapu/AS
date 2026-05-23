@@ -82,29 +82,31 @@ html.dark {
 }
 
 @layer base {
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: 'Oswald', sans-serif;
-    font-size: 16px;
-    color: var(--fg);
-    background-color: var(--bg);
-    transition: background-color 0.4s cubic-bezier(0.23, 1, 0.32, 1), color 0.4s ease;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Oswald', sans-serif;
-    color: var(--fg);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-  }
-  a { text-decoration: none; color: inherit; }
-  p { margin: 0 0 1rem; line-height: 1.7; color: var(--fg-light); }
-  p:last-child { margin-bottom: 0; }
-  ul, ol { padding-left: 1.25rem; margin-bottom: 1rem; }
-  ul:last-child, ol:last-child { margin-bottom: 0; }
-  li { color: var(--fg-light); line-height: 1.7; margin-bottom: 0.25rem; }
+   * { box-sizing: border-box; }
+   html { scroll-behavior: smooth; }
+   body {
+     font-family: 'Oswald', sans-serif;
+     font-size: 16px;
+     color: var(--fg);
+     background-color: var(--bg);
+     transition: background-color 0.4s cubic-bezier(0.23, 1, 0.32, 1), color 0.4s ease;
+     overflow-x: hidden;
+     -webkit-font-smoothing: antialiased;
+   }
+   h1, h2, h3, h4, h5, h6 {
+     font-family: 'Oswald', sans-serif;
+     color: var(--fg);
+     line-height: 1.1;
+     letter-spacing: -0.02em;
+   }
+   a { text-decoration: none; color: inherit; }
+   p { margin: 0 0 1rem; line-height: 1.7; color: var(--fg-light); }
+   p:last-child { margin-bottom: 0; }
+   ul, ol { padding-left: 1.25rem; margin-bottom: 1rem; }
+   ul:last-child, ol:last-child { margin-bottom: 0; }
+   li { color: var(--fg-light); line-height: 1.7; margin-bottom: 0.25rem; }
+   /* Ensure images don't overflow their containers */
+   img { max-width: 100%; height: auto; }
 }
 
 /* ── GLOBAL UTILITIES ─────────────────────────────────── */
