@@ -38,12 +38,11 @@ export default function HeroSection({
         minHeight: "100svh", // Use small viewport height for better mobile UX
         position: "relative",
         overflow: "hidden",
-        borderRadius: "0", // Remove border radius to fit window perfectly
+        borderRadius: "24px", // Curve shape hero section
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "0", // Remove padding to use full width
-        margin: "0", // Remove margins to use full width
+        margin: "40px 40px 0 40px", // Top: 40px, Right: 40px, Bottom: 0, Left: 40px
         ...backgroundStyle,
         background: backgroundType === "image" ? `url(${backgroundSrc}) center/cover no-repeat` : undefined,
       }}

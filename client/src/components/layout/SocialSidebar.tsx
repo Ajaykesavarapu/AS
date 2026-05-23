@@ -10,7 +10,8 @@ const links = [
 
 export default function SocialSidebar() {
   return (
-    <div className="fixed inset-y-0 right-0 flex items-center space-x-4 px-4 py-8 hidden sm:flex z-50" role="navigation" aria-label="Social media links">
+    <div className="fixed inset-y-0 right-0 flex items-center space-x-4 px-4 py-8 z-50" role="navigation" aria-label="Social media links">
+      <div className="w-0.5 bg-[var(--border-c)]" /> {/* Vertical separator */}
       {links.map(({ icon: Icon, href, cls, label }) => (
         <a
           key={cls}
