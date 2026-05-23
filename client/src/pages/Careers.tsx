@@ -130,14 +130,14 @@ export default function Careers() {
               </motion.p>
             </div>
             <div style={{ flex: "1 1 400px", display: "flex", justifyContent: "center" }}>
-              <motion.img
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                src={avatarImg}
-                alt="Careers Avatar"
-                style={{ width: "100%", maxWidth: "450px", objectFit: "contain", dropShadow: "0 20px 40px rgba(0,0,0,0.1)" }}
-              />
+               <motion.img
+                 initial={{ opacity: 0, scale: 0.9 }}
+                 animate={{ opacity: 1, scale: 1 }}
+                 transition={{ duration: 0.8, delay: 0.4 }}
+                 src={avatarImg}
+                 alt="Careers Avatar"
+                 style={{ width: "100%", maxWidth: "450px", objectFit: "contain", filter: "drop-shadow(0 20px 40px rgba(0,0,0,0.1))" }}
+               />
             </div>
           </div>
         </div>
