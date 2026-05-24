@@ -337,9 +337,9 @@ export default function Navbar() {
               paddingBottom: "40px"
             }}
           >
-            <div className="container" style={{ flex: 1, display: "flex", flexDirection: "column", paddingBottom: "40px" }}>
+            <div className="container" style={{ flex: 1, display: "flex", flexDirection: "column", paddingBottom: "40px", maxWidth: "100%", overflow: "hidden" }}>
               <div 
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 md:gap-16 lg:gap-20"
+                className="grid grid-cols-1 gap-10"
                 style={{ 
                   width: "100%",
                 }}
