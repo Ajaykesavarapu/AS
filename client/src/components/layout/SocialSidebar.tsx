@@ -10,17 +10,18 @@ const links = [
 export default function SocialSidebar() {
   return (
     <div 
-      className="fixed left-0 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col items-start"
+      className="fixed right-0 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-end space-y-4 px-4"
       role="navigation" 
       aria-label="Social media links"
     >
+      <div className="w-0.5 bg-[var(--border-c)] my-2" />
       {links.map(({ icon: Icon, href, cls, bg }) => (
         <a
           key={cls}
           href={href}
           target="_blank"
           rel="noreferrer"
-          className="flex items-center justify-center w-[44px] h-[44px] text-white transition-opacity hover:opacity-90"
+          className="flex items-center justify-center w-[44px] h-[44px] text-white transition-opacity hover:opacity-80"
           aria-label={cls}
           data-testid={`link-social-${cls}`}
           style={{ background: bg }}
