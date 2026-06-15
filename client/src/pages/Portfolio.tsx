@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { useModal } from "@/App";
+import { useSEO } from "@/hooks/useSEO";
 import HeroSection from "@/components/layout/HeroSection";
 
 function FadeUp({ children, delay = 0, style }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties }) {
@@ -41,6 +42,11 @@ export default function Portfolio() {
   const [active, setActive] = useState("All");
   const { openModal } = useModal();
 
+  useSEO({
+    title: "Our Portfolio | Digital Transformations & Growth Stories | ASKreativ",
+    description: "Explore ASKreativ's successful case studies. We build modern websites, SEO domination, AI automation, and branding for visionary businesses in Hyderabad."
+  });
+
   const filtered = active === "All" ? projects : projects.filter((p) => p.tags.includes(active));
 
   return (
@@ -49,6 +55,8 @@ export default function Portfolio() {
        <HeroSection
          backgroundType="image"
          backgroundSrc="/Images/services-hero.jpeg"
+         ctaText="View Our Work"
+         ctaOnClick={openModal}
        />
 
       {/* Filter + Grid */}

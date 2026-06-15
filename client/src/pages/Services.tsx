@@ -41,6 +41,8 @@ export default function Services() {
        <HeroSection
          backgroundType="image"
          backgroundSrc="/Images/services-hero.jpeg"
+         ctaText="Explore Services"
+         ctaOnClick={openModal}
        />
 
       {/* ── SERVICES GRID ────────────────────────────────────────────── */}

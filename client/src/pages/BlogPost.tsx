@@ -4,6 +4,9 @@ import { motion, useInView } from "framer-motion";
 import { ArrowLeft, ArrowRight, Clock, Tag } from "lucide-react";
 import { useModal } from "@/App";
 import { useSEO } from "@/hooks/useSEO";
+import HeroSection from "@/components/layout/HeroSection";
+import blogAi from "@/assets/blog_ai.png";
+import blogSeo from "@/assets/blog_seo.png";
 
 function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -21,7 +24,7 @@ const posts: Record<string, { tag: string; title: string; date: string; readTime
     title: "AS Kreativ Helps You Rank Number One on Google with SEO Services",
     date: "June 2024", 
     readTime: "8 min read",
-    img: "/brain/d75d1777-d99e-491a-97aa-03d9a7e1c285/blog_seo_impact_png_1778944137256.png",
+    img: blogSeo,
     seo: {
       title: "AS Kreativ That Delivers Real Impact Through SEO",
       description: "Achieve real impact with AS Kreativ SEO strategies to improve website ranking higher on Google and increase organic traffic and visibility."
@@ -69,7 +72,7 @@ const posts: Record<string, { tag: string; title: string; date: string; readTime
     title: "AI in Digital Marketing Services: How AS Kreativ Helps Businesses Grow",
     date: "June 2024", 
     readTime: "10 min read",
-    img: "/brain/d75d1777-d99e-491a-97aa-03d9a7e1c285/blog_ai_marketing_png_1778944336204.png",
+    img: blogAi,
     seo: {
       title: "AI in Digital Marketing: How AS Kreativ Helps Businesses Grow",
       description: "AS Kreativ AI-powered digital marketing services transform marketing data into clear decisions, automated execution, and sustainable business growth."
@@ -170,21 +173,16 @@ export default function BlogPost() {
   return (
     <main>
       {/* ── HERO ─────────────────────────────────────────────────────── */}
-      <section className="shiftwave-hero">
-        <img
-          src={post.img}
-          alt={post.title}
-          className="shiftwave-hero-media"
-        />
-        <div className="shiftwave-hero-overlay" />
-        <div className="shiftwave-hero-cta">
-          {/* No CTA button in blog post hero section */}
-        </div>
-      </section>
+      <HeroSection
+        backgroundType="image"
+        backgroundSrc={post.img}
+        ctaText="Share Your Vision"
+        ctaOnClick={openModal}
+      />
 
       <section className="section" style={{ padding: "80px 0" }}>
         <div className="container" style={{ maxWidth: "1200px" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 350px", gap: "80px", alignItems: "start" }} className="max-lg:block">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-10 lg:gap-20 items-start">
             {/* Article Content */}
             <article>
               <Link href="/blog" style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "var(--fg-light)", fontSize: "14px", fontWeight: 600, marginBottom: "40px" }} className="hover:text-[var(--orange)]">

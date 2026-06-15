@@ -183,11 +183,7 @@ export default function Home() {
             </h2>
           </FadeUp>
 
-          <div style={{
-            display: "flex", justifyContent: "center", alignItems: "center",
-            gap: "60px", flexWrap: "wrap", padding: "48px 40px",
-            borderRadius: "24px", background: "var(--card-bg)", border: "1px solid var(--card-border)",
-          }}>
+          <div className="flex flex-wrap justify-center items-center gap-10 md:gap-16 p-6 md:p-12 rounded-3xl bg-[var(--card-bg)] border border-[var(--card-border)]">
             {clients.map((c) => (
               <FadeUp key={c.name} delay={0.1}>
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px" }}>
@@ -219,7 +215,7 @@ export default function Home() {
       ═══════════════════════════════════════════════════════════════ */}
       <section style={{ padding: "100px 0", background: "var(--bg-alt)" }}>
         <div className="container">
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "80px", alignItems: "center" }} className="max-lg:block">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
             <FadeUp>
               <span className="section-tag">{homeContent.about.tag}</span>
               <h2 style={{ fontSize: "clamp(28px, 3.5vw, 48px)", fontWeight: 900, color: "var(--fg)", marginBottom: "28px", lineHeight: 1.15 }}>
@@ -411,11 +407,8 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════════════════
           CTA BANNER
       ═══════════════════════════════════════════════════════════════ */}
-      <section style={{ padding: "40px 20px" }}>
-        <div className="container" style={{
-          background: "var(--orange)", borderRadius: "32px", padding: "80px 40px", textAlign: "center",
-          position: "relative", overflow: "hidden",
-        }}>
+      <section className="px-4 py-10 md:px-10">
+        <div className="container text-center relative overflow-hidden bg-[var(--orange)] rounded-[32px] px-6 py-12 md:py-20 md:px-10">
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(0,0,0,0.1) 0%, transparent 50%)" }} />
           <FadeUp>
             <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 900, color: "#fff", marginBottom: "20px", position: "relative" }}>

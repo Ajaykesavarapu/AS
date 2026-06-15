@@ -7,7 +7,7 @@ export const siteConfig = {
     logoAlt: "ASKreativ Logo",
   },
   contact: {
-    email: "helloaskreativ@gmail.com",
+    email: import.meta.env.NEXT_PUBLIC_CONTACT_EMAIL || "helloaskreativ@gmail.com",
     phone: "+91 96669 76611",
     whatsapp: "+91 91544 58686",
     address: "Hyderabad, Telangana, India",

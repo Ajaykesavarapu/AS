@@ -50,12 +50,14 @@ export default function About() {
         <HeroSection
           backgroundType="image"
           backgroundSrc="/Images/about%20us.jpeg"
+          ctaText="Connect with Us"
+          ctaOnClick={openModal}
         />
 
       {/* ── INTELLIGENT ECOSYSTEMS ───────────────────────────────────── */}
       <section className="section" style={{ background: "var(--bg-alt)" }}>
         <div className="container">
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: "80px", alignItems: "center" }} className="max-lg:block">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-20 items-center">
             <FadeUp>
               <span className="section-tag">OUR APPROACH</span>
               <h2 className="section-title">Building Intelligent <span>Digital Ecosystems</span></h2>
@@ -72,7 +74,7 @@ export default function About() {
       {/* ── OUR JOURNEY ──────────────────────────────────────────────── */}
       <section className="section">
         <div className="container">
-          <div style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: "100px", alignItems: "center" }} className="max-lg:block">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-24 items-center">
             <FadeUp>
               <span className="section-tag">OUR JOURNEY</span>
               <h2 className="section-title">From a Dream to <span>Digital Excellence</span></h2>

@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight, Search, Clock } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
+import { useModal } from "@/App";
 import blogAi from "@/assets/blog_ai.png";
 import blogSeo from "@/assets/blog_seo.png";
 import HeroSection from "@/components/layout/HeroSection";
@@ -46,6 +47,7 @@ const posts = [
 
 export default function Blog() {
   const [search, setSearch] = useState("");
+  const { openModal } = useModal();
 
   const filtered = posts.filter((p) => {
     return search === "" || p.title.toLowerCase().includes(search.toLowerCase()) || p.excerpt.toLowerCase().includes(search.toLowerCase());
@@ -62,6 +64,8 @@ export default function Blog() {
        <HeroSection
          backgroundType="image"
          backgroundSrc="/Images/blogs.jpeg"
+         ctaText="Read Blog"
+         ctaOnClick={openModal}
        />
 
       {/* ── ARTICLES ─────────────────────────────────────────────────── */}

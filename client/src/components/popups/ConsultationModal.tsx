@@ -133,7 +133,7 @@ export default function ConsultationModal({ open, onClose }: Props) {
                   <form onSubmit={form.handleSubmit(onSubmit)} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
                     <input type="text" {...form.register("honeypot")} style={{ display: "none" }} tabIndex={-1} autoComplete="off" />
 
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
                         <label style={{ display: "block", fontSize: "11px", fontWeight: 700, color: "#4a4d55", marginBottom: "5px", textTransform: "uppercase", letterSpacing: "0.5px" }}>Full Name *</label>
                         <input {...form.register("fullName")} placeholder="Your Name" style={inputStyle} data-testid="input-fullname" />
@@ -145,7 +145,7 @@ export default function ConsultationModal({ open, onClose }: Props) {
                       </div>
                     </div>
 
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
                         <label style={{ display: "block", fontSize: "11px", fontWeight: 700, color: "#4a4d55", marginBottom: "5px", textTransform: "uppercase", letterSpacing: "0.5px" }}>Email *</label>
                         <input {...form.register("email")} type="email" placeholder="you@company.com" style={inputStyle} data-testid="input-email" />

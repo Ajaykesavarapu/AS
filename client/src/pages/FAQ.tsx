@@ -75,22 +75,12 @@ export default function FAQ() {
   return (
     <main>
       {/* ── HERO ─────────────────────────────────────────────────────── */}
-      <section className="shiftwave-hero">
-        <div
-          className="shiftwave-hero-media"
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: "radial-gradient(circle at 50% 0%, var(--orange-glow) 0%, transparent 60%)",
-            opacity: 0.08,
-            pointerEvents: "none"
-          }}
-        />
-        <div className="shiftwave-hero-overlay" />
-        <div className="shiftwave-hero-cta">
-          {/* No CTA button in hero */}
-        </div>
-      </section>
+      <HeroSection
+        backgroundType="image"
+        backgroundSrc="/Images/services-hero.jpeg"
+        ctaText="Ask a Question"
+        ctaOnClick={openModal}
+      />
 
       {/* ── FAQ CONTENT ──────────────────────────────────────────────── */}
       <section className="section">

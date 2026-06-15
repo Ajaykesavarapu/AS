@@ -10,7 +10,7 @@ const links = [
 export default function SocialSidebar() {
   return (
     <div 
-      className="fixed left-0 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-start px-4"
+       className="fixed left-0 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-start space-y-4 px-4"
       role="navigation" 
       aria-label="Social media links"
     >

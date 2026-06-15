@@ -4,6 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { ArrowLeft, ArrowRight, CheckCircle, type LucideIcon, Target, Cpu, Search, Code2, Share2, Grid3x3, Smartphone, Palette, PenTool, Megaphone, BarChart3, Video } from "lucide-react";
 import { useModal } from "@/App";
 import { useSEO } from "@/hooks/useSEO";
+import HeroSection from "@/components/layout/HeroSection";
 
 function FadeUp({ children, delay = 0, style }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -424,23 +425,12 @@ export default function ServiceDetail() {
   return (
      <main>
        {/* ── HERO ─────────────────────────────────────────────────────── */}
-       <section className="shiftwave-hero">
-         <img
-           src={service.heroImg}
-           alt={service.title}
-           className="shiftwave-hero-media"
-         />
-         <div className="shiftwave-hero-overlay" />
-         <div className="shiftwave-hero-cta">
-           <FadeUp>
-             <div style={{ display: "flex", justifyContent: "center", gap: "16px" }}>
-               <button onClick={openModal} className="btn-primary" style={{ padding: "16px 32px", fontSize: "16px" }}>
-                 Get a Free Consultation <ArrowRight size={18} />
-               </button>
-             </div>
-           </FadeUp>
-         </div>
-       </section>
+       <HeroSection
+         backgroundType="image"
+         backgroundSrc={service.heroImg}
+         ctaText="Get Free Consultation"
+         ctaOnClick={openModal}
+       />
 
       {/* ── WHY IT MATTERS ───────────────────────────────────────────── */}
       <section className="section">
@@ -490,7 +480,7 @@ export default function ServiceDetail() {
       {/* ── BENEFITS ─────────────────────────────────────────────────── */}
       <section className="section">
         <div className="container" style={{ maxWidth: "1000px" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "80px", alignItems: "center" }} className="max-lg:block">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
             <FadeUp>
                <h2 className="section-title">Why Visionary Brands <span>Choose Us</span></h2>
                <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "40px" }}>
