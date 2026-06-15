@@ -53,7 +53,7 @@ export default function Navbar() {
     [location]);
 
   // Optimized navbar height
-  const navbarHeight = scrolled ? 90 : 120;
+  const navbarHeight = scrolled ? 80 : 95;
   const menuPadTop = `${navbarHeight + 20}px`;
 
   return (
@@ -63,11 +63,17 @@ export default function Navbar() {
         className="site-nav"
         style={{
           height: `${navbarHeight}px`,
-          transition: "height 0.3s ease",
+          transition: "all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)",
           overflow: "visible",
-          position: "sticky",
+          position: "fixed",
           top: 0,
-          zIndex: 1000
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          backgroundColor: scrolled ? "var(--bg-glass-heavy, rgba(11, 14, 26, 0.85))" : "transparent",
+          backdropFilter: scrolled ? "blur(12px)" : "none",
+          borderBottom: scrolled ? "1px solid var(--border-c)" : "1px solid transparent",
+          boxShadow: scrolled ? "0 4px 20px rgba(0, 0, 0, 0.1)" : "none"
         }}
       >
         <div className="container" style={{ height: "100%", position: "relative" }}>
@@ -84,11 +90,11 @@ export default function Navbar() {
                 src={logoPath}
                 alt="ASKreativ Global Solutions"
                 style={{
-                  height: scrolled ? "70px" : "100px", // Increased size for better visibility
+                  height: scrolled ? "50px" : "65px",
                   width: "auto",
                   display: "block",
                   transition: "height 0.3s ease",
-                  filter: scrolled ? "drop-shadow(0 0 8px transparent)" : "var(--logo-filter)",
+                  filter: scrolled ? "var(--logo-filter)" : "brightness(0) invert(1)",
                 }}
               />
             </Link>
@@ -122,7 +128,7 @@ export default function Navbar() {
                         padding: "8px 12px", // Optimized padding
                         fontSize: "14px", // Slightly reduced font size
                         fontWeight: 600,
-                        color: isActive(link.href) ? "var(--orange)" : "var(--fg)",
+                        color: isActive(link.href) ? "var(--orange)" : (scrolled ? "var(--fg)" : "#ffffff"),
                         borderRadius: "8px", // Reduced border radius
                         transition: "all 0.2s ease",
                         whiteSpace: "nowrap" // Prevent text wrapping
@@ -216,7 +222,7 @@ export default function Navbar() {
                       padding: "8px 12px", // Optimized padding
                       fontSize: "14px", // Slightly reduced font size
                       fontWeight: 600,
-                      color: isActive(link.href) ? "var(--orange)" : "var(--fg)",
+                      color: isActive(link.href) ? "var(--orange)" : (scrolled ? "var(--fg)" : "#ffffff"),
                       borderRadius: "8px", // Reduced border radius
                       transition: "all 0.2s ease",
                       whiteSpace: "nowrap",
@@ -269,12 +275,12 @@ export default function Navbar() {
                   width: "48px",
                   height: "48px",
                   borderRadius: "50%",
-                  border: menuOpen ? "1px solid transparent" : "1px solid var(--orange)",
+                  border: menuOpen ? "1px solid transparent" : (scrolled ? "1px solid var(--orange)" : "1px solid rgba(255,255,255,0.3)"),
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  background: menuOpen ? "var(--orange)" : "var(--card-bg-glass)",
+                  background: menuOpen ? "var(--orange)" : (scrolled ? "var(--card-bg-glass)" : "rgba(255,255,255,0.1)"),
                   backdropFilter: "blur(8px)",
                   cursor: "pointer",
                   transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
@@ -288,21 +294,21 @@ export default function Navbar() {
                   <span style={{ 
                     position: "absolute", left: 0, top: menuOpen ? "7px" : "0", 
                     width: "100%", height: "2px", 
-                    background: menuOpen ? "#fff" : "var(--orange)", 
+                    background: menuOpen ? "#fff" : (scrolled ? "var(--orange)" : "#ffffff"), 
                     transition: "all 0.3s ease", 
                     transform: menuOpen ? "rotate(45deg)" : "none" 
                   }}></span>
                   <span style={{ 
                     position: "absolute", left: 0, top: "7px", 
                     width: "100%", height: "2px", 
-                    background: menuOpen ? "#fff" : "var(--orange)", 
+                    background: menuOpen ? "#fff" : (scrolled ? "var(--orange)" : "#ffffff"), 
                     transition: "all 0.3s ease", 
                     opacity: menuOpen ? 0 : 1 
                   }}></span>
                   <span style={{ 
                     position: "absolute", left: 0, top: menuOpen ? "7px" : "14px", 
                     width: "100%", height: "2px", 
-                    background: menuOpen ? "#fff" : "var(--orange)", 
+                    background: menuOpen ? "#fff" : (scrolled ? "var(--orange)" : "#ffffff"), 
                     transition: "all 0.3s ease", 
                     transform: menuOpen ? "rotate(-45deg)" : "none" 
                   }}></span>

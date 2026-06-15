@@ -233,7 +233,7 @@ export default function Home() {
             </FadeUp>
 
             <FadeUp delay={0.15}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
+              <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-5">
                 {homeContent.stats.map((s, i) => (
                   <motion.div
                     key={s.label}
