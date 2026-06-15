@@ -1,16 +1,15 @@
 {
   "extends": "./tsconfig.base.json",
-  "compileOnSave": false,
-  "files": [],
-  "references": [
-    {
-      "path": "./lib/db"
-    },
-    {
-      "path": "./lib/api-client-react"
-    },
-    {
-      "path": "./lib/api-zod"
-    }
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": ["node", "express", "cors", "cookie-parser"],
+    "noEmit": true
+  },
+  "include": [
+    "api/**/*.ts",
+    "server/src/**/*.ts",
+    "lib/db/src/**/*.ts",
+    "lib/api-zod/src/**/*.ts"
   ]
 }

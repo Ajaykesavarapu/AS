@@ -1,8 +1,9 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "types": ["node"],
-    "rootDir": "../"
+    "types": ["node", "express", "cors", "cookie-parser"],
+    "rootDir": "../",
+    "noEmit": true
   },
   "include": [
     "index.ts",
