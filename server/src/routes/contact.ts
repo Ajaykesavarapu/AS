@@ -32,7 +32,7 @@ router.post("/contact", async (req, res): Promise<void> => {
 
     const parsed = SubmitContactBody.safeParse(req.body);
     if (!parsed.success) {
-      const errorMsg = parsed.error.issues.map(i => `${i.path.join(".")}: ${i.message}`).join(", ");
+      const errorMsg = parsed.error.issues.map((i: { path: (string | number)[]; message: string }) => `${i.path.join(".")}: ${i.message}`).join(", ");
       console.error("Zod validation failed for contact payload:", errorMsg);
       res.status(400).json({ error: `Validation error: ${errorMsg}` });
       return;
