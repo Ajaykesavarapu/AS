@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/index.mjs"
+      "destination": "/api/index.js"
     },
     {
       "source": "/((?!assets|Images|favicon.svg|logo.png|robots.txt|googlee5f7323937212e3f.html).*)",

@@ -120,17 +120,16 @@ globalThis.__dirname = __bannerPath.dirname(globalThis.__filename);
 
   // Build Vercel API serverless handler (pre-bundled JS so @vercel/node skips TS compilation)
   const apiHandlerPath = path.resolve(artifactDir, "../api/_handler.ts");
-  const apiOutPath = path.resolve(artifactDir, "../api/index.mjs");
+  const apiOutPath = path.resolve(artifactDir, "../api/index.js");
   await esbuild({
     entryPoints: [apiHandlerPath],
     platform: "node",
     bundle: true,
-    format: "esm",
+    format: "cjs",
     outfile: apiOutPath,
     logLevel: "info",
     external: sharedExternal,
     sourcemap: "linked",
-    banner: sharedBanner,
   });
 }
 
