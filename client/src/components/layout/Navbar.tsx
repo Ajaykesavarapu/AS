@@ -4,7 +4,6 @@ import { ChevronDown, X, Menu } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useModal } from "@/App";
 import logoPath from "@/assets/As-01.png";
-import ThemeToggle from "./ThemeToggle";
 
 import { navLinks, siteConfig } from "@/constants/siteData";
 
@@ -71,10 +70,10 @@ export default function Navbar() {
           left: 0,
           right: 0,
           zIndex: 1000,
-          backgroundColor: scrolled ? "var(--bg-glass-heavy, rgba(11, 14, 26, 0.85))" : "transparent",
-          backdropFilter: scrolled ? "blur(12px)" : "none",
-          borderBottom: scrolled ? "1px solid var(--border-c)" : "1px solid transparent",
-          boxShadow: scrolled ? "0 4px 20px rgba(0, 0, 0, 0.1)" : "none"
+          backgroundColor: "var(--bg-glass-heavy, rgba(11, 14, 26, 0.85))",
+          backdropFilter: "blur(12px)",
+          borderBottom: "1px solid var(--border-c)",
+          boxShadow: scrolled ? "0 4px 20px rgba(0, 0, 0, 0.08)" : "none"
         }}
       >
         <div className="container" style={{ height: "100%", position: "relative" }}>
@@ -91,10 +90,11 @@ export default function Navbar() {
                 src={logoPath}
                 alt="ASKreativ Global Solutions"
                 style={{
-                  height: scrolled ? "50px" : "65px",
+                  height: scrolled ? "65px" : "85px",
                   width: "auto",
                   display: "block",
                   transition: "height 0.3s ease",
+                  filter: "drop-shadow(0 2px 8px rgba(0, 0, 0, 0.12))"
                 }}
               />
             </Link>
@@ -256,7 +256,6 @@ export default function Navbar() {
               gap: "10px", // Reduced gap
               flexShrink: 0
             }}>
-              <ThemeToggle />
               <button
                 onClick={openModal}
                 className="btn-primary hidden lg:inline-flex"
@@ -319,92 +318,140 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Unified Trendy Mega Menu / Mobile Menu */}
+      {/* Translucent Backdrop when Mega Menu is Open */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
-            animate={{ opacity: 1, clipPath: "circle(150% at 100% 0%)" }}
-            exit={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setMenuOpen(false)}
             style={{
               position: "fixed",
-              top: 0,
+              inset: 0,
+              top: scrolled ? "80px" : "95px",
+              background: "rgba(0, 0, 0, 0.4)",
+              backdropFilter: "blur(4px)",
+              zIndex: 998,
+            }}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Dropdown Mega Menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              position: "fixed",
+              top: scrolled ? "80px" : "95px",
               left: 0,
               right: 0,
-              bottom: 0,
-              background: "rgba(10, 10, 12, 0.98)", // Trendy dark background
-              backdropFilter: "blur(20px)",
-              zIndex: 9999,
-              display: "flex",
-              flexDirection: "column",
+              background: "var(--card-bg)",
+              borderBottom: "1px solid var(--border-c)",
+              boxShadow: "0 20px 40px rgba(0, 0, 0, 0.12)",
+              zIndex: 999,
+              padding: "48px 0",
               overflowY: "auto",
-              paddingTop: menuPadTop,
-              paddingBottom: "40px"
+              maxHeight: "calc(100vh - 100px)",
+              transition: "top 0.3s ease",
             }}
           >
-            <div className="container" style={{ flex: 1, display: "flex", flexDirection: "column", paddingBottom: "40px", maxWidth: "100%", overflow: "hidden" }}>
-              <div 
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10"
-                style={{ 
-                  width: "100%",
-                }}
-              >
+            <div className="container">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
                 {/* Column 1: Company */}
-                <motion.div 
-                  initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }}
-                >
-                   <h3 style={{ fontSize: "14px", fontWeight: 800, marginBottom: "32px", color: "var(--orange)", textTransform: "uppercase", letterSpacing: "0.15em" }}>Company</h3>
-                   <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-                     {navLinks.filter(l => !l.hasDropdown).map(l => (
-                       <Link key={l.label} href={l.href} onClick={() => setMenuOpen(false)} style={{ color: "#fff", fontSize: "28px", fontWeight: 700, transition: "all 0.3s", textDecoration: "none", display: "inline-block" }} className="hover:text-[var(--orange)] hover:translate-x-2">{l.label}</Link>
-                     ))}
-                   </div>
-                </motion.div>
+                <div>
+                  <h3 style={{ fontSize: "14px", fontWeight: 800, marginBottom: "24px", color: "var(--orange)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Company</h3>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                    {navLinks.filter(l => !l.hasDropdown).map((l) => (
+                      <Link
+                        key={l.label}
+                        href={l.href}
+                        onClick={() => setMenuOpen(false)}
+                        style={{ color: "var(--fg-light)", fontSize: "15px", fontWeight: 600, textDecoration: "none", display: "inline-block", transition: "color 0.2s" }}
+                        className="hover:text-[var(--orange)]"
+                      >
+                        {l.label}
+                      </Link>
+                    ))}
+                    <Link
+                      href="/faq"
+                      onClick={() => setMenuOpen(false)}
+                      style={{ color: "var(--fg-light)", fontSize: "15px", fontWeight: 600, textDecoration: "none", display: "inline-block", transition: "color 0.2s" }}
+                      className="hover:text-[var(--orange)]"
+                    >
+                      FAQ
+                    </Link>
+                    <Link
+                      href="/careers"
+                      onClick={() => setMenuOpen(false)}
+                      style={{ color: "var(--fg-light)", fontSize: "15px", fontWeight: 600, textDecoration: "none", display: "inline-block", transition: "color 0.2s" }}
+                      className="hover:text-[var(--orange)]"
+                    >
+                      Careers
+                    </Link>
+                  </div>
+                </div>
 
                 {/* Column 2: Our Services */}
-                <motion.div 
-                  initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }}
-                >
-                   <h3 style={{ fontSize: "14px", fontWeight: 800, marginBottom: "32px", color: "var(--orange)", textTransform: "uppercase", letterSpacing: "0.15em" }}>Our Services</h3>
-                   <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-                     {services.map(s => (
-                       <Link key={s.label} href={s.slug.startsWith("/") ? s.slug : `/${s.slug}`} onClick={() => setMenuOpen(false)} style={{ color: "rgba(255,255,255,0.7)", fontSize: "18px", fontWeight: 500, transition: "all 0.3s", textDecoration: "none" }} className="hover:text-[var(--orange)] hover:translate-x-2">{s.label}</Link>
-                     ))}
-                   </div>
-                </motion.div>
+                <div>
+                  <h3 style={{ fontSize: "14px", fontWeight: 800, marginBottom: "24px", color: "var(--orange)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Core Services</h3>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                    {services.map((s) => (
+                      <Link
+                        key={s.label}
+                        href={s.slug.startsWith("/") ? s.slug : `/${s.slug}`}
+                        onClick={() => setMenuOpen(false)}
+                        style={{ color: "var(--fg-light)", fontSize: "15px", fontWeight: 500, textDecoration: "none", display: "inline-block", transition: "color 0.2s" }}
+                        className="hover:text-[var(--orange)]"
+                      >
+                        {s.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
 
                 {/* Column 3: Industries We Serve */}
-                <motion.div 
-                  initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.5 }}
-                >
-                   <h3 style={{ fontSize: "14px", fontWeight: 800, marginBottom: "32px", color: "var(--orange)", textTransform: "uppercase", letterSpacing: "0.15em" }}>Industries</h3>
-                   <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-                     {industriesDropdown.slice(0, 7).map(s => (
-                       <Link key={s.label} href={s.slug.startsWith("/") ? s.slug : `/${s.slug}`} onClick={() => setMenuOpen(false)} style={{ color: "rgba(255,255,255,0.7)", fontSize: "18px", fontWeight: 500, transition: "all 0.3s", textDecoration: "none" }} className="hover:text-[var(--orange)] hover:translate-x-2">{s.label}</Link>
-                     ))}
-                   </div>
-                </motion.div>
+                <div>
+                  <h3 style={{ fontSize: "14px", fontWeight: 800, marginBottom: "24px", color: "var(--orange)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Industries We Serve</h3>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                    {industriesDropdown.map((s) => (
+                      <Link
+                        key={s.label}
+                        href={s.slug.startsWith("/") ? s.slug : `/${s.slug}`}
+                        onClick={() => setMenuOpen(false)}
+                        style={{ color: "var(--fg-light)", fontSize: "15px", fontWeight: 500, textDecoration: "none", display: "inline-block", transition: "color 0.2s" }}
+                        className="hover:text-[var(--orange)]"
+                      >
+                        {s.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
 
-                {/* Column 4: More Industries / Info */}
-                <motion.div 
-                  initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.5 }}
-                >
-                   <h3 style={{ fontSize: "14px", fontWeight: 800, marginBottom: "32px", color: "rgba(255,255,255,0.2)", textTransform: "uppercase", letterSpacing: "0.15em" }}>More</h3>
-                   <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-                     {industriesDropdown.slice(7).map(s => (
-                       <Link key={s.label} href={s.slug.startsWith("/") ? s.slug : `/${s.slug}`} onClick={() => setMenuOpen(false)} style={{ color: "rgba(255,255,255,0.5)", fontSize: "16px", fontWeight: 500, transition: "all 0.3s", textDecoration: "none" }} className="hover:text-[var(--orange)] hover:translate-x-2">{s.label}</Link>
-                     ))}
-                   </div>
-                   
-                   <div style={{ marginTop: "40px", padding: "32px", background: "rgba(255,255,255,0.03)", borderRadius: "24px", border: "1px solid rgba(255,255,255,0.05)" }}>
-                      <h4 style={{ color: "#fff", fontSize: "20px", fontWeight: 800, marginBottom: "12px" }}>Start Your Project</h4>
-                      <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "14px", marginBottom: "24px", lineHeight: 1.6 }}>Ready to engineer your digital growth? Let's discuss your vision.</p>
-                      <button onClick={() => { setMenuOpen(false); openModal(); }} className="btn-primary" style={{ width: "100%", justifyContent: "center" }}>
-                        Get a Free Quote
-                      </button>
-                   </div>
-                </motion.div>
+                {/* Column 4: Let's Connect */}
+                <div>
+                  <h3 style={{ fontSize: "14px", fontWeight: 800, marginBottom: "24px", color: "var(--orange)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Let's Connect</h3>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "16px", padding: "24px", background: "var(--bg-section)", borderRadius: "20px", border: "1px solid var(--border-c)" }}>
+                    <h4 style={{ color: "var(--fg)", fontSize: "17px", fontWeight: 800, margin: 0 }}>Start Your Project</h4>
+                    <p style={{ color: "var(--fg-light)", fontSize: "13px", lineHeight: 1.5, margin: 0 }}>Ready to engineer your digital growth? Let's discuss your vision.</p>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "8px", fontSize: "13px", color: "var(--fg-light)", fontWeight: 500 }}>
+                      <span style={{ wordBreak: "break-all" }}>Email: {siteConfig.contact.email}</span>
+                      <span>Phone: {siteConfig.contact.phone}</span>
+                    </div>
+                    <button
+                      onClick={() => { setMenuOpen(false); openModal(); }}
+                      className="btn-primary"
+                      style={{ width: "100%", justifyContent: "center", fontSize: "14px", padding: "12px" }}
+                    >
+                      Get a Free Quote
+                    </button>
+                  </div>
+                </div>
 
               </div>
             </div>

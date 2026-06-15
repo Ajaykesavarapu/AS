@@ -37,6 +37,7 @@
   --border-c: #e9ecef;
   --card-bg: #ffffff;
   --card-bg-glass: rgba(255, 255, 255, 0.7);
+  --bg-glass-heavy: rgba(255, 255, 255, 0.85);
   --card-border: rgba(0, 0, 0, 0.05);
   --muted-bg: #f8f9fa;
   --muted-fg: #868e96;
@@ -268,7 +269,7 @@ html.dark {
 
 /* ── THEME TOGGLE ────────────────────────────────────── */
 .theme-toggle-wrap {
-  position: relative; display: inline-flex; align-items: center; margin-right: 8px;
+  position: fixed; left: 30px; bottom: 30px; z-index: 9990;
 }
 .theme-switch { position: relative; display: inline-block; width: 56px; height: 28px; }
 .theme-switch input { opacity: 0; width: 0; height: 0; }
@@ -510,16 +511,29 @@ html.dark .glass {
 }
 
 /* ── SHIFTWAVE FULL-VIEWPORT HERO ────────────────────── */
+.shiftwave-hero-frame {
+  width: 100%;
+  height: calc(100vh - 95px);
+  height: calc(100svh - 95px);
+  padding: 24px;
+  box-sizing: border-box;
+  display: flex;
+  margin-top: 95px; /* Push below navbar */
+  transition: margin-top 0.3s ease;
+  background-color: var(--bg);
+}
+
 .shiftwave-hero {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0;
   padding: 0;
+  border-radius: 40px;
 }
 
 .shiftwave-hero-media {
@@ -554,8 +568,14 @@ html.dark .glass {
 }
 
 @media (max-width: 768px) {
+  .shiftwave-hero-frame {
+    padding: 16px;
+    margin-top: 80px;
+    height: calc(100vh - 80px);
+    height: calc(100svh - 80px);
+  }
   .shiftwave-hero {
-    height: 100svh; /* use small viewport height on mobile for better UX */
+    border-radius: 24px;
   }
   .shiftwave-hero-cta {
     bottom: 80px;

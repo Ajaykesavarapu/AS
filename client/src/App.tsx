@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SocialSidebar from "@/components/layout/SocialSidebar";
+import ThemeToggle from "@/components/layout/ThemeToggle";
 import ConsultationModal from "@/components/popups/ConsultationModal";
 import ExitIntentPopup from "@/components/popups/ExitIntentPopup";
 import CookieBanner from "@/components/popups/CookieBanner";
@@ -65,6 +66,7 @@ function AppInner() {
       <ScrollToTop />
       <ScrollProgress />
       <SocialSidebar />
+      <ThemeToggle />
       <Navbar />
       <Switch>
         <Route path="/" component={Home} />
