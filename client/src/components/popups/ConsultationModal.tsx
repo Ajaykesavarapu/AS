@@ -51,17 +51,25 @@ export default function ConsultationModal({ open, onClose }: Props) {
   }, [open]);
 
   const onSubmit = (data: FormData) => {
-    mutation.mutate({
-      data: {
-        fullName: data.fullName,
-        businessName: data.businessName || null,
-        email: data.email,
-        phone: data.phone,
-        service: data.service as "digital-marketing" | "ai-automation" | "seo-services" | "website-development" | "social-media-marketing" | "erp-systems" | "mobile-app-development" | "branding-design" | "other",
-        message: data.message || null,
-        honeypot: data.honeypot || null,
-      },
-    });
+    try {
+      mutation.mutate({
+        data: {
+          fullName: data.fullName,
+          businessName: data.businessName || null,
+          email: data.email,
+          phone: data.phone,
+          service: data.service as "digital-marketing" | "ai-automation" | "seo-services" | "website-development" | "social-media-marketing" | "erp-systems" | "mobile-app-development" | "branding-design" | "other",
+          message: data.message || null,
+          honeypot: data.honeypot || null,
+        },
+      }, {
+        onError: (err) => {
+          console.error("Consultation form async submission error:", err);
+        }
+      });
+    } catch (err) {
+      console.error("Synchronous consultation form submission exception:", err);
+    }
   };
 
   return (
@@ -105,10 +113,10 @@ export default function ConsultationModal({ open, onClose }: Props) {
             <div style={{ padding: "48px" }}>
               {mutation.isSuccess ? (
                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} style={{ textAlign: "center", padding: "40px 0" }}>
-                  <div style={{ width: "80px", height: "80px", borderRadius: "50%", background: "var(--orange-glass)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 24px" }}>
-                    <CheckCircle size={40} style={{ color: "var(--orange)" }} />
+                  <div style={{ width: "80px", height: "80px", borderRadius: "50%", background: "rgba(34, 197, 94, 0.1)", color: "#22c55e", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 24px", border: "1px solid rgba(34, 197, 94, 0.2)" }}>
+                    <CheckCircle size={40} style={{ color: "#22c55e" }} />
                   </div>
-                  <h3 style={{ fontSize: "32px", fontWeight: 900, color: "var(--fg)", marginBottom: "12px", letterSpacing: "-0.02em" }}>Message Sent!</h3>
+                  <h3 style={{ fontSize: "32px", fontWeight: 950, color: "#22c55e", marginBottom: "12px", letterSpacing: "-0.02em" }}>Message Sent!</h3>
                   <p style={{ color: "var(--fg-light)", fontSize: "17px", marginBottom: "32px", opacity: 0.8 }}>We'll reach out within 24 hours to begin your transformation.</p>
                   <button
                     onClick={() => { mutation.reset(); form.reset(); onClose(); }}
@@ -180,7 +188,11 @@ export default function ConsultationModal({ open, onClose }: Props) {
                       <textarea {...form.register("message")} rows={3} placeholder="Tell us about your project..." style={{ ...inputStyle, resize: "vertical" }} data-testid="textarea-message" />
                     </div>
 
-                    {mutation.isError && <p style={{ fontSize: "13px", color: "#ef4444" }}>Something went wrong. Please try again.</p>}
+                    {mutation.isError && (
+                      <p style={{ fontSize: "13px", color: "#ef4444", fontWeight: 600, padding: "10px", background: "rgba(239, 68, 68, 0.08)", border: "1px solid rgba(239, 68, 68, 0.15)", borderRadius: "10px" }}>
+                        Submission Failed: {(mutation.error as any)?.data?.error || mutation.error?.message || "Something went wrong. Please try again."}
+                      </p>
+                    )}
 
                     <button
                       type="submit"

@@ -138,7 +138,7 @@ export default function About() {
             <span className="section-tag" style={{ justifyContent: "center" }}>OUR CORE SOLUTIONS</span>
             <h2 className="section-title" style={{ textAlign: "center" }}>Intelligent <span>Digital Machinery</span></h2>
           </FadeUp>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))", gap: "24px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
             {solutions.map((s, i) => (
               <FadeUp key={s.title} delay={i * 0.08}>
                 <div style={{ padding: "40px", borderRadius: "24px", background: "var(--bg)", border: "1px solid var(--card-border)", height: "100%" }}>

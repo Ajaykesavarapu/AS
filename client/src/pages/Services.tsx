@@ -48,7 +48,7 @@ export default function Services() {
       {/* ── SERVICES GRID ────────────────────────────────────────────── */}
       <section className="section" style={{ position: "relative" }}>
         <div className="container">
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(360px, 1fr))", gap: "32px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "32px" }}>
             {services.map((s, i) => {
               const Icon = s.icon;
               return (

@@ -88,7 +88,7 @@ export default function Portfolio() {
           </FadeUp>
 
           {/* Grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(360px, 1fr))", gap: "32px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "32px" }}>
             {filtered.map((p, i) => (
               <FadeUp key={p.title} delay={i * 0.08}>
                 <div className="card portfolio-card" style={{ padding: 0, overflow: "hidden", borderRadius: "32px", background: "var(--card-bg)", border: "1px solid var(--card-border)", transition: "all 0.4s cubic-bezier(0.23, 1, 0.32, 1)" }}>

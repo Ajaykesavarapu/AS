@@ -3,7 +3,7 @@ import { ArrowLeft, Search } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <main style={{ minHeight: "80vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "160px 24px" }}>
+    <main style={{ minHeight: "80vh", display: "flex", alignItems: "center", justifyContent: "center" }} className="py-24 md:py-40 px-6">
       <div style={{ textAlign: "center", maxWidth: "500px" }}>
         <div style={{ fontSize: "120px", fontWeight: 900, color: "var(--orange)", opacity: 0.15, lineHeight: 1, marginBottom: "0" }}>404</div>
         <h1 style={{ fontSize: "32px", fontWeight: 800, color: "var(--fg)", marginBottom: "16px", marginTop: "-16px" }}>Page Not Found</h1>

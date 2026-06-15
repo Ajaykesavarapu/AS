@@ -71,7 +71,7 @@ export default function Blog() {
       {/* ── ARTICLES ─────────────────────────────────────────────────── */}
       <section className="section">
         <div className="container">
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(450px, 1fr))", gap: "40px" }} className="max-md:grid-cols-1">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "40px" }} className="max-md:grid-cols-1">
             {filtered.map((post, i) => (
               <FadeUp key={post.slug} delay={i * 0.1}>
                 <Link href={`/blog/${post.slug}`} style={{ display: "block", height: "100%" }}>

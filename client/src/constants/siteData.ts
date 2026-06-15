@@ -5,11 +5,12 @@ export const siteConfig = {
     name: "ASKreativ Global Solutions",
     tagline: "AI-Powered Digital Growth Agency",
     logoAlt: "ASKreativ Logo",
+    description: "ASKreativ Global Solutions is a leading AI-powered digital marketing and development agency in Hyderabad, built to turn visions into results through high-growth digital execution machinery, branding, and automation.",
   },
   contact: {
     email: import.meta.env.NEXT_PUBLIC_CONTACT_EMAIL || "helloaskreativ@gmail.com",
     phone: "+91 96669 76611",
-    whatsapp: "+91 91544 58686",
+    whatsapp: "+91 96669 76611",
     address: "Hyderabad, Telangana, India",
   },
   socials: [
@@ -17,7 +18,7 @@ export const siteConfig = {
     { label: "Facebook", href: "https://www.facebook.com/profile.php?id=61588501648124" },
     { label: "YouTube", href: "https://www.youtube.com/@AsKreativ" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/askreativ/" },
-    { label: "WhatsApp", href: "https://wa.me/919154458686" },
+    { label: "WhatsApp", href: "https://wa.me/919666976611" },
   ],
 };
 

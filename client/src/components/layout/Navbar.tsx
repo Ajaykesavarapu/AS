@@ -4,6 +4,7 @@ import { ChevronDown, X, Menu } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useModal } from "@/App";
 import logoPath from "@/assets/As-01.png";
+import ThemeToggle from "./ThemeToggle";
 
 import { navLinks, siteConfig } from "@/constants/siteData";
 
@@ -94,7 +95,6 @@ export default function Navbar() {
                   width: "auto",
                   display: "block",
                   transition: "height 0.3s ease",
-                  filter: scrolled ? "var(--logo-filter)" : "brightness(0) invert(1)",
                 }}
               />
             </Link>
@@ -102,7 +102,6 @@ export default function Navbar() {
             {/* Desktop Nav */}
             <div
               style={{
-                display: "flex",
                 alignItems: "center",
                 gap: "6px", // Reduced gap for better space usage
                 flexShrink: 0
@@ -257,6 +256,7 @@ export default function Navbar() {
               gap: "10px", // Reduced gap
               flexShrink: 0
             }}>
+              <ThemeToggle />
               <button
                 onClick={openModal}
                 className="btn-primary hidden lg:inline-flex"

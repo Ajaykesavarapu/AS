@@ -459,7 +459,7 @@ export default function ServiceDetail() {
             <span className="section-tag" style={{ justifyContent: "center" }}>WHAT WE OFFER</span>
             <h2 className="section-title">Our Specific <span>Solutions</span></h2>
           </FadeUp>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))", gap: "24px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
             {service.services.map((s, i) => (
               <FadeUp key={s.title} delay={i * 0.07}>
                 <div style={{ display: "flex", gap: "20px", padding: "32px", borderRadius: "24px", background: "var(--card-bg)", border: "1px solid var(--card-border)" }} className="card">

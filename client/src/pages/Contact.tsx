@@ -49,17 +49,25 @@ export default function Contact() {
   });
 
   const onSubmit = (data: FormData) => {
-    mutation.mutate({
-      data: {
-        fullName: data.fullName,
-        businessName: data.businessName || null,
-        email: data.email,
-        phone: data.phone,
-        service: data.service as any,
-        message: data.message || null,
-        honeypot: data.honeypot || null,
-      }
-    });
+    try {
+      mutation.mutate({
+        data: {
+          fullName: data.fullName,
+          businessName: data.businessName || null,
+          email: data.email,
+          phone: data.phone,
+          service: data.service as any,
+          message: data.message || null,
+          honeypot: data.honeypot || null,
+        }
+      }, {
+        onError: (err) => {
+          console.error("Contact form async submission error:", err);
+        }
+      });
+    } catch (err) {
+      console.error("Synchronous contact form submission exception:", err);
+    }
   };
 
   useSEO({
@@ -170,10 +178,10 @@ export default function Contact() {
                <div className="card glass-card" style={{ padding: "48px 32px", borderRadius: "32px", background: "var(--card-bg)", border: "1px solid var(--card-border)", boxShadow: "0 40px 100px var(--shadow-lg)" }}>
                  {mutation.isSuccess ? (
                    <div style={{ textAlign: "center", padding: "60px 0" }}>
-                     <div style={{ width: "80px", height: "80px", borderRadius: "50%", background: "var(--orange-glass)", color: "var(--orange)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 32px" }}>
-                       <CheckCircle size={40} />
+                     <div style={{ width: "80px", height: "80px", borderRadius: "50%", background: "rgba(34, 197, 94, 0.1)", color: "#22c55e", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 32px", border: "1px solid rgba(34, 197, 94, 0.2)" }}>
+                       <CheckCircle size={40} style={{ color: "#22c55e" }} />
                      </div>
-                     <h3 style={{ fontWeight: 950, fontSize: "32px", color: "var(--fg)", marginBottom: "16px" }}>Message Received</h3>
+                     <h3 style={{ fontWeight: 950, fontSize: "32px", color: "#22c55e", marginBottom: "16px" }}>Message Received</h3>
                      <p style={{ color: "var(--fg-light)", fontSize: "18px", marginBottom: "32px" }}>Our execution team will reach out within 24 hours.</p>
                      <button
                        onClick={() => { mutation.reset(); reset(); }}
@@ -238,8 +246,8 @@ export default function Contact() {
                      </div>
 
                      {mutation.isError && (
-                       <p style={{ fontSize: "14px", color: "#ef4444" }}>
-                         Failed to submit message. Please try again.
+                       <p style={{ fontSize: "14px", color: "#ef4444", fontWeight: 600, padding: "12px", background: "rgba(239, 68, 68, 0.08)", border: "1px solid rgba(239, 68, 68, 0.15)", borderRadius: "12px" }}>
+                         Submission Failed: {(mutation.error as any)?.data?.error || mutation.error?.message || "An unexpected error occurred. Please try again."}
                        </p>
                      )}
 

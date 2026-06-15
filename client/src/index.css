@@ -82,7 +82,7 @@ html.dark {
 
 @layer base {
    * { box-sizing: border-box; }
-   html { scroll-behavior: smooth; }
+   html { scroll-behavior: smooth; overflow-x: hidden; }
    body {
      font-family: 'Oswald', sans-serif;
      font-size: 16px;
@@ -117,7 +117,16 @@ html.dark {
 .premium-reveal-inner {
   display: block;
 }
-.container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+@media (max-width: 640px) {
+  .container {
+    padding: 0 16px;
+  }
+}
 
 .section-tag {
   display: inline-flex; align-items: center; gap: 8px;
@@ -259,7 +268,7 @@ html.dark {
 
 /* ── THEME TOGGLE ────────────────────────────────────── */
 .theme-toggle-wrap {
-  position: fixed; left: 20px; bottom: 20px; z-index: 9999;
+  position: relative; display: inline-flex; align-items: center; margin-right: 8px;
 }
 .theme-switch { position: relative; display: inline-block; width: 56px; height: 28px; }
 .theme-switch input { opacity: 0; width: 0; height: 0; }
@@ -539,11 +548,9 @@ html.dark .glass {
 
 .shiftwave-hero-cta {
   position: absolute;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 60px;
+  left: 60px;
   z-index: 5;
-  text-align: center;
 }
 
 @media (max-width: 768px) {
@@ -551,6 +558,7 @@ html.dark .glass {
     height: 100svh; /* use small viewport height on mobile for better UX */
   }
   .shiftwave-hero-cta {
-    bottom: 60px;
+    bottom: 80px;
+    left: 24px;
   }
 }

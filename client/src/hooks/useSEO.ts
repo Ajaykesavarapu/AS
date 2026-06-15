@@ -4,12 +4,20 @@ export function useSEO({ title, description }: { title: string; description: str
   useEffect(() => {
     document.title = title;
     
-    let metaDescription = document.querySelector('meta[name="description"]');
-    if (!metaDescription) {
-      metaDescription = document.createElement('meta');
-      metaDescription.setAttribute('name', 'description');
-      document.head.appendChild(metaDescription);
-    }
-    metaDescription.setAttribute('content', description);
+    const setMeta = (query: string, nameOrProp: string, attr: "name" | "property", value: string) => {
+      let element = document.querySelector(query);
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attr, nameOrProp);
+        document.head.appendChild(element);
+      }
+      element.setAttribute('content', value);
+    };
+
+    setMeta('meta[name="description"]', 'description', 'name', description);
+    setMeta('meta[property="og:title"]', 'og:title', 'property', title);
+    setMeta('meta[property="og:description"]', 'og:description', 'property', description);
+    setMeta('meta[name="twitter:title"]', 'twitter:title', 'name', title);
+    setMeta('meta[name="twitter:description"]', 'twitter:description', 'name', description);
   }, [title, description]);
 }

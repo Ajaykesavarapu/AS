@@ -27,7 +27,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-12 md:gap-6 mb-16">
           {/* Brand Info */}
           <div style={{ gridColumn: "span 1" }}>
-            <img src={logoPath} alt="ASKreativ Global Solutions" style={{ height: "220px", width: "auto", marginBottom: "0px", marginTop: "-40px", filter: "var(--logo-filter)" }} />
+            <img src={logoPath} alt="ASKreativ Global Solutions" style={{ height: "220px", width: "auto", marginBottom: "0px", marginTop: "-40px" }} />
             <p style={{ fontSize: "14px", lineHeight: "1.8", color: "var(--fg-light)", marginBottom: "32px", maxWidth: "320px" }}>
               {homeContent.about.description1}
             </p>
@@ -149,7 +149,7 @@ export default function Footer() {
 
       {/* Floating WhatsApp */}
       <a
-        href={siteConfig.socials.find(s => s.label === "WhatsApp")?.href || "https://wa.me/919154458686"}
+        href={siteConfig.socials.find(s => s.label === "WhatsApp")?.href || "https://wa.me/919666976611"}
         target="_blank"
         rel="noreferrer"
         style={{
