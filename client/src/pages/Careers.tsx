@@ -179,7 +179,7 @@ export default function Careers() {
 
       {/* ── CTA ──────────────────────────────────────────────────────── */}
       <section className="section">
-        <div className="container" style={{ background: "var(--fg)", borderRadius: "40px", padding: "100px 20px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+        <div className="container" style={{ background: "linear-gradient(135deg, var(--navy) 0%, #080a2d 100%)", border: "1px solid var(--border-c)", borderRadius: "40px", padding: "100px 20px", textAlign: "center", position: "relative", overflow: "hidden" }}>
            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(45deg, rgba(232,119,34,0.1) 0%, transparent 100%)" }} />
            <FadeUp>
              <h2 style={{ fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 950, color: "#fff", marginBottom: "24px" }}>Build the Future with Us</h2>
