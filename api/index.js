@@ -55901,6 +55901,33 @@ router2.post("/contact", async (req, res) => {
       console.error("Database insertion failed/timed out:", dbErr);
     }
     try {
+      const emailResponse = await fetch("https://formsubmit.co/ajax/helloaskreativ@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          _subject: `New Lead: ${parsed.data.fullName} (${parsed.data.service})`,
+          Name: parsed.data.fullName,
+          Business: parsed.data.businessName || "N/A",
+          Email: parsed.data.email,
+          Phone: parsed.data.phone || "N/A",
+          Service: parsed.data.service,
+          Message: parsed.data.message || "No message provided"
+        })
+      });
+      if (!emailResponse.ok) {
+        const text2 = await emailResponse.text();
+        req.log.warn({ status: emailResponse.status, text: text2 }, "FormSubmit response warning");
+      } else {
+        req.log.info("Email notification sent successfully to helloaskreativ@gmail.com");
+      }
+    } catch (emailErr) {
+      req.log.warn({ emailErr }, "Email notification failed to send");
+      console.error("Email sending error:", emailErr);
+    }
+    try {
       const csvPath = process.env.VERCEL ? "/tmp/contacts.csv" : import_node_path.default.resolve(process.cwd(), "contacts.csv");
       let exists2 = false;
       try {

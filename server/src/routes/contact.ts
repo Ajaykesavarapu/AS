@@ -68,6 +68,36 @@ router.post("/contact", async (req, res): Promise<void> => {
       console.error("Database insertion failed/timed out:", dbErr);
     }
 
+    // Send email notification to helloaskreativ@gmail.com via FormSubmit.co
+    try {
+      const emailResponse = await fetch("https://formsubmit.co/ajax/helloaskreativ@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          _subject: `New Lead: ${parsed.data.fullName} (${parsed.data.service})`,
+          Name: parsed.data.fullName,
+          Business: parsed.data.businessName || "N/A",
+          Email: parsed.data.email,
+          Phone: parsed.data.phone || "N/A",
+          Service: parsed.data.service,
+          Message: parsed.data.message || "No message provided"
+        })
+      });
+
+      if (!emailResponse.ok) {
+        const text = await emailResponse.text();
+        req.log.warn({ status: emailResponse.status, text }, "FormSubmit response warning");
+      } else {
+        req.log.info("Email notification sent successfully to helloaskreativ@gmail.com");
+      }
+    } catch (emailErr: any) {
+      req.log.warn({ emailErr }, "Email notification failed to send");
+      console.error("Email sending error:", emailErr);
+    }
+
     // Save to CSV for Excel compatibility
     try {
       const csvPath = process.env.VERCEL
