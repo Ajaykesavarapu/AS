@@ -55840,7 +55840,10 @@ if (!process.env.DATABASE_URL) {
     "DATABASE_URL must be set. Did you forget to provision a database? Falling back to standalone mode."
   );
 } else {
-  pool = new Pool3({ connectionString: process.env.DATABASE_URL });
+  pool = new Pool3({
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
+  });
   db = drizzle(pool, { schema: schema_exports });
 }
 
