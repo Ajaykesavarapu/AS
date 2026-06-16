@@ -55881,7 +55881,7 @@ router2.post("/contact", async (req, res) => {
     }
     try {
       if (db) {
-        await db.insert(contactsTable).values({
+        const queryPromise = db.insert(contactsTable).values({
           fullName: parsed.data.fullName,
           businessName: parsed.data.businessName ?? null,
           email: parsed.data.email,
@@ -55889,12 +55889,16 @@ router2.post("/contact", async (req, res) => {
           service: parsed.data.service,
           message: parsed.data.message ?? null
         });
+        const timeoutPromise = new Promise(
+          (_, reject) => setTimeout(() => reject(new Error("Database insertion timed out (2.5s limit reached)")), 2500)
+        );
+        await Promise.race([queryPromise, timeoutPromise]);
       } else {
         req.log.warn("Database connection is null/unconfigured. Skipping database insert.");
       }
     } catch (dbErr) {
-      req.log.warn({ dbErr }, "Database insert failed, falling back to CSV only");
-      console.error("Database insertion failed:", dbErr);
+      req.log.warn({ dbErr }, "Database insert failed or timed out, falling back to CSV/Logs");
+      console.error("Database insertion failed/timed out:", dbErr);
     }
     try {
       const csvPath = import_node_path.default.resolve(process.cwd(), "contacts.csv");
