@@ -55901,7 +55901,7 @@ router2.post("/contact", async (req, res) => {
       console.error("Database insertion failed/timed out:", dbErr);
     }
     try {
-      const csvPath = import_node_path.default.resolve(process.cwd(), "contacts.csv");
+      const csvPath = process.env.VERCEL ? "/tmp/contacts.csv" : import_node_path.default.resolve(process.cwd(), "contacts.csv");
       let exists2 = false;
       try {
         await import_promises.default.access(csvPath);

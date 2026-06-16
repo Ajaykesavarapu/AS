@@ -70,7 +70,9 @@ router.post("/contact", async (req, res): Promise<void> => {
 
     // Save to CSV for Excel compatibility
     try {
-      const csvPath = path.resolve(process.cwd(), "contacts.csv");
+      const csvPath = process.env.VERCEL
+        ? "/tmp/contacts.csv"
+        : path.resolve(process.cwd(), "contacts.csv");
       
       // Check if file exists to add header
       let exists = false;
