@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm run build",
+  "buildCommand": "pnpm -r --if-present run build",
   "outputDirectory": "client/dist",
   "rewrites": [
     {

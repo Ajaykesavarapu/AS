@@ -119,7 +119,7 @@ globalThis.__dirname = __bannerPath.dirname(globalThis.__filename);
   });
 
   // Build Vercel API serverless handler (pre-bundled JS so @vercel/node skips TS compilation)
-  const apiHandlerPath = path.resolve(artifactDir, "../api/_handler.ts");
+  const apiHandlerPath = path.resolve(artifactDir, "src/api-handler.ts");
   const apiOutPath = path.resolve(artifactDir, "../api/index.js");
   await esbuild({
     entryPoints: [apiHandlerPath],
