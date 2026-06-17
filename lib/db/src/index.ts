@@ -12,8 +12,17 @@ if (!process.env.DATABASE_URL) {
     "DATABASE_URL must be set. Did you forget to provision a database? Falling back to standalone mode."
   );
 } else {
+  let connectionString = process.env.DATABASE_URL;
+  try {
+    const parsedUrl = new URL(connectionString);
+    parsedUrl.searchParams.delete("sslmode");
+    connectionString = parsedUrl.toString();
+  } catch (err) {
+    // Keep original if it's not a standard URL format
+  }
+
   pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString,
     ssl: { rejectUnauthorized: false }
   });
   db = drizzle(pool, { schema });
