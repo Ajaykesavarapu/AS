@@ -58,11 +58,32 @@ export default function ConsultationModal({ open, onClose }: Props) {
           businessName: data.businessName || null,
           email: data.email,
           phone: data.phone,
-          service: data.service as "digital-marketing" | "ai-automation" | "seo-services" | "website-development" | "social-media-marketing" | "erp-systems" | "mobile-app-development" | "branding-design" | "other",
+          service: data.service as any,
           message: data.message || null,
           honeypot: data.honeypot || null,
         },
       }, {
+        onSuccess: () => {
+          // Trigger client-side email notification via FormSubmit
+          fetch("https://formsubmit.co/ajax/helloaskreativ@gmail.com", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify({
+              _subject: `New Consultation Request: ${data.fullName} (${data.service})`,
+              Name: data.fullName,
+              Business: data.businessName || "N/A",
+              Email: data.email,
+              Phone: data.phone || "N/A",
+              Service: data.service,
+              Message: data.message || "No message provided"
+            })
+          }).catch((err) => {
+            console.error("Client-side FormSubmit error:", err);
+          });
+        },
         onError: (err) => {
           console.error("Consultation form async submission error:", err);
         }

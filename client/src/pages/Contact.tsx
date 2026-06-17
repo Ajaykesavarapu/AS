@@ -61,6 +61,27 @@ export default function Contact() {
           honeypot: data.honeypot || null,
         }
       }, {
+        onSuccess: () => {
+          // Trigger client-side email notification via FormSubmit
+          fetch("https://formsubmit.co/ajax/helloaskreativ@gmail.com", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify({
+              _subject: `New Lead: ${data.fullName} (${data.service})`,
+              Name: data.fullName,
+              Business: data.businessName || "N/A",
+              Email: data.email,
+              Phone: data.phone || "N/A",
+              Service: data.service,
+              Message: data.message || "No message provided"
+            })
+          }).catch((err) => {
+            console.error("Client-side FormSubmit error:", err);
+          });
+        },
         onError: (err) => {
           console.error("Contact form async submission error:", err);
         }
