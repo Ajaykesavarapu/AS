@@ -22,6 +22,24 @@ export default function Industries() {
   useSEO({
     title: "Business Industries We Serve | ASKreativ Hyderabad",
     description: "ASKreativ helps industries grow with digital marketing, automation, branding, websites, ERP systems, and mobile app development solutions.",
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.askreativ.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Industries",
+          "item": "https://www.askreativ.in/industries"
+        }
+      ]
+    }
   });
 
   return (

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export function useSEO({ title, description }: { title: string; description: string }) {
+export function useSEO({ title, description, schema }: { title: string; description: string; schema?: object }) {
   useEffect(() => {
     document.title = title;
     
@@ -29,5 +29,25 @@ export function useSEO({ title, description }: { title: string; description: str
     }
     const cleanPath = window.location.pathname === "/" ? "" : window.location.pathname.replace(/\/$/, "");
     canonical.setAttribute('href', `${window.location.origin}${cleanPath}`);
-  }, [title, description]);
+
+    // Dynamic Structured Data (JSON-LD)
+    const existingSchema = document.getElementById("json-ld-schema");
+    if (existingSchema) {
+      existingSchema.remove();
+    }
+    if (schema) {
+      const script = document.createElement("script");
+      script.id = "json-ld-schema";
+      script.type = "application/ld+json";
+      script.innerHTML = JSON.stringify(schema);
+      document.head.appendChild(script);
+    }
+
+    return () => {
+      const cleanupSchema = document.getElementById("json-ld-schema");
+      if (cleanupSchema) {
+        cleanupSchema.remove();
+      }
+    };
+  }, [title, description, schema]);
 }

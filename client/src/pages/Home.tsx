@@ -115,7 +115,42 @@ export default function Home() {
   const { openModal } = useModal();
   useSEO({
     title: "AI Automation & Digital Marketing Agency Hyderabad",
-    description: "ASKreativ is an AI automation and digital marketing agency in Hyderabad, helping businesses with SEO, branding, websites, ERP systems, and apps."
+    description: "ASKreativ is an AI automation and digital marketing agency in Hyderabad, helping businesses with SEO, branding, websites, ERP systems, and apps.",
+    schema: [
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "ASKreativ",
+        "image": "https://www.askreativ.in/logo.png",
+        "url": "https://www.askreativ.in",
+        "telephone": "+91 96669 76611",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Hyderabad, Telangana",
+          "addressLocality": "Hyderabad",
+          "addressRegion": "Telangana",
+          "postalCode": "500081",
+          "addressCountry": "IN"
+        },
+        "sameAs": [
+          "https://facebook.com/profile.php?id=61588501648124",
+          "https://x.com/askreativ_1",
+          "https://instagram.com/askreativ_1",
+          "https://linkedin.com/in/askreativ",
+          "https://youtube.com/channel/UCTOgmK7KKDlE6E1uMXuwVoA"
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "url": "https://www.askreativ.in",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://www.askreativ.in/blog?search={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    ]
   });
 
   return (

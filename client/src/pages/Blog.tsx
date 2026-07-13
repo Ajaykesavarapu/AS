@@ -55,7 +55,25 @@ export default function Blog() {
 
   useSEO({
     title: "Blog & Insights | AI Marketing & SEO Success | ASKreativ",
-    description: "The latest breakthroughs in AI automation, growth engineering, and the human psychology of elite branding. Engineered to keep you ahead."
+    description: "The latest breakthroughs in AI automation, growth engineering, and the human psychology of elite branding. Engineered to keep you ahead.",
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.askreativ.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://www.askreativ.in/blog"
+        }
+      ]
+    }
   });
 
   return (

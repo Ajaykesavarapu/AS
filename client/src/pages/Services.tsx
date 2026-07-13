@@ -32,7 +32,25 @@ export default function Services() {
   const { openModal } = useModal();
   useSEO({
     title: "AI Automation, Digital Marketing & Development Solutions | ASKreativ",
-    description: "ASKreativ Global Solutions is a high-growth digital execution engine in Hyderabad, built to turn visions into results through storytelling and strategic technology."
+    description: "ASKreativ Global Solutions is a high-growth digital execution engine in Hyderabad, built to turn visions into results through storytelling and strategic technology.",
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.askreativ.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://www.askreativ.in/services"
+        }
+      ]
+    }
   });
 
   return (

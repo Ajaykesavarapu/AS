@@ -418,7 +418,34 @@ export default function ServiceDetail() {
     );
   }
 
-  useSEO(service.seo);
+  useSEO({
+    title: service.seo.title,
+    description: service.seo.description,
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.askreativ.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://www.askreativ.in/services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": service.title,
+          "item": `https://www.askreativ.in/${params.slug}`
+        }
+      ]
+    }
+  });
 
   const Icon = service.icon;
 

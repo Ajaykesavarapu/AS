@@ -41,7 +41,25 @@ export default function About() {
   const { openModal } = useModal();
   useSEO({
     title: "About ASKreativ Global Solutions | AI Digital Agency Hyderabad",
-    description: "ASKreativ is an AI-powered digital growth company in Hyderabad. We combine creativity, AI, and strategy to build intelligent digital ecosystems."
+    description: "ASKreativ is an AI-powered digital growth company in Hyderabad. We combine creativity, AI, and strategy to build intelligent digital ecosystems.",
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.askreativ.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "About",
+          "item": "https://www.askreativ.in/about"
+        }
+      ]
+    }
   });
 
   return (

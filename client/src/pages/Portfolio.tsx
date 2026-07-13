@@ -44,7 +44,25 @@ export default function Portfolio() {
 
   useSEO({
     title: "Our Portfolio | Digital Transformations & Growth Stories | ASKreativ",
-    description: "Explore ASKreativ's successful case studies. We build modern websites, SEO domination, AI automation, and branding for visionary businesses in Hyderabad."
+    description: "Explore ASKreativ's successful case studies. We build modern websites, SEO domination, AI automation, and branding for visionary businesses in Hyderabad.",
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.askreativ.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portfolio",
+          "item": "https://www.askreativ.in/portfolio"
+        }
+      ]
+    }
   });
 
   const filtered = active === "All" ? projects : projects.filter((p) => p.tags.includes(active));

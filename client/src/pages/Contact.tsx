@@ -93,7 +93,50 @@ export default function Contact() {
 
   useSEO({
     title: "Contact Us | ASKreativ Global Solutions Hyderabad",
-    description: "Every massive growth story begins with a single conversation. Whether you’re scaling a startup or dominating an industry, our engine is ready to power your vision."
+    description: "Every massive growth story begins with a single conversation. Whether you’re scaling a startup or dominating an industry, our engine is ready to power your vision.",
+    schema: [
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://www.askreativ.in/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Contact",
+            "item": "https://www.askreativ.in/contact"
+          }
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "ASKreativ",
+        "image": "https://www.askreativ.in/logo.png",
+        "url": "https://www.askreativ.in",
+        "telephone": "+91 96669 76611",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Hyderabad, Telangana",
+          "addressLocality": "Hyderabad",
+          "addressRegion": "Telangana",
+          "postalCode": "500081",
+          "addressCountry": "IN"
+        },
+        "sameAs": [
+          "https://facebook.com/profile.php?id=61588501648124",
+          "https://x.com/askreativ_1",
+          "https://instagram.com/askreativ_1",
+          "https://linkedin.com/in/askreativ",
+          "https://youtube.com/channel/UCTOgmK7KKDlE6E1uMXuwVoA"
+        ]
+      }
+    ]
   });
 
   const inputStyle: React.CSSProperties = {
