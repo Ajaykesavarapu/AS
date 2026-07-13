@@ -120,6 +120,7 @@ export default function Home() {
 
   return (
     <main>
+       <h1 className="sr-only">AI Automation & Digital Marketing Agency Hyderabad | ASKreativ</h1>
        {/* ═══════════════════════════════════════════════════════════════
            HERO — Modern hero with left-aligned text and right-stat cards
        ═══════════════════════════════════════════════════════════════ */}
@@ -385,9 +386,6 @@ export default function Home() {
                     whileHover={{ y: -6 }}
                     style={{ background: "var(--card-bg)", borderRadius: "24px", overflow: "hidden", border: "1px solid var(--card-border)", height: "100%", display: "flex", flexDirection: "column" }}
                   >
-                    <div style={{ position: "relative", height: "220px", overflow: "hidden" }}>
-                      <img src={b.img} alt={b.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} className="hover:scale-105 transition-transform duration-700" />
-                    </div>
                     <div style={{ padding: "32px", display: "flex", flexDirection: "column", flex: 1 }}>
                       <span style={{ fontSize: "12px", fontWeight: 700, color: "var(--orange)", textTransform: "uppercase", letterSpacing: "1px", marginBottom: "16px" }}>{b.tag}</span>
                       <h3 style={{ fontSize: "20px", fontWeight: 800, color: "var(--fg)", marginBottom: "16px", lineHeight: 1.4 }}>{b.title}</h3>
@@ -404,29 +402,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════════════
-          CTA BANNER
-      ═══════════════════════════════════════════════════════════════ */}
-      <section className="px-4 py-10 md:px-10">
-        <div className="container text-center relative overflow-hidden bg-[var(--orange)] rounded-[32px] px-6 py-12 md:py-20 md:px-10">
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(0,0,0,0.1) 0%, transparent 50%)" }} />
-          <FadeUp>
-            <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 900, color: "#fff", marginBottom: "20px", position: "relative" }}>
-              {homeContent.ctaSection.title}
-            </h2>
-            <p style={{ fontSize: "18px", color: "rgba(255,255,255,0.85)", marginBottom: "36px", maxWidth: "600px", margin: "0 auto 36px", position: "relative" }}>
-              {homeContent.ctaSection.description}
-            </p>
-            <button onClick={openModal} style={{
-              background: "var(--bg)", color: "var(--orange)", padding: "18px 44px", borderRadius: "14px",
-              fontSize: "17px", fontWeight: 800, border: "none", cursor: "pointer", position: "relative",
-              display: "inline-flex", alignItems: "center", gap: "10px",
-            }}>
-              {homeContent.ctaSection.buttonText} <ArrowRight size={18} />
-            </button>
-          </FadeUp>
-        </div>
-      </section>
     </main>
   );
 }

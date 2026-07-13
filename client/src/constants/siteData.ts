@@ -59,7 +59,6 @@ export const navLinks = [
     ]
   },
   { label: "Blog", href: "/blog" },
-  { label: "Careers", href: "/careers" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -104,10 +103,10 @@ export const homeContent = {
     tag: "WHY ASKREATIV",
     title: "Why Visionary Businesses Choose Us",
     list: [
-      { icon: Cpu, title: "AI-Powered Strategy", desc: "We use automation and modern technology to help businesses scale efficiently." },
-      { icon: Lightbulb, title: "Strategy & Innovation", desc: "We focus on data-driven marketing, creativity, and long-term business growth." },
-      { icon: Target, title: "Hyderabad’s Strategy Experts", desc: "Based in Hyderabad, we understand the local market and local branding needs." },
-      { icon: Zap, title: "Complete Digital Growth", desc: "From branding to ERP, we provide everything needed for modern business growth." },
+      { icon: Cpu, title: "AI-Powered Growth", desc: "We use automation and modern technology to help businesses scale efficiently." },
+      { icon: Lightbulb, title: "Creative Innovation", desc: "We focus on data-driven marketing, creativity, and long-term business growth." },
+      { icon: Target, title: "Market & Growth Experts", desc: "We understand market dynamics and brand building needs." },
+      { icon: Zap, title: "Unified Digital Scaling", desc: "From branding to ERP, we provide everything needed for modern business growth." },
     ]
   },
   process: {

@@ -74,6 +74,7 @@ export default function FAQ() {
 
   return (
     <main>
+      <h1 className="sr-only">Frequently Asked Questions | ASKreativ Global Solutions</h1>
       {/* ── HERO ─────────────────────────────────────────────────────── */}
       <HeroSection
         backgroundType="image"
@@ -101,10 +102,10 @@ export default function FAQ() {
       <section className="cta-banner" style={{ margin: "100px 0" }}>
         <div className="container" style={{ position: "relative", zIndex: 1, textAlign: "center", padding: "100px 20px" }}>
           <FadeUp>
-            <h2 style={{ fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 900, marginBottom: "24px" }}>
-              Still Have <span>Questions?</span>
+            <h2 style={{ fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 900, marginBottom: "24px", color: "#ffffff" }}>
+              Still Have <span style={{ color: "#ffffff", opacity: 0.8 }}>Questions?</span>
             </h2>
-            <p style={{ fontSize: "20px", color: "var(--fg-light)", marginBottom: "48px", maxWidth: "700px", margin: "0 auto 48px" }}>
+            <p style={{ fontSize: "20px", color: "rgba(255, 255, 255, 0.85)", marginBottom: "48px", maxWidth: "700px", margin: "0 auto 48px" }}>
               Our experts are ready to build your custom digital strategy.
             </p>
             <button onClick={openModal} className="btn-primary" style={{ padding: "20px 48px", fontSize: "17px" }}>

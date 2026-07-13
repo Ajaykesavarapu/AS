@@ -46,6 +46,7 @@ export default function About() {
 
   return (
     <main>
+      <h1 className="sr-only">About ASKreativ Global Solutions | AI Digital Agency Hyderabad</h1>
         {/* ── HERO ─────────────────────────────────────────────────────── */}
         <HeroSection
           backgroundType="image"
@@ -155,8 +156,8 @@ export default function About() {
       <section className="cta-banner" style={{ margin: "100px 0" }}>
         <div className="container" style={{ position: "relative", zIndex: 1, textAlign: "center", padding: "100px 20px" }}>
           <FadeUp>
-            <h2 style={{ fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 900, marginBottom: "24px" }}>
-              Ready to Unleash Your <br/><span>Digital Growth?</span>
+            <h2 style={{ fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 900, marginBottom: "24px", color: "#ffffff" }}>
+              Ready to Unleash Your <br/><span style={{ color: "#ffffff", opacity: 0.8 }}>Digital Growth?</span>
             </h2>
             <button onClick={openModal} className="btn-primary" style={{ padding: "20px 48px", fontSize: "17px" }}>
               Book a Strategy Session <ArrowRight size={20} />

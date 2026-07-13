@@ -60,6 +60,7 @@ export default function Blog() {
 
   return (
     <main>
+      <h1 className="sr-only">Blog & Insights | AI Marketing & SEO Success | ASKreativ</h1>
        {/* ── HERO ─────────────────────────────────────────────────────── */}
        <HeroSection
          backgroundType="image"
@@ -76,9 +77,6 @@ export default function Blog() {
               <FadeUp key={post.slug} delay={i * 0.1}>
                 <Link href={`/blog/${post.slug}`} style={{ display: "block", height: "100%" }}>
                   <div className="card glass-card" style={{ padding: 0, overflow: "hidden", height: "100%", display: "flex", flexDirection: "column", borderRadius: "32px" }}>
-                    <div style={{ position: "relative", overflow: "hidden", aspectRatio: "1.8" }}>
-                      <img src={post.img} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                    </div>
                     <div style={{ padding: "40px", flex: 1, display: "flex", flexDirection: "column" }}>
                       <span className="section-tag" style={{ marginBottom: "16px" }}>{post.tag}</span>
                       <h3 style={{ fontWeight: 850, fontSize: "24px", color: "var(--fg)", marginBottom: "16px", lineHeight: "1.3" }}>{post.title}</h3>

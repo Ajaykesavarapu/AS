@@ -37,6 +37,7 @@ export default function Services() {
 
   return (
     <main>
+      <h1 className="sr-only">AI Automation, Digital Marketing & Development Solutions | ASKreativ</h1>
        {/* ── HERO ─────────────────────────────────────────────────────── */}
        <HeroSection
          backgroundType="image"
@@ -88,8 +89,8 @@ export default function Services() {
       <section className="cta-banner" style={{ margin: "100px 0" }}>
         <div className="container" style={{ position: "relative", zIndex: 1, textAlign: "center", padding: "100px 20px" }}>
           <FadeUp>
-            <h2 style={{ fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 900, marginBottom: "24px" }}>
-              Ready to Expand Your <br/><span>Digital Footprint?</span>
+            <h2 style={{ fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 900, marginBottom: "24px", color: "#ffffff" }}>
+              Ready to Expand Your <br/><span style={{ color: "#ffffff", opacity: 0.8 }}>Digital Footprint?</span>
             </h2>
             <button onClick={openModal} className="btn-primary" style={{ padding: "20px 48px", fontSize: "17px" }}>
               Get a Proposal <ArrowRight size={20} />

@@ -51,6 +51,7 @@ export default function Portfolio() {
 
   return (
     <main>
+      <h1 className="sr-only">Case Studies & Portfolio | ASKreativ Global Solutions</h1>
        {/* Hero Section */}
        <HeroSection
          backgroundType="image"

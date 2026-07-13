@@ -424,6 +424,7 @@ export default function ServiceDetail() {
 
   return (
      <main>
+       <h1 className="sr-only">{service.title} | ASKreativ Global Solutions</h1>
        {/* ── HERO ─────────────────────────────────────────────────────── */}
        <HeroSection
          backgroundType="image"

@@ -5,12 +5,24 @@ export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const accepted = localStorage.getItem("askreativ-cookies");
-    if (!accepted) setTimeout(() => setVisible(true), 2000);
+    const consentShown = localStorage.getItem("cookieConsentShown") || localStorage.getItem("askreativ-cookies");
+    if (!consentShown) {
+      const timer = setTimeout(() => setVisible(true), 2000);
+      return () => clearTimeout(timer);
+    }
+    return;
   }, []);
 
-  const accept = () => { localStorage.setItem("askreativ-cookies", "accepted"); setVisible(false); };
-  const decline = () => { localStorage.setItem("askreativ-cookies", "declined"); setVisible(false); };
+  const accept = () => {
+    localStorage.setItem("cookieConsentShown", "true");
+    localStorage.setItem("askreativ-cookies", "accepted");
+    setVisible(false);
+  };
+  const decline = () => {
+    localStorage.setItem("cookieConsentShown", "true");
+    localStorage.setItem("askreativ-cookies", "declined");
+    setVisible(false);
+  };
 
   return (
     <AnimatePresence>
@@ -20,11 +32,7 @@ export default function CookieBanner() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ type: "spring", duration: 0.5 }}
-          style={{
-            position: "fixed", bottom: "80px", right: "24px", maxWidth: "340px",
-            zIndex: 99990, background: "var(--card-bg)", border: "1px solid var(--border-c)",
-            borderRadius: "16px", padding: "20px", boxShadow: "0 12px 40px var(--shadow-md)",
-          }}
+          className="cookie-banner-container"
           data-testid="cookie-banner"
         >
           <p style={{ fontSize: "13px", color: "var(--fg-light)", marginBottom: "14px" }}>

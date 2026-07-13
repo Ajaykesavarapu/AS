@@ -386,14 +386,6 @@ export default function Navbar() {
                     >
                       FAQ
                     </Link>
-                    <Link
-                      href="/careers"
-                      onClick={() => setMenuOpen(false)}
-                      style={{ color: "var(--fg-light)", fontSize: "15px", fontWeight: 600, textDecoration: "none", display: "inline-block", transition: "color 0.2s" }}
-                      className="hover:text-[var(--orange)]"
-                    >
-                      Careers
-                    </Link>
                   </div>
                 </div>
 

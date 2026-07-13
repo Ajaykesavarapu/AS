@@ -582,3 +582,49 @@ html.dark .glass {
     left: 24px;
   }
 }
+
+/* Visually hidden but SEO accessible */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Ensure CTA Banner Headings and Subtext are readable on dark background */
+.cta-banner h2 {
+  color: #ffffff !important;
+}
+.cta-banner p {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Responsive Cookie Banner Container */
+.cookie-banner-container {
+  position: fixed;
+  bottom: 80px;
+  right: 24px;
+  max-width: 340px;
+  width: calc(100% - 48px);
+  z-index: 99990;
+  background: var(--card-bg);
+  border: 1px solid var(--border-c);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 12px 40px var(--shadow-md);
+}
+@media (max-width: 768px) {
+  .cookie-banner-container {
+    bottom: 24px;
+    left: 16px;
+    right: 16px;
+    max-width: none;
+    width: auto;
+  }
+}
+

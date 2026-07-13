@@ -26,6 +26,7 @@ export default function Industries() {
 
   return (
     <main>
+      <h1 className="sr-only">Business Industries We Serve | ASKreativ Global Solutions</h1>
       {/* ── HERO ─────────────────────────────────────────────────────── */}
       <HeroSection
         backgroundType="image"

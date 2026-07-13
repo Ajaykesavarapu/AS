@@ -106,6 +106,7 @@ export default function Contact() {
 
   return (
     <main>
+      <h1 className="sr-only">Contact Us | ASKreativ Global Solutions</h1>
        {/* ── HERO ─────────────────────────────────────────────────────── */}
        <HeroSection
          backgroundType="image"

@@ -172,6 +172,7 @@ export default function BlogPost() {
 
   return (
     <main>
+      <h1 className="sr-only">{post.title} | ASKreativ Global Solutions</h1>
       {/* ── HERO ─────────────────────────────────────────────────────── */}
       <HeroSection
         backgroundType="image"

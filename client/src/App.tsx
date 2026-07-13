@@ -1,4 +1,4 @@
-import { useState, createContext, useContext, useEffect } from "react";
+import { lazy, Suspense } from "react";
 import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -11,17 +11,17 @@ import ThemeToggle from "@/components/layout/ThemeToggle";
 import ConsultationModal from "@/components/popups/ConsultationModal";
 import ExitIntentPopup from "@/components/popups/ExitIntentPopup";
 import CookieBanner from "@/components/popups/CookieBanner";
-import Home from "@/pages/Home";
-import About from "@/pages/About";
-import Services from "@/pages/Services";
-import ServiceDetail from "@/pages/ServiceDetail";
-import Portfolio from "@/pages/Portfolio";
-import Blog from "@/pages/Blog";
-import BlogPost from "@/pages/BlogPost";
-import Contact from "@/pages/Contact";
-import FAQ from "@/pages/FAQ";
-import Careers from "@/pages/Careers";
-import NotFound from "@/pages/not-found";
+
+const Home = lazy(() => import("@/pages/Home"));
+const About = lazy(() => import("@/pages/About"));
+const Services = lazy(() => import("@/pages/Services"));
+const ServiceDetail = lazy(() => import("@/pages/ServiceDetail"));
+const Portfolio = lazy(() => import("@/pages/Portfolio"));
+const Blog = lazy(() => import("@/pages/Blog"));
+const BlogPost = lazy(() => import("@/pages/BlogPost"));
+const Contact = lazy(() => import("@/pages/Contact"));
+const FAQ = lazy(() => import("@/pages/FAQ"));
+const NotFound = lazy(() => import("@/pages/not-found"));
 
 const queryClient = new QueryClient();
 
@@ -58,6 +58,8 @@ function ScrollToTop() {
 
 import Industries from "@/pages/Industries";
 
+import { useState, createContext, useContext, useEffect } from "react";
+
 function AppInner() {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -68,33 +70,44 @@ function AppInner() {
       <SocialSidebar />
       <ThemeToggle />
       <Navbar />
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/about" component={About} />
-        <Route path="/services" component={Services} />
-        <Route path="/industries" component={Industries} />
-        
-        {/* Specific Service Slugs */}
-        <Route path="/website-development-services-hyderabad" component={ServiceDetail} />
-        <Route path="/seo-services-hyderabad" component={ServiceDetail} />
-        <Route path="/ai-automation-services-hyderabad" component={ServiceDetail} />
-        <Route path="/social-media-marketing-services-hyderabad" component={ServiceDetail} />
-        <Route path="/ppc-services-hyderabad" component={ServiceDetail} />
-        <Route path="/digital-content-video-production-services-hyderabad" component={ServiceDetail} />
-        <Route path="/graphic-design-services-hyderabad" component={ServiceDetail} />
-        <Route path="/mobile-app-development-services-hyderabad" component={ServiceDetail} />
-        <Route path="/erp-management-systems-hyderabad" component={ServiceDetail} />
-        <Route path="/traditional-marketing-services-hyderabad" component={ServiceDetail} />
+      <Suspense fallback={
+        <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ width: "40px", height: "40px", borderRadius: "50%", border: "3px solid var(--orange-glass)", borderTopColor: "var(--orange)", animation: "spin 1s linear infinite" }} />
+          <style>{`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}</style>
+        </div>
+      }>
+        <Switch>
+          <Route path="/" component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/services" component={Services} />
+          <Route path="/industries" component={Industries} />
+          
+          {/* Specific Service Slugs */}
+          <Route path="/website-development-services-hyderabad" component={ServiceDetail} />
+          <Route path="/seo-services-hyderabad" component={ServiceDetail} />
+          <Route path="/ai-automation-services-hyderabad" component={ServiceDetail} />
+          <Route path="/social-media-marketing-services-hyderabad" component={ServiceDetail} />
+          <Route path="/ppc-services-hyderabad" component={ServiceDetail} />
+          <Route path="/digital-content-video-production-services-hyderabad" component={ServiceDetail} />
+          <Route path="/graphic-design-services-hyderabad" component={ServiceDetail} />
+          <Route path="/mobile-app-development-services-hyderabad" component={ServiceDetail} />
+          <Route path="/erp-management-systems-hyderabad" component={ServiceDetail} />
+          <Route path="/traditional-marketing-services-hyderabad" component={ServiceDetail} />
 
-        <Route path="/services/:slug" component={ServiceDetail} />
-        <Route path="/portfolio" component={Portfolio} />
-        <Route path="/blog" component={Blog} />
-        <Route path="/blog/:slug" component={BlogPost} />
-        <Route path="/contact" component={Contact} />
-        <Route path="/faq" component={FAQ} />
-        <Route path="/careers" component={Careers} />
-        <Route component={NotFound} />
-      </Switch>
+          <Route path="/services/:slug" component={ServiceDetail} />
+          <Route path="/portfolio" component={Portfolio} />
+          <Route path="/blog" component={Blog} />
+          <Route path="/blog/:slug" component={BlogPost} />
+          <Route path="/contact" component={Contact} />
+          <Route path="/faq" component={FAQ} />
+          <Route component={NotFound} />
+        </Switch>
+      </Suspense>
       <Footer />
       <ConsultationModal open={modalOpen} onClose={() => setModalOpen(false)} />
       <ExitIntentPopup />
