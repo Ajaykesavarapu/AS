@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export function useSEO({ title, description, schema }: { title: string; description: string; schema?: object }) {
+export function useSEO({ title, description, schema, canonical: customCanonical }: { title: string; description: string; schema?: object; canonical?: string }) {
   useEffect(() => {
     document.title = title;
     
@@ -28,7 +28,8 @@ export function useSEO({ title, description, schema }: { title: string; descript
       document.head.appendChild(canonical);
     }
     const cleanPath = window.location.pathname === "/" ? "" : window.location.pathname.replace(/\/$/, "");
-    canonical.setAttribute('href', `${window.location.origin}${cleanPath}`);
+    const canonicalHref = customCanonical || `${window.location.origin}${cleanPath}`;
+    canonical.setAttribute('href', canonicalHref);
 
     // Dynamic Structured Data (JSON-LD)
     const existingSchema = document.getElementById("json-ld-schema");

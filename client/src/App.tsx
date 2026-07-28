@@ -102,6 +102,7 @@ function AppInner() {
           <Route path="/services/:slug" component={ServiceDetail} />
           <Route path="/portfolio" component={Portfolio} />
           <Route path="/blog" component={Blog} />
+          <Route path="/blogs" component={Blog} />
           <Route path="/blog/:slug" component={BlogPost} />
           <Route path="/contact" component={Contact} />
           <Route path="/faq" component={FAQ} />
